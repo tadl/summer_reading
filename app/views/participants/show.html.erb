@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @participant.first_name %>
+</p>
+
+<p>
+  <strong>Middle name:</strong>
+  <%= @participant.middle_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @participant.last_name %>
+</p>
+
+<p>
+  <strong>Library card:</strong>
+  <%= @participant.library_card %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @participant.email %>
+</p>
+
+<p>
+  <strong>Zip code:</strong>
+  <%= @participant.zip_code %>
+</p>
+
+<p>
+  <strong>Home library:</strong>
+  <%= @participant.home_library %>
+</p>
+
+<p>
+  <strong>School:</strong>
+  <%= @participant.school %>
+</p>
+
+<p>
+  <strong>Grade:</strong>
+  <%= @participant.grade %>
+</p>
+
+<p>
+  <strong>Age:</strong>
+  <%= @participant.age %>
+</p>
+
+<p>
+  <strong>Club:</strong>
+  <%= @participant.club %>
+</p>
+
+<%= link_to 'Edit', edit_participant_path(@participant) %> |
+<%= link_to 'Back', participants_path %>
