@@ -1,3 +1,8 @@
-A base application that allows users to login to a generic web service using their tadl.org Google Apps accounts.
+An appliction that allows patrons to:
+- sign-up for summer reading program
+- monitor their progress online
+- receive email communication on progress and upcoming events
 
-After cloning, modify .env.example to include the key and secret for your app. 
+Staff will be able to:
+- search for patrons and view their progress
+- award "badges"
