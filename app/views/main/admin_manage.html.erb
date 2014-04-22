@@ -1,0 +1,38 @@
+<h2>Staff Users</h2>
+<div id="approved_users">
+	<% @admins.each do |a| %>
+		<div class="admin_card" id="user_<%= a.id %>">
+			<div id="">
+				<div class="admin_left">
+					<img src="<%= a.avatar %>">
+				</div>
+				<div class="admin_right">
+					Name: <%= a.name %> <br />
+					Email: <%= a.email %> <br />
+				</div>
+				<div class="clear_div"></div>
+			</div>
+		</div>
+	<% end %>
+</div>
+<div id="unapproved_users">
+	<% if check_for_admin %>
+		<h2>Unapproved Staff Users</h2>
+		<% @unapproved_admins.each do |a| %>
+			<div class="admin_card" id="user_<%= a.id %>">
+				<div id="">
+					<div class="admin_left">
+						<img src="<%= a.avatar %>">
+					</div>
+					<div class="admin_right">
+						Name: <%= a.name %> <br />
+						Email: <%= a.email %> <br />
+						Role: <%= a.role %> <br />
+						<a onclick="change_role('approved', '<%= a.id %>')">Approve User</a>
+					</div>
+					<div class="clear_div"></div>
+				</div>
+			</div>
+		<% end %>			
+<% end %>
+</div>
