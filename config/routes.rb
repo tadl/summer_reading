@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'main#index'
   get "main/admin_manage"
+  get "main/sign_up"
+  get "main/register"
   get "main/change_admin_role"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match 'auth/failure', to: redirect('/'), via: [:get, :post]
