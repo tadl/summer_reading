@@ -4,7 +4,7 @@
     <%= link_to "Sign out", signout_path, id: "sign_out" %>
     <br />
     <a href="/main/admin_manage">Staff Users</a><br />
-    <a href="/participants">Registered Patrons</a><br />
+    <a href="/main/patron_list">Registered Patrons</a><br />
   <% else %>
     <%= link_to "Staff Login", "/auth/google_oauth2", id: "sign_in" %>
   <% end %>
