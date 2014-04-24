@@ -81,11 +81,15 @@ class MainController < ApplicationController
     @experiences = Experience.all
   end
 
+  def award_list
+    @awards = Award.all
+  end
+
   def award_patron
-    participant = params[:participan]
+    participant = params[:participant]
     experience = params[:experience]
-    if Awards.where(:participant_id => participant, :experience_id => experience ).blank?
-      a = Awards.new
+    if Award.where(:participant_id => participant, :experience_id => experience ).blank?
+      a = Award.new
       a.participant_id = participant
       a.experience_id = experience
       a.notes = params[:notes]
