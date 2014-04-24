@@ -73,4 +73,8 @@ class MainController < ApplicationController
     end
   end
 
+  def patron_list
+    @participants = Participant.all
+  end
+
 end
