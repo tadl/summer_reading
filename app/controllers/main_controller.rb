@@ -1,5 +1,5 @@
 class MainController < ApplicationController
-  before_action :authenticate_user!, :except => [:index, :sign_up]
+  before_action :authenticate_user!, :except => [:index, :sign_up, :register]
   respond_to :html, :json
   
   def index
