@@ -77,4 +77,28 @@ class MainController < ApplicationController
     @participants = Participant.all
   end
 
+  def experience_list
+    @experiences = Experience.all
+  end
+
+  def award_patron
+    participant = params[:participan]
+    experience = params[:experience]
+    if Awards.where(:participant_id => participant, :experience_id => experience ).blank?
+      a = Awards.new
+      a.participant_id = participant
+      a.experience_id = experience
+      a.notes = params[:notes]
+      a.save
+      message = "success"
+    else
+      message = "award was already granted"
+    end
+    
+    respond_with do |format|
+        format.json { render :json =>{message: message}}
+    end 
+    
+  end
+
 end

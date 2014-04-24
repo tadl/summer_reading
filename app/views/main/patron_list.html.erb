@@ -3,6 +3,7 @@
 <table>
   <thead>
     <tr>
+      <th>ID</th>
       <th>First name</th>
       <th>Last name</th>
       <th>Library card</th>
@@ -19,6 +20,7 @@
   <tbody>
     <% @participants.each do |participant| %>
       <tr>
+        <td><%= participant.id %></td>
         <td><%= participant.first_name %></td>
         <td><%= participant.last_name %></td>
         <td><%= participant.library_card %></td>
