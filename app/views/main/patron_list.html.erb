@@ -14,7 +14,9 @@
       <th>Grade</th>
       <th>Age</th>
       <th>Club</th>
-      <th>Awards</th>
+      <th>Experiences</th>
+      <th>Experience Count</th>
+      <th>Award New Experience</th>
     </tr>
   </thead>
 
@@ -33,9 +35,21 @@
         <td><%= participant.age %></td>
         <td><%= participant.club %></td>
         <td>
-          <%= participant.experiences %>
-                 
-          
+          <% participant.awards.each do |a| %>
+             <%= a.experience.name %>    
+          <% end %>
+        </td>
+        <td>
+        <%= participant.awards.count %>
+        </td>
+        <td>
+        <select name="<%= participant.id %>_form">
+            <option value="">Select Experience</option>
+          <% participant.unearned_experiences.each do |e| %>
+            <option value="<%= e.id %>"><%= e.name %></option>
+          <% end %>
+
+        </select>
         </td> 
 
       </tr>

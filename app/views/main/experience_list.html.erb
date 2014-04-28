@@ -1,0 +1,25 @@
+<h1>Listing experiences</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @experiences.each do |experience| %>
+      <tr>
+        <td><%= experience.name %></td>
+        <td><%= experience.description %></td>
+        <td><%= link_to 'Edit', edit_experience_path(experience) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+
