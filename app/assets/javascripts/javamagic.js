@@ -67,6 +67,27 @@ function register(){
   }
 }
 
+function search_by_name(){
+ var name = $('#search_by_name').val();
+ var clean_name = encodeURIComponent(name);  
+  if (name){
+    var url = '/main/search_by_name?name=' + clean_name
+    window.open(url,"_self")
+     }else{
+    alert("enter a name!");  
+     }     
+}
+
+function search_by_card(){
+ var card = $('#search_by_card').val();
+ var clean_card = encodeURIComponent(card);  
+  if (card){
+    var url = '/main/search_by_card?card=' + clean_card
+    window.open(url,"_self")
+     }else{
+    alert("enter a card# !");  
+     }     
+}
 
 
 

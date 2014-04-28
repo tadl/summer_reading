@@ -8,7 +8,20 @@
 </head>
 <body>
 
-<%= yield %>
+<div id="top_bar">
+<% if current_user %>
+	<% if check_for_approved %>
+		Search by Name: <input type="text" id="search_by_name">
+		<a onclick="search_by_name()">GO</a>
+		Search by Card #: <input type="text" id="search_by_card">
+		<a onclick="search_by_card()">GO</a>
+	<% end %>
+<% end %>		
+</div>
+
+<div id="content">
+	<%= yield %>
+</div>
 
 </body>
 </html>

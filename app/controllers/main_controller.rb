@@ -1,5 +1,6 @@
 class MainController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :sign_up, :register]
+  before_action :check_for_approved, :except => [:index, :sign_up, :register, :admin_manage, :change_admin_role] 
   respond_to :html, :json
   
   def index
@@ -103,6 +104,17 @@ class MainController < ApplicationController
         format.json { render :json =>{message: message}}
     end 
     
+  end
+
+  def search_by_name
+    @search = URI.unescape(params[:name])
+    @participants = Participant.search_by_name(params[:name])
+  end
+
+  def search_by_card
+    # Here is where we should apply Jeff's magic formula for MI driver license
+    @search = URI.unescape(params[:card])
+    @participants = Participant.search_by_card(params[:card])
   end
 
 end

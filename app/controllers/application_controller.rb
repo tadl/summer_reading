@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :authenticate_user!
   helper_method :check_for_admin
+  helper_method :check_for_approved
   private
   def current_user
     @current_user ||= Admin.find(session[:user_id]) if session[:user_id]
@@ -20,6 +21,13 @@ class ApplicationController < ActionController::Base
     super_users = ENV["super_users"].split(',')
 
     if super_users.include? @current_user.email
+      return true
+    end
+  end
+
+  def check_for_approved
+    super_users = ENV["super_users"].split(',')
+    if current_user.role == 'approved'
       return true
     end
   end
