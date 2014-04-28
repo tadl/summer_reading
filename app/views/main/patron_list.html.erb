@@ -43,13 +43,13 @@
         <%= participant.awards.count %>
         </td>
         <td>
-        <select name="<%= participant.id %>_form">
+        <select id="award_form_<%= participant.id %>">
             <option value="">Select Experience</option>
           <% participant.unearned_experiences.each do |e| %>
-            <option value="<%= e.id %>"><%= e.name %></option>
+            <option value="<%= e.id %>"><%= e.name %></option>            
           <% end %>
-
         </select>
+        <a onclick="award_experience('<%= participant.id %>')">Award</a>
         </td> 
 
       </tr>

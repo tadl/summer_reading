@@ -19,6 +19,23 @@ function change_role(role, id){
   }); 
 }
 
+function award_experience(participant_id){
+  var target_div = '#award_form_' + participant_id
+  var experience_id = $(target_div).val();
+  if (experience_id == ""){
+    alert("select a reward")
+    return
+  }else{
+    var url = '/main/award_patron.json?participant=' + participant_id + '&experience=' + experience_id
+    $.get(url, function(data){
+      console.log('award_sent')
+    }).done(function(){
+      location.reload();
+    }).fail(function(){
+      alert('Something is borked! Try again later.')
+    });
+  }
+}
 
 function register(){
   var first_name = $("#first_name").val();
