@@ -30,6 +30,7 @@ gem 'dotenv-rails', :groups => [:development, :test]
 
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
+gem 'pg_search'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
