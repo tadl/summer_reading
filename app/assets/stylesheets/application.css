@@ -11,5 +11,118 @@
  * file per style scope.
  *
  *= require_tree .
+ *= require font-awesome
  *= require_self
  */
+
+ html body {
+ 	margin: 0;
+ 	padding: 0;
+ 	font-family: 'Lato', 'sans-serif';
+ 	font-size: 16px;
+
+ }
+
+html body a{
+ 	text-decoration: none;
+
+ }
+
+
+ #top_bar{
+ 	background-color: #11b872;
+ 	color: #fff;
+ 	width: 100%;
+ 	height: 35px;
+ 	top: 0;
+ 	margin: 0;
+ 	padding: 5px;
+ 	min-width: 950px;
+ 	font-size: 16px;
+ 	position: fixed;
+ 	z-index: 998;
+ }
+
+ #search_div{
+ 	margin-left: 20px;
+ 	margin-top: 5px;
+ 	float: left;	
+ }
+
+ #search_div a{
+ 	color: #000;
+ 	background-color: #fff;
+ 	padding: 3px;
+ 	margin-right: 10px;
+ }
+
+  #search_div a:hover{
+ 	color: #000;
+ 	font-weight: bold;
+ 	padding: 3px;
+ }
+
+ #login_div{
+ 	margin-top: 5px;
+ 	float: right;
+ 	margin-right: 20px;
+ }
+
+#home_div{
+	margin-top: 5px;
+	float: left;
+	margin-left: 10px;
+	font-weight: bold; 
+}
+
+#home_div a {
+	color: #fff
+
+} 
+
+#content{
+	margin-top: 50px;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	max-width: 1200px;
+	min-width: 940px;
+}
+
+#content h2 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#content h3 {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+
+
+
+ .clear_div{
+ 	clear: both;
+ }
+.patron_card{
+	margin-bottom: 5px;
+	margin-top: 5px;
+	border-bottom: 1px dashed #11b872;
+}
+
+.patron_card p {
+	margin-bottom: 5px;
+	margin-top: 5px;
+	
+}
+.patron_badge {
+	float: left;
+	width: 175px;
+	margin-left: 10px; 
+	margin-right: 10px;
+}
+
+
+
+

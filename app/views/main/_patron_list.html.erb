@@ -1,64 +1,45 @@
 
 
 <% if @participants.count(:all) != 0  %>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Library card</th>
-      <th>Email</th>
-      <th>Zip code</th>
-      <th>Home library</th>
-      <th>School</th>
-      <th>Grade</th>
-      <th>Age</th>
-      <th>Club</th>
-      <th>Experiences</th>
-      <th>Experience Count</th>
-      <th>Award New Experience</th>
-    </tr>
-  </thead>
+
 
   <tbody>
     <% @participants.each do |participant| %>
-      <tr>
-        <td><%= participant.id %></td>
-        <td><%= participant.first_name %></td>
-        <td><%= participant.last_name %></td>
-        <td><%= participant.library_card %></td>
-        <td><%= participant.email %></td>
-        <td><%= participant.zip_code %></td>
-        <td><%= participant.home_library %></td>
-        <td><%= participant.school %></td>
-        <td><%= participant.grade %></td>
-        <td><%= participant.age %></td>
-        <td><%= participant.club %></td>
-        <td>
+      <div id="patron_<%= participant.id %>"class="patron_card">  
+        
+        <h3> <%= participant.first_name %> <%= participant.last_name %> </h3> 
+         <p> 
+           Age: <%= participant.age %>, Club: <%= participant.club %>, Experience Count: <%= participant.awards.count %>   
+        </p>
+        <p>
+         Experiences: </br>
           <% participant.awards.each do |a| %>
-             <%= a.experience.name %>    
+            <div class="patron_badge">
+              <i class="fa fa-trophy fa-5x" style="color: #<%= "%06x" % (rand * 0xffffff) %>"></i><br>
+              <%= a.experience.name %>
+            </div>     
           <% end %>
-        </td>
-        <td>
-        <%= participant.awards.count %>
-        </td>
-        <td>
-        <select id="award_form_<%= participant.id %>">
+            <div class="clear_div"></div>
+           <br>
+          <select id="award_form_<%= participant.id %>">
             <option value="">Select Experience</option>
           <% participant.unearned_experiences.each do |e| %>
             <option value="<%= e.id %>"><%= e.name %></option>            
           <% end %>
-        </select>
-        <a onclick="award_experience('<%= participant.id %>')">Award</a>
-        </td> 
-
-      </tr>
+          </select>
+          <a onclick="award_experience('<%= participant.id %>')">Award</a>
+        </p>
+        <p style="display: none;"> 
+          <td><%= participant.library_card %></td>
+          <td><%= participant.email %></td>
+          <td><%= participant.zip_code %></td>
+          <td><%= participant.home_library %></td>
+          <td><%= participant.school %></td>
+          <td><%= participant.grade %></td>
+        </p>
+      </div>
     <% end %>
-  </tbody>
-</table>
 
-<br>
 <%else%>
   <p> No patrons found </p>
  <% end %> 

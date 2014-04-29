@@ -3,20 +3,33 @@
 <head>
   <title>Summer Reading</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
 <div id="top_bar">
-<% if current_user %>
-	<% if check_for_approved %>
-		Search by Name: <input type="text" id="search_by_name">
-		<a onclick="search_by_name()">GO</a>
-		Search by Card #: <input type="text" id="search_by_card">
-		<a onclick="search_by_card()">GO</a>
-	<% end %>
-<% end %>		
+	<div id="home_div">
+		<a href="/main/index">
+			<i class="fa fa-home fa-lg"></i> Summer-Reading
+		</a>
+	</div>
+	<% if current_user %>
+		<% if check_for_approved %>
+			<div id="search_div">			
+				Name: <input type="text" id="search_by_name">
+				<a onclick="search_by_name()">GO</a>
+				Card #: <input type="text" id="search_by_card">
+				<a onclick="search_by_card()">GO</a>
+			</div>
+		<% end %>
+		<div id="login_div">
+			<strong><%= current_user.name %></strong>
+    		<%= link_to "logout", signout_path, id: "sign_out" %>
+		</div>	
+	<% end %>	
+	<div style="clear_div"></div>			
 </div>
 
 <div id="content">
