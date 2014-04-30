@@ -1,3 +1,22 @@
+var load_functions;
+load_functions = function() {
+  $("#search_by_name").keydown(function(event){
+    if(event.keyCode == 13){
+      search_by_name();        
+    }
+  });
+  $("#search_by_card").keydown(function(event){
+    if(event.keyCode == 13){
+      search_by_card();        
+    }
+  });
+};
+
+$(document).ready(load_functions);
+$(document).on('page:load', load_functions);
+
+
+
 function change_role(role, id){
   if (role == "approved"){
     var appended_div = "#approved_users"
@@ -72,7 +91,7 @@ function search_by_name(){
  var clean_name = encodeURIComponent(name);  
   if (name){
     var url = '/main/search_by_name?name=' + clean_name
-    window.open(url,"_self")
+    Turbolinks.visit(url)
      }else{
     alert("enter a name!");  
      }     
@@ -83,11 +102,16 @@ function search_by_card(){
  var clean_card = encodeURIComponent(card);  
   if (card){
     var url = '/main/search_by_card?card=' + clean_card
-    window.open(url,"_self")
+    Turbolinks.visit(url)
      }else{
     alert("enter a card# !");  
      }     
 }
+
+
+
+
+
 
 
 

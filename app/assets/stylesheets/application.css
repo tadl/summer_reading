@@ -37,7 +37,6 @@ html body a{
  	top: 0;
  	margin: 0;
  	padding: 5px;
- 	min-width: 950px;
  	font-size: 16px;
  	position: fixed;
  	z-index: 998;
@@ -46,7 +45,8 @@ html body a{
  #search_div{
  	margin-left: 20px;
  	margin-top: 5px;
- 	float: left;	
+ 	float: left;
+ 	font-weight: bold;	
  }
 
  #search_div a{
@@ -54,6 +54,7 @@ html body a{
  	background-color: #fff;
  	padding: 3px;
  	margin-right: 10px;
+ 	font-weight: normal;
  }
 
   #search_div a:hover{
@@ -87,7 +88,6 @@ html body a{
 	margin-right: auto;
 	width: 100%;
 	max-width: 1200px;
-	min-width: 940px;
 }
 
 #content h2 {
