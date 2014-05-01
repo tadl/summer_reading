@@ -10,6 +10,13 @@
 <body>
 
 <div id="top_bar">
+	<% if current_user && check_for_approved %>
+		<div id="menu_button_div">
+			<a onclick="toggle_menu()">
+				<i class="fa fa-bars fa-lg"></i> 
+			</a>
+		</div>
+	<% end %>
 	<div id="home_div">
 		<a href="/main/index">
 			<i class="fa fa-home fa-lg"></i> Summer-Reading
@@ -18,9 +25,9 @@
 	<% if current_user %>
 		<% if check_for_approved %>
 			<div id="search_div">			
-				Name: <input type="text" id="search_by_name">
+				<input type="text" id="search_by_name" placeholder="Search by Name" >
 				<a onclick="search_by_name()">GO</a>
-				Card #: <input type="text" id="search_by_card">
+				<input type="text" id="search_by_card" placeholder="Search by Card #">
 				<a onclick="search_by_card()">GO</a>
 			</div>
 		<% end %>
@@ -28,9 +35,30 @@
 			<strong><%= current_user.name %></strong>
     		<%= link_to "logout", signout_path, id: "sign_out" %>
 		</div>	
+	<% else %>
+		<div id="login_div">
+			<%= link_to "Staff Login", "/auth/google_oauth2", id: "sign_in" %>
+		</div>
 	<% end %>	
 	<div style="clear_div"></div>			
 </div>
+
+<div id="menu_widget">
+  <% if current_user %>
+    <a href="/main/admin_manage">Staff Users</a><br />
+    <% if check_for_approved %>
+      <a href="/main/patron_list">Registered Patrons</a><br />
+      <a href="/main/experience_list">Experience List</a><br />
+    <% else %>
+      <span>Your account is pending approval. Please check back soon </span>
+    <% end %>
+  <% else %>
+    
+  <% end %>
+  	<a href="/main/sign_up">Patron Sign-up</a>
+</div>
+
+
 
 <div id="content">
 	<%= yield %>
