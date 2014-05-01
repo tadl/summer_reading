@@ -10,6 +10,15 @@ load_functions = function() {
       search_by_card();        
     }
   });
+
+  $("html").click(function(){
+    $("#menu_widget").hide();
+  });
+
+  $("#menu_button_div").click(function(e){
+    e.stopPropagation();
+  });
+
 };
 
 $(document).ready(load_functions);
@@ -18,8 +27,6 @@ $(document).on('page:load', load_functions);
 function toggle_menu(){
   $( "#menu_widget" ).toggle()
 }
-
-
 
 
 function change_role(role, id){
