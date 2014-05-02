@@ -122,12 +122,28 @@ a:hover {
 
 } 
 
+#message_div{
+	background-color: #fff;
+	opacity: .9;
+	border: 2px solid #11b872;
+	text-align:center;
+	width: 75%;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 5px;
+
+}
+
+#message_div h3{
+	display: inline;
+	}
+
 #content{
 	margin-top: 50px;
 	padding: 10px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 100%;
+	width: 95%;
 	max-width: 1200px;
 	background-color: #fff;
 	display: block;
@@ -142,6 +158,75 @@ a:hover {
 	margin-bottom: 5px;
 }
 
+#register_buttons{
+	background-color:rgba(255, 255, 255, 0.8);
+	width: 600px;
+	height: 170px;
+	position:absolute;
+	margin: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#register_buttons ul{
+	padding: 0;
+	list-style: none;
+	position: absolute;
+	bottom: 5px;
+	text-align: center;
+	width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#register_buttons li{
+	margin: 10px;
+	display: inline-block;
+}
+
+
+
+.register_button {
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 30px;
+  background: #3498db;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.register_button:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+.age_requirement_text{
+	font-size: 14px;
+	margin: 0;
+	padding: 0;
+}
+
+.group_name{
+	margin: 0;
+	padding: 0;
+}
+
+.registration_box_title{
+	margin-top: 15px; 
+	font-size: 30px;
+	text-align: center;
+	position: relative;
+	top: 15px;
+}
 
 
 
@@ -161,9 +246,8 @@ a:hover {
 }
 .patron_badge {
 	float: left;
-	width: 175px;
-	margin-left: 10px; 
-	margin-right: 10px;
+	width: 20%;
+	margin: 10px; 
 }
 
 

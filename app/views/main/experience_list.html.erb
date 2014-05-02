@@ -1,25 +1,19 @@
-<h1>Listing experiences</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @experiences.each do |experience| %>
-      <tr>
-        <td><%= experience.name %></td>
-        <td><%= experience.description %></td>
-        <td><%= link_to 'Edit', edit_experience_path(experience) %></td>
-      </tr>
+<h1>Experiences</h1>
+  
+  <% @experiences.each_slice(4) do |slice| %>
+    <% slice.each do |experience|%>
+      <div class="patron_badge">
+        <i class="fa fa-trophy fa-5x" style="color: #<%= "%06x" % (rand * 0xffffff) %>"></i>
+        <br>
+        <%= experience.name %>
+        <br>
+        <%= experience.description %> - <%= link_to 'edit', edit_experience_path(experience) %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+    <div class="clear_div"></div>     
+  <% end %>
 
-<br>
+
+
 
 

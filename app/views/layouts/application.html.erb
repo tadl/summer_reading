@@ -31,13 +31,13 @@
 				<a onclick="search_by_card()">GO</a>
 			</div>
 		<% end %>
-		<div id="login_div">
+		<div id="login_div" data-no-turbolink>
 			<strong><%= current_user.name %></strong>
     		<%= link_to "logout", signout_path, id: "sign_out" %>
 		</div>	
 	<% else %>
-		<div id="login_div">
-			<%= link_to "Staff Login", "/auth/google_oauth2", id: "sign_in" %>
+		<div id="login_div" data-no-turbolink>
+			<%= link_to "Staff Login", "/auth/google_oauth2", id: "sign_in", protocol: 'https' %>
 		</div>
 	<% end %>	
 	<div style="clear_div"></div>			

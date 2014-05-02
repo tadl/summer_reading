@@ -17,12 +17,53 @@ body{
 }
 
 </style>
- 
 
- <% if current_user %>
-  <% if !check_for_approved %>
-      <hi>Your account is pending approval. Please check back soon </h1>
-  <% end %>
-<% else %>
+<% if current_user && !check_for_approved  %>
+	<div id="message_div">
+		<h3>Your account is pending approval. Please check back soon </h3>
+	</div>
+<% end %>   
+
+<% if flash[:alert] %>
+	<div id="message_div">
+		<%= flash[:alert] %>
+	</div>
 <% end %>
-    
+
+<div id="register_buttons">
+	<h2 class="registration_box_title">Register for Summer Reading:</h2>
+	<ul>
+		<li>
+			<a href="/main/sign_up">
+			<div class="register_button">
+				<div class="group_name">Babies</div> 
+				<div class="age_requirement_text">4-12 years</div>
+			</div>
+			</a>
+		</li>
+		<li>
+			<a href="/main/sign_up">
+			<div class="register_button">
+				<div class="group_name">Youth</div> 
+				<div class="age_requirement_text">4-12 years</div>
+			</div>
+			</a>
+		</li>
+		<li>
+			<a href="/main/sign_up">
+			<div class="register_button">
+				<div class="group_name">Teen</div> 
+				<div class="age_requirement_text">13-19 years</div>
+			</div>
+			</a>
+		</li>
+		<li>
+			<a href="/main/sign_up">
+			<div class="register_button">
+				<div class="group_name">Adult</div> 
+				<div class="age_requirement_text">+18 years</div>
+			</div>
+			</a>
+		</li>
+	</ul>
+</div>

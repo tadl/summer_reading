@@ -28,7 +28,7 @@ gem 'spring',        group: :development
 gem 'rails_12factor', group: :production
 gem 'dotenv-rails', :groups => [:development, :test]
 
-gem 'omniauth'
+gem 'omniauth-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'pg_search'
 gem 'font-awesome-sass'
