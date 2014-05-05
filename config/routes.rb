@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   root 'main#index'
   get "main/index"
   get "main/admin_manage"
-  get "main/sign_up"
+  match "main/sign_up/:group", to: "main#sign_up", via: [:get, :post]
   get "main/register"
   get "main/change_admin_role"
   get "main/patron_list"

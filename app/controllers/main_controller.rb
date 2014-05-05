@@ -28,7 +28,23 @@ class MainController < ApplicationController
   end
 
   def sign_up
-    
+    group = params[:group]
+    if group == "baby" 
+      @group_name = "Baby"
+      @group_variable = params[:group]
+    elsif group == "youth"
+      @group_name = "Youth"
+      @group_variable = params[:group]
+    elsif group == "teen"
+      @group_name = "Teen"
+      @group_variable = params[:group]
+    elsif group == "adult"
+      @group_name = "Adult"
+      @group_variable = params[:group]
+    else
+      alert_msg = "Something went wrong! Please try again."
+      redirect_to :root, :flash => {:alert => alert_msg }      
+    end
   end
 
   def register
