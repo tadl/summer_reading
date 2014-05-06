@@ -91,7 +91,8 @@ class MainController < ApplicationController
   end
 
   def patron_list
-    @participants = Participant.all
+    participants_count = Participant.count
+    @participants = Participant.all.paginate(:page => params[:page], :per_page => 5)
   end
 
   def experience_list

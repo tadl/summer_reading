@@ -32,6 +32,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'pg_search'
 gem 'font-awesome-sass'
+gem 'will_paginate'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

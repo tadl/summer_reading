@@ -1,7 +1,7 @@
 
 
-<% if @participants.count(:all) != 0  %>
-
+<% if @participants_count != 0  %>
+<%= will_paginate @participants %>
 
   <tbody>
     <% @participants.each do |participant| %>
@@ -42,6 +42,6 @@
 
 <%else%>
   <p> No patrons found </p>
- <% end %> 
+<% end %> 
 
 
