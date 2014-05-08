@@ -17,4 +17,9 @@ class Participant < ActiveRecord::Base
 			unearned_experiences = Experience.order('name ASC').where("id not in(?)", experience_array)
 		end
 	end
+
+	def age
+		now = Time.now.utc.to_date
+  		now.year - self.birth_date.year - ((now.month > self.birth_date.month || (now.month == self.birth_date.month && now.day >= self.birth_date.day)) ? 0 : 1)
+	end
 end

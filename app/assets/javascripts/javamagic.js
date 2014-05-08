@@ -71,7 +71,7 @@ function award_experience(participant_id){
 function register(group){
   var first_name = $("#first_name").val();
   var last_name = $("#last_name").val();
-  var age = $("#age").val();
+  var birth_date = $("#birth_date").val();
   var grade = $("#grade").val();
   var school = $("#school").val();
   var zip_code = $("#zip_code").val();
@@ -82,11 +82,11 @@ function register(group){
   var message_div = "#messages"
 
   if (group == 'teen' || group == 'youth'){
-    if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || grade.length == "0" || school.length == "0" || zip_code.length == "0" || home_library.length == "0") {
+    if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || grade.length == "0" || school.length == "0" || zip_code.length == "0" || home_library.length == "0") {
     alert("missing required feilds")
     }else{
       base_url = '/main/register.json'
-      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
       full_url = base_url + parameters;
       $.get(full_url, function(data){
         console.log('registration sent');
@@ -97,11 +97,11 @@ function register(group){
       });
     }
   }else{
-    if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || zip_code.length == "0" || home_library.length == "0") {
+    if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || zip_code.length == "0" || home_library.length == "0") {
     alert("missing required feilds")
     }else{
       base_url = '/main/register.json'
-      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
       full_url = base_url + parameters;
       $.get(full_url, function(data){
         console.log('registration sent');

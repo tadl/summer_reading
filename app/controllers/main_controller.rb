@@ -50,7 +50,7 @@ class MainController < ApplicationController
   def register
     first_name = CGI.unescapeHTML(params[:first_name])
     last_name = CGI.unescapeHTML(params[:last_name])
-    age = CGI.unescapeHTML(params[:age])
+    birth_date = CGI.unescapeHTML(params[:birth_date])
     grade = CGI.unescapeHTML(params[:grade])
     school = CGI.unescapeHTML(params[:school])
     zip_code = CGI.unescapeHTML(params[:zip_code])
@@ -68,7 +68,7 @@ class MainController < ApplicationController
       p = Participant.new
       p.first_name = first_name
       p.last_name = last_name
-      p.age = age
+      p.birth_date = birth_date
       p.grade = grade
       p.school = school
       p.zip_code = zip_code

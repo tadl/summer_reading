@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140424183653) do
+ActiveRecord::Schema.define(version: 20140508214725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,10 +54,12 @@ ActiveRecord::Schema.define(version: 20140424183653) do
     t.string   "home_library"
     t.string   "school"
     t.string   "grade"
-    t.integer  "age"
     t.string   "club"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "birth_date",      default: '2011-01-01'
+    t.boolean  "got_reading_kit", default: false
+    t.boolean  "got_final_prize", default: false
   end
 
 end
