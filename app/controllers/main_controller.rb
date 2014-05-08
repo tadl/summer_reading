@@ -92,7 +92,7 @@ class MainController < ApplicationController
 
   def patron_list
     participants_count = Participant.count
-    @participants = Participant.all.paginate(:page => params[:page], :per_page => 5)
+    @participants = Participant.all.order(:id).page params[:page]
   end
 
   def experience_list
@@ -125,13 +125,13 @@ class MainController < ApplicationController
 
   def search_by_name
     @search = URI.unescape(params[:name])
-    @participants = Participant.search_by_name(params[:name])
+    @participants = Participant.search_by_name(params[:name]).page params[:page]
   end
 
   def search_by_card
     # Here is where we should apply Jeff's magic formula for MI driver license
     @search = URI.unescape(params[:card])
-    @participants = Participant.search_by_card(params[:card])
+    get_all_participants = Participant.search_by_card(params[:card]).page params[:page]
   end
 
 end

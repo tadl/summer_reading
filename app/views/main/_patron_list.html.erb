@@ -1,7 +1,8 @@
 
 
 <% if @participants_count != 0  %>
-<%= will_paginate @participants %>
+
+<%= paginate @participants %>
 
   <tbody>
     <% @participants.each do |participant| %>
