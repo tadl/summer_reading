@@ -28,12 +28,9 @@
 	Home Library: 
 	<select  id="home_library">
 		<option disabled="disabled" selected="selected">Select a Location</option>
-  		<option value="Woodmere">Woodmere</option>
-  		<option value="Kingsley">Kingsley</option>
-  		<option value="Interlochen">Interlochen</option>
-  		<option value="East Bay">East Bay</option>
-  		<option value="Peninsula">Peninsula</option>
-  		<option value="Fife Lake">Fife Lake</option>
+		<% @libraries.each do |library| %>
+  			<option value="<%= library %>"><%= library %></option>
+  		<% end %>
 	</select>
 
 	<br> 

@@ -108,7 +108,7 @@ function register(group){
         $.get(full_url, function(data){
           console.log('registration sent');
         }).done(function() {
-          $(message_div).html('<h3>Succes</h3>');   
+          $(message_div).html("<h3>Congratulations, you've successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event click here.</h3>");   
         }).fail(function() {
           $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
         });
@@ -119,7 +119,7 @@ function register(group){
     alert("missing required feilds")
     }else{
       if ((group == 'teen' && patron_age > '19') || (group == 'teen' && patron_age < '13') || (group == 'youth' && patron_age > '12') || (group == 'youth' && patron_age < '4') || (group == 'adult' && patron_age < '18') || (group == 'baby' && patron_age > '3')){
-        $(message_div).html('<h3>It looks like you are '+ patron_age +' years old. That means you are too old or too young for this reading group, please register for another.</h3>');
+        $(message_div).html('<h3>It looks like you are '+ patron_age +' year(s) old. That means you are too old or too young for the '+ group +' summer reading group, <a href="/main/index">please register for another</a>.</h3>');
       }else{  
         base_url = '/main/register.json'
         parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
@@ -127,7 +127,7 @@ function register(group){
         $.get(full_url, function(data){
           console.log('registration sent');
         }).done(function() {
-          $(message_div).html('<h3>Succes</h3>');   
+          $(message_div).html("<h3>Congratulations, you've successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event click here.</h3>");   
         }).fail(function() {
           $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
         });
