@@ -68,6 +68,19 @@ function award_experience(participant_id){
   }
 }
 
+function calculateAge(birthday) { // birthday is a date
+    var birth_date = parseDate(birthday);
+    var ageDifMs = Date.now() - birth_date.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+function parseDate(input) {
+  var parts = input.match(/(\d+)/g);
+  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+  return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+}
+
 function register(group){
   var first_name = $("#first_name").val();
   var last_name = $("#last_name").val();
@@ -80,40 +93,47 @@ function register(group){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
-
+  var patron_age = calculateAge(birth_date);
   if (group == 'teen' || group == 'youth'){
     if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || grade.length == "0" || school.length == "0" || zip_code.length == "0" || home_library.length == "0") {
     alert("missing required feilds")
     }else{
-      base_url = '/main/register.json'
-      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
-      full_url = base_url + parameters;
-      $.get(full_url, function(data){
-        console.log('registration sent');
-      }).done(function() {
-        $(message_div).html('<h3>Succes</h3>');   
-      }).fail(function() {
-        $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
-      });
+      if ((group == 'teen' && patron_age > '19') || (group == 'teen' && patron_age < '13') || (group == 'youth' && patron_age > '12') || (group == 'youth' && patron_age < '4') || (group == 'adult' && patron_age < '18') || (group == 'baby' && patron_age > '3')){
+       
+        $(message_div).html('<h3>It looks like you are '+ patron_age +' years old. That means you are too old or too young for this reading group, please register for another.</h3>');
+      }else{  
+        base_url = '/main/register.json'
+        parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+        full_url = base_url + parameters;
+        $.get(full_url, function(data){
+          console.log('registration sent');
+        }).done(function() {
+          $(message_div).html('<h3>Succes</h3>');   
+        }).fail(function() {
+          $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
+        });
+      }
     }
   }else{
     if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || zip_code.length == "0" || home_library.length == "0") {
     alert("missing required feilds")
     }else{
-      base_url = '/main/register.json'
-      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
-      full_url = base_url + parameters;
-      $.get(full_url, function(data){
-        console.log('registration sent');
-      }).done(function() {
-        $(message_div).html('<h3>Succes</h3>');   
-      }).fail(function() {
-        $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
-      });
+      if ((group == 'teen' && patron_age > '19') || (group == 'teen' && patron_age < '13') || (group == 'youth' && patron_age > '12') || (group == 'youth' && patron_age < '4') || (group == 'adult' && patron_age < '18') || (group == 'baby' && patron_age > '3')){
+        $(message_div).html('<h3>It looks like you are '+ patron_age +' years old. That means you are too old or too young for this reading group, please register for another.</h3>');
+      }else{  
+        base_url = '/main/register.json'
+        parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&birth_date=' + encodeURIComponent(birth_date) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+        full_url = base_url + parameters;
+        $.get(full_url, function(data){
+          console.log('registration sent');
+        }).done(function() {
+          $(message_div).html('<h3>Succes</h3>');   
+        }).fail(function() {
+          $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
+        });
+      }
     }
   }
-
-  
 }
 
 function search_by_name(){
@@ -137,6 +157,9 @@ function search_by_card(){
     alert("enter a card# !");  
      }     
 }
+
+
+
 
 
 

@@ -4,12 +4,39 @@
 <form>
 	First Name: <input type="text" id="first_name"> Last Name: <input type="text" id="last_name"><br>
 	Birthday: <input type="date" id="birth_date"><br>
-	<% if @group_variable == 'youth' || @group_variable == 'teen' %>
-		Grade (in Fall): <input type="text" id="grade"><br>
-		School: <input type="text" id="school"><br>
-	<% end %>	
+	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
+		Grade (in Fall): 
+		<select  id="grade">
+			<option disabled="disabled" selected="selected">Select Your Grade</option>
+				<% @grades.each do |grade| %>
+					<option value="<%= grade %>"><%= grade %></option>
+				<% end %>	
+		</select>
+		<br>
+		School:
+		<select  id="school">
+			<option disabled="disabled" selected="selected">Select Your School</option>
+				<% @schools.each do |school| %>
+					<option value="<%= school %>"><%= school %></option>
+				<% end %>	
+		</select>
+		<br>
+	<% end %>
+	
+
 	Home Zip Code: <input type="number" id="zip_code"><br>
-	Home Library: <input type="text" id="home_library"><br> 
+	Home Library: 
+	<select  id="home_library">
+		<option disabled="disabled" selected="selected">Select a Location</option>
+  		<option value="Woodmere">Woodmere</option>
+  		<option value="Kingsley">Kingsley</option>
+  		<option value="Interlochen">Interlochen</option>
+  		<option value="East Bay">East Bay</option>
+  		<option value="Peninsula">Peninsula</option>
+  		<option value="Fife Lake">Fife Lake</option>
+	</select>
+
+	<br> 
 	Email (optional): <input type="email" id="email"><br>
 	Library Card # (optional): <input type="number" id="library_card">
 </form>

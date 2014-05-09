@@ -1,8 +1,21 @@
 class MainController < ApplicationController
+  before_filter :shared_variables
   before_action :authenticate_user!, :except => [:index, :sign_up, :register]
   before_action :check_for_approved, :except => [:index, :sign_up, :register, :admin_manage, :change_admin_role] 
   respond_to :html, :json
   
+  def shared_variables
+    @teen_schools = ['Central High School', 'TBA Career Tech Center', 'Kitchi Minogining Tribal School', 'Northwest Michigan House of Hope','Pathfinder School','St. Elizabeth Ann Seton Middle School', 'St. Francis High School', 'Traverse City Christian School', 'Traverse Bay Mennonite School', 'Traverse City College Preparatory Academy','Traverse City High School','Traverse City Seventh-Day Advent','West Middle School','West Senior High','Forest Area Middle School','Forest Area High School', 'Kingsley Area Middle School', 'Kingsley Area High School', "St. Mary's of Hannah", 'Greenspire School', 'Woodland School', 'New Campus', 'Grand Traverse Academy', 'Other', 'Home School',]
+    
+    @teen_grades = [5,6,8,9,10,11,12, 'College', 'None']
+
+
+    @youth_schools = ['Blair','Central Grade School','Central Tag','Cherry Knoll','Courtade Elementary','Eastern','Holy Angels','Immaculate Conception Elementary','Long Lake','Northwest Michigan House of Hope','Old Mission Peninsula','Pathfinder School','Silver Lake','St. Elizabeth Ann Seton Middle School','Oak Park', 'TBA SE Early Childhood','TCAPS Montessori Schoool',"The Children's House",'Traverse Bay Christian School', 'Traverse Bay Mennonite School', 'Traverse City Seventh-Day Advent', 'Traverse Heights Elementary School','Trinity Lutheran','West Middle School','Westwoods','Willow Hill','Woodland School','Fife Lake Elementary','Forest Area Middle School','Interlochen Elementary','Kingsley Area Elementary','Kingsley Area Middle School','Lake Ann Elementary',"St. Mary's of Hannah",'Grand Traverse Academy','Greenspire School', 'New Campus', 'Other', 'Home School',]
+
+    @youth_grades = ['Pre-School','Kindergarten', 1, 2, 3, 4, 5,]
+
+  end
+
   def index
   end
 
@@ -35,9 +48,13 @@ class MainController < ApplicationController
     elsif group == "youth"
       @group_name = "Youth"
       @group_variable = params[:group]
+      @schools = @youth_schools.sort
+      @grades = @youth_grades
     elsif group == "teen"
       @group_name = "Teen"
       @group_variable = params[:group]
+      @schools = @teen_schools.sort
+      @grades = @teen_grades
     elsif group == "adult"
       @group_name = "Adult"
       @group_variable = params[:group]
@@ -133,5 +150,7 @@ class MainController < ApplicationController
     @search = URI.unescape(params[:card])
     get_all_participants = Participant.search_by_card(params[:card]).page params[:page]
   end
+
+
 
 end
