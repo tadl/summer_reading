@@ -232,6 +232,9 @@ a:hover {
 
  .clear_div{
  	clear: both;
+ 	height: 0px;
+ 	margin: 0px;
+ 	padding: 0px;
  }
 .patron_card{
 	margin-bottom: 5px;
@@ -250,6 +253,59 @@ a:hover {
 	margin: 10px; 
 }
 
+#sign_up{
+	background-color:rgba(255, 255, 255, 0.8);
+	width: 80%;
+	max-width: 600px;
+	height: 80%;
+	min-height: 400px;
+	padding: 10px;
+	position:absolute;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	top: 50;
 
+
+}
+
+
+#sign_up_form{
+	margin-top: 10px;
+	font-size: 18px;
+	line-height: 100%;
+}
+
+
+#sign_up_form select{
+
+	font-size: 20px;
+
+
+}
+
+
+.sign_up_form_left{
+	float:left;
+	width: 45%;
+	padding:5px;
+
+}
+.sign_up_form_right{
+	float:left;
+	width: 45%;
+	padding:5px;
+}
+
+.full_width{
+	width: 100%;
+	font-size: 20px;
+}
+
+.half_width{
+	width: 50%;
+	font-size: 20px;
+}
 
 

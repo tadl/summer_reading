@@ -140,6 +140,28 @@ class MainController < ApplicationController
     
   end
 
+  def mark_got_kit
+    participant_id = params[:participant]
+    got_kit = params[:got_kit]
+    p = Participant.find(participant_id)
+    p.update_attributes(:got_reading_kit => got_kit)
+    p.save
+    respond_with do |format|
+      format.json { render :json =>{message: 'complete'}}
+    end 
+  end
+
+  def mark_got_prize
+    participant_id = params[:participant]
+    got_prize = params[:got_prize]
+    p = Participant.find(participant_id)
+    p.update_attributes(:got_final_prize => got_prize)
+    p.save
+    respond_with do |format|
+      format.json { render :json =>{message: 'complete'}}
+    end 
+  end
+
   def search_by_name
     @search = URI.unescape(params[:name])
     @participants = Participant.search_by_name(params[:name]).page params[:page]

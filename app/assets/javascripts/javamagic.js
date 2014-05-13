@@ -19,6 +19,38 @@ load_functions = function() {
     e.stopPropagation();
   });
 
+  $('.got_kit').change(function() {
+     if($(this).is(":checked")) {
+        var participant_id = $(this).val();
+        $(this).attr('disabled', 'disabled');  
+        var got_kit = 'true'
+        base_url = '/main/mark_got_kit.json'
+        parameters = '?participant='+ participant_id + '&got_kit=' + got_kit
+        full_url = base_url + parameters;
+        $.get(full_url, function(data){
+        }).done(function() { 
+        }).fail(function() {
+          alert('Something bad happened. Please try again later...'); 
+        });
+      }
+  });
+
+   $('.got_prize').change(function() {
+     if($(this).is(":checked")) {
+        var participant_id = $(this).val();
+        $(this).attr('disabled', 'disabled');  
+        var got_prize = 'true'
+        base_url = '/main/mark_got_prize.json'
+        parameters = '?participant='+ participant_id + '&got_prize=' + got_prize
+        full_url = base_url + parameters;
+        $.get(full_url, function(data){
+        }).done(function() {
+        }).fail(function() {
+          alert('Something bad happened. Please try again later...'); 
+        });
+      }
+  });
+
 };
 
 $(document).ready(load_functions);
@@ -84,7 +116,11 @@ function parseDate(input) {
 function register(group){
   var first_name = $("#first_name").val();
   var last_name = $("#last_name").val();
-  var birth_date = $("#birth_date").val();
+  
+  var birth_date_month = $("#birth_date__2i").val();
+  var birth_date_year = $("#birth_date__1i").val();
+  var birth_date_day = $("#birth_date__3i").val();
+  var birth_date = birth_date_year+ '/'  +birth_date_month + '/' + birth_date_day;
   var grade = $("#grade").val();
   var school = $("#school").val();
   var zip_code = $("#zip_code").val();
@@ -93,11 +129,12 @@ function register(group){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
-  var patron_age = calculateAge(birth_date);
+  alert(birth_date);
   if (group == 'teen' || group == 'youth'){
-    if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || grade.length == "0" || school.length == "0" || zip_code.length == "0" || home_library.length == "0") {
+    if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || grade == null || grade.length == "0" || school.length == "0" || zip_code.length == "0" || home_library.length == "0") {
     alert("missing required feilds")
     }else{
+      var patron_age = calculateAge(birth_date);
       if ((group == 'teen' && patron_age > '19') || (group == 'teen' && patron_age < '13') || (group == 'youth' && patron_age > '12') || (group == 'youth' && patron_age < '4') || (group == 'adult' && patron_age < '18') || (group == 'baby' && patron_age > '3')){
        
         $(message_div).html('<h3>It looks like you are '+ patron_age +' years old. That means you are too old or too young for this reading group, please register for another.</h3>');
@@ -115,6 +152,7 @@ function register(group){
       }
     }
   }else{
+    var patron_age = calculateAge(birth_date);
     if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || zip_code.length == "0" || home_library.length == "0") {
     alert("missing required feilds")
     }else{

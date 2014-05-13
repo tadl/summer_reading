@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get "main/experience_list"
   get "main/award_list"
   get "main/award_patron"
+  get "main/mark_got_kit"
+  get "main/mark_got_prize"
   get "main/search_by_name"
   get "main/search_by_card"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]

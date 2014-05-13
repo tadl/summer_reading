@@ -1,42 +1,90 @@
-<%= @group_name %>
+<style type="text/css">
+body{
+  background: url("https://s3.amazonaws.com/tcbot/summer_reading_bg1.jpg") center center fixed;
+  background-repeat:no-repeat;
+  background-size:cover;
+}
+
+#content{ background-color: transparent; }
+
+#top_bar{
+  opacity: .9;
+}
+
+#menu_widget{
+  opacity: .9;
+}
+
+</style>
+
+<div id="sign_up">
+<h2><%= @group_name %> Registration</h2>
 
 
-<form>
-	First Name: <input type="text" id="first_name"> Last Name: <input type="text" id="last_name"><br>
-	Birthday: <input type="date" id="birth_date"><br>
+<form id="sign_up_form">
+	
+	<div class="sign_up_form_left">
+		First Name:<br> 
+		<input class="full_width" type="text" id="first_name">
+	</div> 
+	<div class="sign_up_form_right">
+		Last Name: <br>
+		<input class="full_width" type="text" id="last_name"> 
+	</div>
+	<div class="clear_div"></div>
+	<div class="sign_up_form_left">
+		Birthday: <br>
+		<%= date_select('birth_date',"", :start_year => 1910, :end_year => Date.current.year, order: [:month, :day, :year], :class => 'full_width') %>
+	</div>
+	<div class="clear_div"></div>
+
+
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
-		Grade (in Fall): 
+	<div class="sign_up_form_left">
+		Grade (in Fall):<br> 
 		<select  id="grade">
 			<option disabled="disabled" selected="selected">Select Your Grade</option>
 				<% @grades.each do |grade| %>
 					<option value="<%= grade %>"><%= grade %></option>
 				<% end %>	
 		</select>
-		<br>
-		School:
+	</div>	
+	<div class="sign_up_form_right">
+		School: <br>
 		<select  id="school">
 			<option disabled="disabled" selected="selected">Select Your School</option>
 				<% @schools.each do |school| %>
 					<option value="<%= school %>"><%= school %></option>
 				<% end %>	
 		</select>
-		<br>
+	</div>
 	<% end %>
 	
-
-	Home Zip Code: <input type="number" id="zip_code"><br>
-	Home Library: 
-	<select  id="home_library">
-		<option disabled="disabled" selected="selected">Select a Location</option>
-		<% @libraries.each do |library| %>
-  			<option value="<%= library %>"><%= library %></option>
-  		<% end %>
-	</select>
-
-	<br> 
-	Email (optional): <input type="email" id="email"><br>
-	Library Card # (optional): <input type="number" id="library_card">
+	<div class="sign_up_form_left">
+		Home Zip Code:<br> 
+		<input class="half_width" type="number" id="zip_code">
+	</div>
+	<div class="sign_up_form_left">
+		Home Library: <br> 
+		<select  id="home_library">
+			<option disabled="disabled" selected="selected">Select a Location</option>
+			<% @libraries.each do |library| %>
+  				<option value="<%= library %>"><%= library %></option>
+  			<% end %>
+		</select>
+	</div>
+	<div class="clear_div"></div>
+	<div class="sign_up_form_left">
+		Email (optional):<br>
+	 	<input class="full_width" type="email" id="email">
+	</div>
+	<div class="sign_up_form_left">
+		Library Card # (optional):<br>
+		<input class="full_width" type="number" id="library_card">
+	</div>
+	<div class="clear_div"></div>
 </form>
 <button onclick="register('<%= @group_variable %>')">Register</button>
 <div id="messages">
+</div>
 </div>

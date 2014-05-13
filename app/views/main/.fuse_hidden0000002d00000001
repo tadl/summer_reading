@@ -42,7 +42,7 @@
           <% if participant.got_final_prize == false %> 
           <input type="checkbox" class="got_prize" value="<%= participant.id %>">
           <% else %>
-          <input type="checkbox" class="already_got_prize" value="<%= participant.id %>" checked disabled>
+          <input type="checkbox" class="got_prize" value="<%= participant.id %>" checked disabled>
           <% end %>
           Got Award
         </p>
