@@ -15,8 +15,9 @@
         <p>
          Experiences: </br>
           <% participant.awards.each do |a| %>
-            <div class="patron_badge">
-              <i class="fa fa-trophy fa-5x" style="color: #<%= "%06x" % (rand * 0xffffff) %>"></i><br>
+            <div class="patron_badge center">
+              <img src="<%= a.experience.image_url %>" class="award">
+              <br>
               <%= a.experience.name %>
             </div>     
           <% end %>

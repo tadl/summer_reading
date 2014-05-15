@@ -36,9 +36,6 @@ body{
 		Birthday: <br>
 		<%= date_select('birth_date',"", :start_year => 1910, :end_year => Date.current.year, order: [:month, :day, :year], :class => 'full_width') %>
 	</div>
-	<div class="clear_div"></div>
-
-
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_left">
 		Grade (in Fall):<br> 
@@ -48,7 +45,12 @@ body{
 					<option value="<%= grade %>"><%= grade %></option>
 				<% end %>	
 		</select>
-	</div>	
+	</div>
+	<% end %>	
+	<div class="clear_div"></div>
+
+
+	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_right">
 		School: <br>
 		<select  id="school">
@@ -59,7 +61,7 @@ body{
 		</select>
 	</div>
 	<% end %>
-	
+	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Home Zip Code:<br> 
 		<input class="half_width" type="number" id="zip_code">
@@ -84,7 +86,9 @@ body{
 	</div>
 	<div class="clear_div"></div>
 </form>
-<button onclick="register('<%= @group_variable %>')">Register</button>
+<div class="center"> 
+<a class="register_button" onclick="register('<%= @group_variable %>')">Register</a>
+</div>
 <div id="messages">
 </div>
 </div>

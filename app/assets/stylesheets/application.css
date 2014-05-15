@@ -308,4 +308,13 @@ a:hover {
 	font-size: 20px;
 }
 
+.award{
+	height: 150px;
+}
+
+.center{
+	margin-top: 10px;
+	text-align: center;
+}
+
 
