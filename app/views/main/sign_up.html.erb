@@ -15,31 +15,33 @@ body{
   opacity: .9;
 }
 
+
+
 </style>
 
 <div id="sign_up">
 <h2><%= @group_name %> Registration</h2>
 
 
-<form id="sign_up_form">
+<div id="sign_up_form">
 	
 	<div class="sign_up_form_left">
 		First Name:<br> 
-		<input class="full_width" type="text" id="first_name">
+		<input class="full_width required sign_up_element" type="text" id="first_name">
 	</div> 
 	<div class="sign_up_form_right">
 		Last Name: <br>
-		<input class="full_width" type="text" id="last_name"> 
+		<input class="full_width required sign_up_element" type="text" id="last_name"> 
 	</div>
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Birthday: <br>
-		<%= date_select('birth_date',"", :start_year => 1910, :end_year => Date.current.year, order: [:month, :day, :year], :class => 'full_width') %>
+		<%= date_select('birth_date', '', {:start_year => 1910, :end_year => Date.current.year, order: [:month, :day, :year]}, {:class => ' required sign_up_element'}) %>
 	</div>
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_left">
 		Grade (in Fall):<br> 
-		<select  id="grade">
+		<select  id="grade" class="required sign_up_element">
 			<option disabled="disabled" selected="selected">Select Your Grade</option>
 				<% @grades.each do |grade| %>
 					<option value="<%= grade %>"><%= grade %></option>
@@ -53,7 +55,7 @@ body{
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_right">
 		School: <br>
-		<select  id="school">
+		<select  id="school" class="required sign_up_element">
 			<option disabled="disabled" selected="selected">Select Your School</option>
 				<% @schools.each do |school| %>
 					<option value="<%= school %>"><%= school %></option>
@@ -64,11 +66,11 @@ body{
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Home Zip Code:<br> 
-		<input class="half_width" type="number" id="zip_code">
+		<input class="half_width required sign_up_element" type="number" id="zip_code">
 	</div>
 	<div class="sign_up_form_left">
 		Home Library: <br> 
-		<select  id="home_library">
+		<select  id="home_library" class="required sign_up_element">
 			<option disabled="disabled" selected="selected">Select a Location</option>
 			<% @libraries.each do |library| %>
   				<option value="<%= library %>"><%= library %></option>
@@ -78,14 +80,14 @@ body{
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Email (optional):<br>
-	 	<input class="full_width" type="email" id="email">
+	 	<input class="full_width sign_up_element" type="email" id="email">
 	</div>
 	<div class="sign_up_form_left">
 		Library Card # (optional):<br>
-		<input class="full_width" type="number" id="library_card">
+		<input class="full_width sign_up_element" type="number" id="library_card">
 	</div>
 	<div class="clear_div"></div>
-</form>
+</div>
 <div class="center"> 
 <a class="register_button" onclick="register('<%= @group_variable %>')">Register</a>
 </div>

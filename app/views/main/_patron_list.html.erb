@@ -9,8 +9,19 @@
       <div id="patron_<%= participant.id %>"class="patron_card">  
         
         <h3> <%= participant.first_name %> <%= participant.last_name %> </h3> 
-         <p> 
-           Age: <%= participant.age %>, Club: <%= participant.club %>, Experience Count: <%= participant.awards.count %>   
+        <p> 
+           <strong>Age:</strong> <%= participant.age %>, 
+           <strong>Club:</strong> <%= participant.club %>, 
+           <strong>Experience Count:</strong> <%= participant.awards.count %>, 
+        </p>
+        <p>
+          <strong>Home Library:</strong> <%= participant.home_library %>, 
+          <%if  participant.library_card? %>
+            <strong>Library Card:</strong> <%= participant.library_card %>,
+          <% end %>
+          <% if participant.school? && participant.school != 'undefined' %>
+            <strong>School:</strong> <%= participant.school %>
+          <% end %>    
         </p>
         <p>
          Experiences: </br>

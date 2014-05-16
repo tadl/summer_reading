@@ -20,6 +20,7 @@
  	padding: 0;
  	font-family: 'Lato', 'sans-serif';
  	font-size: 16px;
+ 	-webkit-text-size-adjust:none; 
  }
 
 html body a{
@@ -278,12 +279,13 @@ a:hover {
 }
 
 
-#sign_up_form select{
-
-	font-size: 20px;
-
+.sign_up_element{
+	font-size: 18px;
+	border: 1px solid #3aa8f2;
 
 }
+
+
 
 
 .sign_up_form_left{
@@ -315,6 +317,10 @@ a:hover {
 .center{
 	margin-top: 10px;
 	text-align: center;
+}
+
+.highlight{
+	border: 2px solid #ff201a;
 }
 
 

@@ -93,7 +93,7 @@ function award_experience(participant_id){
     $.get(url, function(data){
       console.log('award_sent')
     }).done(function(){
-      location.reload();
+      Turbolinks.visit(document.URl)
     }).fail(function(){
       alert('Something is borked! Try again later.')
     });
@@ -131,7 +131,8 @@ function register(group){
   var message_div = "#messages"
   if (group == 'teen' || group == 'youth'){
     if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || grade == null || grade.length == "0" || school.length == "0" || zip_code.length == "0" || home_library.length == "0") {
-    $(message_div).html('<h3>Missing required feilds</h3>'); 
+      check_fields();
+      $(message_div).html('<h3>Missing required feilds</h3>'); 
     }else{
       var patron_age = calculateAge(birth_date);
       if ((group == 'teen' && patron_age > '19') || (group == 'teen' && patron_age < '13') || (group == 'youth' && patron_age > '12') || (group == 'youth' && patron_age < '4') || (group == 'adult' && patron_age < '18') || (group == 'baby' && patron_age > '3')){
@@ -153,7 +154,8 @@ function register(group){
   }else{
     var patron_age = calculateAge(birth_date);
     if (first_name.length == "0" || last_name.length == "0" || birth_date.length == "0" || zip_code.length == "0" || home_library.length == "0") {
-    alert("missing required feilds")
+      check_fields();
+      $(message_div).html('<h3>Missing required feilds</h3>');
     }else{
       if ((group == 'teen' && patron_age > '19') || (group == 'teen' && patron_age < '13') || (group == 'youth' && patron_age > '12') || (group == 'youth' && patron_age < '4') || (group == 'adult' && patron_age < '18') || (group == 'baby' && patron_age > '3')){
         $(message_div).html('<h3>It looks like you are '+ patron_age +' year(s) old. That means you are too old or too young for the '+ group +' summer reading group, <a href="/main/index">please register for another</a>.</h3>');
@@ -172,6 +174,16 @@ function register(group){
     }
   }
 }
+
+function check_fields(){
+  $('.required').removeClass('highlight');
+  $('.required').each(function(){
+    if ($.trim($(this).val()).length == 0){
+      $(this).addClass('highlight');
+    }
+  })
+}
+
 
 function search_by_name(){
  var name = $('#search_by_name').val();
