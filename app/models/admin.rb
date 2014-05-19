@@ -1,7 +1,7 @@
 class Admin < ActiveRecord::Base
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_initialize.tap do |admin|
-      if auth.extra.raw_info.hd == 'tadl.org' 
+      if auth.extra.raw_info['hd'] == 'tadl.org' 
         admin.provider = auth.provider
         admin.uid = auth.uid
         admin.name = auth.info.name
