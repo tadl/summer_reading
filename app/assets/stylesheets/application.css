@@ -258,8 +258,6 @@ a:hover {
 	background-color:rgba(255, 255, 255, 0.8);
 	width: 80%;
 	max-width: 600px;
-	height: 80%;
-	min-height: 400px;
 	padding: 10px;
 	position:absolute;
 	margin-left: auto;
@@ -271,6 +269,12 @@ a:hover {
 
 }
 
+#messages{
+	margin-top: 20px;
+	font-size: 18px;
+	color: #ff201a;
+}	
+
 
 #sign_up_form{
 	margin-top: 10px;
@@ -280,7 +284,7 @@ a:hover {
 
 
 .sign_up_element{
-	font-size: 18px;
+	font-size: 16px;
 	border: 1px solid #3aa8f2;
 
 }

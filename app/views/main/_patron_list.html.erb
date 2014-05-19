@@ -50,14 +50,16 @@
           <% end %>
           Revieved reading Kit 
         </p>
-        <p>
-          <% if participant.got_final_prize == false %> 
-          <input type="checkbox" class="got_prize" value="<%= participant.id %>">
-          <% else %>
-          <input type="checkbox" class="already_got_prize" value="<%= participant.id %>" checked disabled>
-          <% end %>
-          Got Award
-        </p>
+        <%if participant.awards.count >= 6 %>
+          <p>  
+            <% if participant.got_final_prize == false %> 
+            <input type="checkbox" class="got_prize" value="<%= participant.id %>">
+            <% else %>
+            <input type="checkbox" class="already_got_prize" value="<%= participant.id %>" checked disabled>
+            <% end %>
+            Got Award
+          </p>
+        <% end %>
         <p style=""> 
           <td><%= participant.library_card %></td>
           <td><%= participant.email %></td>
