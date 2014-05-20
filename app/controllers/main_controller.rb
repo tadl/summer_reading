@@ -1,4 +1,6 @@
 class MainController < ApplicationController
+  require 'uri'
+  
   before_filter :shared_variables
   before_action :authenticate_user!, :except => [:index, :sign_up, :register]
   before_action :check_for_approved, :except => [:index, :sign_up, :register, :admin_manage, :change_admin_role] 
@@ -108,8 +110,28 @@ class MainController < ApplicationController
   end
 
   def patron_list
-    participants_count = Participant.count
-    @participants = Participant.all.order(:id).page params[:page]
+
+    home_library = params[:location].try(:titleize)
+    club = params[:group]
+
+    if params[:location] && params[:group]
+      @participants = Participant.where(home_library: home_library, club: club).all.order(:id).page params[:page]
+    end
+    
+    if params[:location] && params[:group].blank?
+      @participants = Participant.where(home_library: home_library).all.order(:id).page params[:page]
+    end
+    
+    if params[:location].blank? && params[:group]
+      @participants = Participant.where(club: club).all.order(:id).page params[:page]
+    end
+    
+
+    if params[:group].blank? && params[:location].blank?
+      @participants = Participant.all.order(:id).page params[:page]
+    end 
+
+    @participant_count = @participants.count 
   end
 
   def experience_list
