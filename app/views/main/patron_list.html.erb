@@ -1,10 +1,13 @@
 <script>
-jQuery(function(){
 
+$(document).ready(set_filters);
+$(document).on('page:load', set_filters);
+
+
+set_filters = function (){
 $('input[name="club"][value="<%= @club_filter %>"]').attr('checked', 'checked');
 $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'checked');
-
-})
+}
 </script>
 
 <h2>All Patrons</h2>
