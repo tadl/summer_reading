@@ -94,6 +94,7 @@ class MainController < ApplicationController
       p.home_library = home_library
       p.club = club
       p.email = email
+      # TODO: normalize library_card before saving by passing through _normalize_card?
       p.library_card = library_card 
       p.save
     end
@@ -112,7 +113,20 @@ class MainController < ApplicationController
   def patron_list
 
     home_library = params[:location].try(:titleize)
-    club = params[:group]
+    library = params[:location]
+ 
+
+    if params[:group]
+      club = params[:group]
+    else
+      club = 'all'
+    end
+
+    if params[:location]
+      library = params[:location]
+    else
+      library = 'all'
+    end
 
     if params[:location] && params[:group]
       @participants = Participant.where(home_library: home_library, club: club).all.order(:id).page params[:page]
@@ -130,7 +144,8 @@ class MainController < ApplicationController
     if params[:group].blank? && params[:location].blank?
       @participants = Participant.all.order(:id).page params[:page]
     end 
-
+    @club_filter = club
+    @location_filter = library
     @participant_count = @participants.count 
   end
 
@@ -190,11 +205,35 @@ class MainController < ApplicationController
   end
 
   def search_by_card
-    # Here is where we should apply Jeff's magic formula for MI driver license
+    # TODO: normalize card value before searching by passing through _normalize_card?
     @search = URI.unescape(params[:card])
     get_all_participants = Participant.search_by_card(params[:card]).page params[:page]
   end
 
+  def _normalize_card(card_value)
+    # It is entirely possible that this method belongs somewhere else,
+    # with regard to where things "should" go in a Ruby on Rails app
+
+    # accept a value as input which represents a library card number
+    # since the value may be supplied by a barcode scanner, we should attempt to
+    # normalize the value by lowercasing it, stripping trailing characters, etc
+
+    # Strip any whitespace
+    card_value.gsub!(/\s+/, '')
+
+    # Lowercase entire value
+    card_value.downcase!
+
+    # Strip trailing digits if this looks like a scanned drivers license or ID
+    if (card_value.length == 27 or card_value.length == 25)
+      card_value = card_value[0,13].downcase
+    else
+      if (card_value.length == 23) # Older format State ID cards
+        card_value = card_value[0,12].downcase
+      end
+    end
+     return card_value
+  end
 
 
 end

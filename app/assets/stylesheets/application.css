@@ -327,4 +327,24 @@ a:hover {
 	border: 2px solid #ff201a;
 }
 
+#filter_bar{
+	border-bottom: 1px dashed #11b872;
+}
+
+#filter_bar ul{
+	padding: 5px;
+	list-style: none;
+	margin: 5px;
+}
+
+
+
+
+#filter_bar li{
+	display: inline-block;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+
 

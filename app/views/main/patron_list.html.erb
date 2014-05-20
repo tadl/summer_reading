@@ -1,2 +1,63 @@
+<script>
+jQuery(function(){
+
+$('input[name="club"][value="<%= @club_filter %>"]').attr('checked', 'checked');
+$('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'checked');
+
+})
+</script>
+
 <h2>All Patrons</h2>
+
+<div id ="filter_bar">
+<ul>
+  <li>
+    <strong>Group:</strong>
+  </li>
+  <li>
+    <input type="radio" name="club" value="all">All
+  </li> 
+  <li>
+    <input type="radio" name="club" value="baby">Baby
+  </li>
+  <li>
+    <input type="radio" name="club" value="youth">Youth
+  </li>
+  <li>
+    <input type="radio" name="club" value="teen">Teen
+  </li>
+  <li>
+    <input type="radio" name="club" value="adult">Adult
+  </li> 
+</ul>
+
+
+<ul>
+  <li>
+    <strong>Location:</strong>
+  </li>
+  <li>
+    <input type="radio" name="library" value="all">All
+  </li> 
+  <li>
+    <input type="radio" name="library" value="woodmere">Woodmere
+  </li>
+  <li>
+    <input type="radio" name="library" value="kingsley">Kingsley
+  </li> 
+  <li>
+    <input type="radio" name="library" value="interlochen">Interlochen
+  </li> 
+  <li>
+    <input type="radio" name="library" value="peninsula">Peninsula
+  </li> 
+  <li>
+    <input type="radio" name="library" value="fife lake">Fife Lake
+  </li> 
+  <li>
+    <input type="radio" name="library" value="east bay">East Bay
+  </li> 
+</ul>
+<button> Apply Filter</button>
+</div>
 <%= render 'patron_list' %>
