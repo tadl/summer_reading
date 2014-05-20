@@ -58,6 +58,6 @@ $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'che
     <input type="radio" name="library" value="east bay">East Bay
   </li> 
 </ul>
-<button> Apply Filter</button>
+<button onclick="filter_patrons()"> Apply Filter</button>
 </div>
 <%= render 'patron_list' %>
