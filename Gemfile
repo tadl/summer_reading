@@ -29,7 +29,7 @@ gem 'rails_12factor', group: :production
 gem 'dotenv-rails', :groups => [:development, :test]
 
 
-
+gem 'newrelic_rpm'
 gem 'omniauth-oauth2'
 gem 'omniauth-google-oauth2'
 gem 'pg_search'
