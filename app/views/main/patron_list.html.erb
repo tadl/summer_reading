@@ -7,8 +7,20 @@ $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'che
 })
 </script>
 
-<h2>All Patrons</h2>
-
+<h2>
+  Browsing
+  <% if @club_filter == 'all' %>
+    all patrons
+  <% else %>
+    patrons in the <%= @club_filter.capitalize %> club
+  <% end %>
+  <% if @location_filter == 'all' %>
+    at all locations, 
+  <% else %>
+    at <%= @location_filter.capitalize %>, 
+  <% end %>
+    <%= @participant_count %> registered patrons have earned <%= @total_experience_count %> total experiences.
+</h2>
 <div id ="filter_bar">
 <ul>
   <li>

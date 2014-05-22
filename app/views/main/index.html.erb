@@ -1,9 +1,7 @@
 <style>
 
-body{
-  background: url("https://s3.amazonaws.com/tcbot/summer_reading_bg1.jpg") center center fixed;
-  background-repeat:no-repeat;
-  background-size:cover;
+#background_img{
+	display: block;
 }
 
 #content{ background-color: transparent; }
@@ -18,6 +16,7 @@ body{
 
 </style>
 
+
 <% if current_user && !check_for_approved  %>
 	<div id="message_div">
 		<h3>Your account is pending approval. Please check back soon </h3>
@@ -31,7 +30,7 @@ body{
 <% end %>
 
 <div id="register_buttons">
-	<h2 class="registration_box_title">Register for Summer Reading:</h2>
+	<h2 class="registration_box_title">Experience Summer Reading Club 2014</h2>
 	<ul>
 		<li>
 			<a href="/main/sign_up/baby">

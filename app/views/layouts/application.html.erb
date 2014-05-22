@@ -2,13 +2,14 @@
 <html>
 <head>
   <title>Summer Reading</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <link href='//fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+<div id="background_img"></div>
 <div id="top_bar">
 	<% if current_user && check_for_approved %>
 		<div id="menu_button_div">
