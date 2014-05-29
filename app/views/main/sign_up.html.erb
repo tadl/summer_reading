@@ -33,8 +33,8 @@
 	</div>
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
-		Birthday: <br>
-		<%= date_select('birth_date', '', {:start_year => 1910, :end_year => Date.current.year, order: [:month, :day, :year]}, {:class => ' required sign_up_element'}) %>
+		Age: <br>
+		<%= select_tag 'age', options_for_select(@age), {:class => 'required sign_up_element'} %>
 	</div>
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_left">

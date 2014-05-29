@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get "main/award_patron"
   get "main/mark_got_kit"
   get "main/mark_got_prize"
+  get "main/mark_baby_complete"
   get "main/search_by_name"
   get "main/search_by_card"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]

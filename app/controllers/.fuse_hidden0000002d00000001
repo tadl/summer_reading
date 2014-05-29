@@ -18,10 +18,7 @@ class MainController < ApplicationController
 
     @libraries = ['Woodmere','Kingsley','Interlochen','East Bay','Peninsula','Fife Lake']
     
-    @baby_ages = [*0..4]
-    @youth_ages = [*4..12]
-    @teen_ages = [*13..19]
-    @adult_ages = [*18..105]
+    @age = [1,4]
 
   end
 
@@ -54,23 +51,19 @@ class MainController < ApplicationController
     if group == "baby" 
       @group_name = "Baby"
       @group_variable = params[:group]
-      @age = @baby_ages
     elsif group == "youth"
       @group_name = "Youth"
       @group_variable = params[:group]
       @schools = @youth_schools.sort
       @grades = @youth_grades
-      @age = @youth_ages
     elsif group == "teen"
       @group_name = "Teen"
       @group_variable = params[:group]
       @schools = @teen_schools.sort
       @grades = @teen_grades
-      @age = @teen_ages
     elsif group == "adult"
       @group_name = "Adult"
       @group_variable = params[:group]
-      @age = @adult_ages
     else
       alert_msg = "Something went wrong! Please try again."
       redirect_to :root, :flash => {:alert => alert_msg }      
@@ -80,15 +73,17 @@ class MainController < ApplicationController
   def register
     first_name = CGI.unescapeHTML(params[:first_name])
     last_name = CGI.unescapeHTML(params[:last_name])
-    age = CGI.unescapeHTML(params[:age])
+    birth_date = CGI.unescapeHTML(params[:birth_date])
     grade = CGI.unescapeHTML(params[:grade])
     school = CGI.unescapeHTML(params[:school])
     zip_code = CGI.unescapeHTML(params[:zip_code])
     home_library = CGI.unescapeHTML(params[:home_library])
     club = CGI.unescapeHTML(params[:club])
     email = CGI.unescapeHTML(params[:email])
-    library_card_raw = CGI.unescapeHTML(params[:library_card])
-    library_card_clean = _normalize_card(library_card_raw)
+    library_card = CGI.unescapeHTML(params[:library_card])
+    # We can do additional sanitization here
+    # If required feilds are missing or we see anything wrong we can set valid_values 
+    # As we are checking for wrong things we can update the error_message so the client knows what is up
     valid_values = true
     error_message = 'We noticed the following problems:'
 
@@ -96,14 +91,15 @@ class MainController < ApplicationController
       p = Participant.new
       p.first_name = first_name
       p.last_name = last_name
-      p.age = age
+      p.birth_date = birth_date
       p.grade = grade
       p.school = school
       p.zip_code = zip_code
       p.home_library = home_library
       p.club = club
       p.email = email
-      p.library_card = library_card_clean
+      # TODO: normalize library_card before saving by passing through _normalize_card?
+      p.library_card = library_card 
       p.save
     end
 
