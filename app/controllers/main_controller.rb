@@ -88,7 +88,7 @@ class MainController < ApplicationController
     club = CGI.unescapeHTML(params[:club])
     email = CGI.unescapeHTML(params[:email])
     library_card_raw = CGI.unescapeHTML(params[:library_card])
-    library_card_clean = _normalize_card(library_card_raw)
+    library_card_clean = _normalize_card(library_card_raw) rescue null
     valid_values = true
     error_message = 'We noticed the following problems:'
 
