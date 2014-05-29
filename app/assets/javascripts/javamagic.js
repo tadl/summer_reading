@@ -235,7 +235,7 @@ function filter_patrons(){
 function download_as_csv(){
   var filters = window.location.search;
   var url = '/main/patron_list.csv' + filters
-  Turbolinks.visit(url)
+  window.open(url)
 
 }
 
