@@ -160,6 +160,7 @@ class MainController < ApplicationController
       end
     end
 
+  
     @participants = @participants.page params[:page]
 
 
@@ -172,8 +173,16 @@ class MainController < ApplicationController
     end
 
     respond_with do |format|
-      format.html
-      format.csv { send_data participant_csv }
+      format.html {
+        if params[:winner] == 'yes'
+          @participants = Kaminari.paginate_array(@participants).page(params[:page])
+        else
+          @participants = @participants.page params[:page]
+        end
+      }
+      format.csv { 
+        send_data participant_csv 
+      }
     end  
   end
 
