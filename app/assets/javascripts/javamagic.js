@@ -209,26 +209,32 @@ function search_by_card(){
 
 function filter_patrons(){
   var club_value = $('input[name="club"]:checked').val()
- 
-
-
   var library_value = $('input[name="library"]:checked').val()
   var club = 'group='+ encodeURIComponent(club_value)+ '&'
   var library = 'location='+encodeURIComponent(library_value)+'&'
-  
+  var url = '/main/patron_list?'
+
+
   if (club_value == 'all' && library_value != 'all') {
-    params = library
-    var url = '/main/patron_list?' + params
+    var params = library
+    url = '/main/patron_list?' + params
   } else if (library_value == 'all' && club_value != 'all'){
-    params = club
-    var url = '/main/patron_list?' + params
+    var params = club
+    url = '/main/patron_list?' + params
   } else if (library_value != 'all' && club_value != 'all'){
     var params = club + library
-    var url = '/main/patron_list?' + params
-  } else if (library_value == 'all' && club_value == 'all'){
-    var url = '/main/patron_list'
+    url = '/main/patron_list?' + params
   }
-  
+
+  if($("#winner").is(':checked')){
+    url = url + 'winner=yes' 
+  }
+  Turbolinks.visit(url)
+}
+
+function download_as_csv(){
+  var filters = window.location.search;
+  var url = '/main/patron_list.csv' + filters
   Turbolinks.visit(url)
 
 }

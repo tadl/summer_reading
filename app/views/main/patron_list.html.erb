@@ -4,7 +4,13 @@ jQuery(function(){
 $('input[name="club"][value="<%= @club_filter %>"]').attr('checked', 'checked');
 $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'checked');
 
+<% if @winner == 'yes' %>
+  $('#winner').attr('checked', 'checked');
+<% end %>
+
+
 })
+
 </script>
 
 <h2>
@@ -70,6 +76,9 @@ $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'che
     <input type="radio" name="library" value="east bay">East Bay
   </li> 
 </ul>
+<input type="checkbox" id="winner">Limit to Award Eligible Patrons
+<br>
 <button onclick="filter_patrons()"> Apply Filter</button>
+<button onclick="download_as_csv()"> Download as CSV </button>
 </div>
 <%= render 'patron_list' %>

@@ -1,5 +1,6 @@
 class MainController < ApplicationController
   require 'uri'
+  require 'csv'
   
   before_filter :shared_variables
   before_action :authenticate_user!, :except => [:index, :sign_up, :register]
@@ -114,7 +115,7 @@ class MainController < ApplicationController
 
     home_library = params[:location].try(:titleize)
     library = params[:location]
- 
+    @winner = params[:winner]
 
     if params[:group]
       club = params[:group]
@@ -129,30 +130,54 @@ class MainController < ApplicationController
     end
 
     if params[:location] && params[:group]
-      @participants = Participant.where(home_library: home_library, club: club).all.order(:id).page params[:page]
+      @participants = Participant.where(home_library: home_library, club: club).all.order(:id)
     end
     
     if params[:location] && params[:group].blank?
-      @participants = Participant.where(home_library: home_library).all.order(:id).page params[:page]
+      @participants = Participant.where(home_library: home_library).all.order(:id)
     end
     
     if params[:location].blank? && params[:group]
-      @participants = Participant.where(club: club).all.order(:id).page params[:page]
+      @participants = Participant.where(club: club).all.order(:id)
     end
     
     if params[:group].blank? && params[:location].blank?
-      @participants = Participant.all.order(:id).page params[:page]
-    end 
+      @participants = Participant.all.order(:id)
+    end
+
+
+
+    if params[:winner] == 'yes'
+      @participants = @participants.select {|p| p.awards.count >= 6}
+      @participants = Kaminari.paginate_array(@participants).page(params[:page])
+    end
+      
+
+    participant_csv = CSV.generate do |csv|
+        csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Awards Count', 'Email']
+      @participants.each do |p|
+        csv << [p.first_name, p.last_name, p.age, p.club, p.home_library, p.awards.count, p.email,]
+      end
+    end
+
+    @participants = @participants.page params[:page]
+
+
     @club_filter = club
     @location_filter = library
     @participant_count = @participants.count 
     @total_experience_count = 0
     @participants.each do |p|
       @total_experience_count = p.awards.count + @total_experience_count
-    end 
+    end
 
-
+    respond_with do |format|
+      format.html
+      format.csv { send_data participant_csv }
+    end  
   end
+
+
 
   def experience_list
     @experiences = Experience.all
