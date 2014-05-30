@@ -64,6 +64,33 @@
 	</div>
 	<div class="clear_div"></div>
 	<button onclick="update_patron_info()">Update</button>
-	<h3>Participation Info: (changes saved automagically)</h3>
+	<h3>Participation Info: (changes saved automagically) </h3>
+	<h4>Experiences</h4>
+	<ul>	
+		<% @patron.awards.each do |a| %>
+			<li id="<%= a.experience.id %>"> <%= a.experience.name %> <a style="color: #FF0000" onclick="delete_award('<%= a.experience.id %>')">Delete</a></li>
+		<% end %>
+	</ul>
+	<h4>Status</h4>
+	<ul>
+	
+		<li>
+			<% if @patron.got_final_prize == false %> 
+            	<input type="checkbox" class="edit_got_prize" value="<%= @patron.id %>">
+        	<% else %>
+            	<input type="checkbox" class="edit_got_prize" value="<%= @patron.id %>" checked>	
+        	<% end %>	
+        	Got Award	
+		</li>
+		<li>
+			<% if @patron.got_reading_kit == false %> 
+          		<input type="checkbox" class="edit_got_kit" value="<%= @patron.id %>">
+          	<% else %>
+          		<input type="checkbox" class="edit_got_kit" value="<%= @patron.id %>" checked>
+          	<% end %>
+         	Received reading Kit
+		</li>
+	
+	</ul>	
 </div>
 

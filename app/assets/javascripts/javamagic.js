@@ -36,6 +36,24 @@ load_functions = function() {
       }
   });
 
+  $('.edit_got_kit').change(function() {
+     var participant_id = $(this).val(); 
+     if($(this).is(":checked")) { 
+        var got_kit = 'true'
+      }else{  
+        var got_kit = 'false'
+      }
+      base_url = '/main/mark_got_kit.json'
+      parameters = '?participant='+ participant_id + '&got_kit=' + got_kit
+      full_url = base_url + parameters;
+      $.get(full_url, function(data){
+        }).done(function() {
+          Turbolinks.visit(document.URl) 
+        }).fail(function() {
+          alert('Something bad happened. Please try again later...'); 
+      });
+  });
+
   $('.got_prize').change(function() {
     if($(this).is(":checked")) {
       var participant_id = $(this).val();
@@ -51,6 +69,24 @@ load_functions = function() {
         alert('Something bad happened. Please try again later...'); 
       });
     }
+  });
+
+  $('.edit_got_prize').change(function() {
+    var participant_id = $(this).val(); 
+    if($(this).is(":checked")) { 
+       var got_prize = 'true'
+     }else{  
+       var got_prize = 'false'
+     }
+     base_url = '/main/mark_got_prize.json'
+     parameters = '?participant='+ participant_id + '&got_prize=' + got_prize
+     full_url = base_url + parameters;
+     $.get(full_url, function(data){
+       }).done(function() {
+         Turbolinks.visit(document.URl) 
+       }).fail(function() {
+         alert('Something bad happened. Please try again later...'); 
+     });
   });
 
   $('.not_complete_baby').change(function() {
@@ -133,7 +169,6 @@ function register(group, staff){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
-  alert(library_card)
   if ((group == 'teen' || group == 'youth') && staff != 'staff'){
     if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || grade == null || grade.length == "0" || school == null || school.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
       $(message_div).html('<h3>Missing required fields</h3>');
