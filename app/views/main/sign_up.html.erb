@@ -12,17 +12,12 @@
 #menu_widget{
   opacity: .9;
 }
-
-
-
 </style>
 
 <div id="sign_up">
-<h2><%= @group_name %> Registration</h2>
-
-
 <div id="sign_up_form">
-	
+<h2><%= @group_name %> Registration</h2>
+<form id="myform" autocomplete="off">	
 	<div class="sign_up_form_left">
 		First Name:<br> 
 		<input class="full_width required required_staff sign_up_element" type="text" id="first_name">
@@ -85,15 +80,18 @@
 		<input class="full_width sign_up_element" id="library_card">
 	</div>
 	<div class="clear_div"></div>
-</div>
-<div class="center">
+	<div class="center">
+	<p>
 	<% if current_user %> 
-	<h4> hello </h4>
 		<a class="register_button" onclick="register('<%= @group_variable %>', 'staff')">Register</a>
 	<% else %>
 		<a class="register_button" onclick="register('<%= @group_variable %>')">Register</a>
 	<% end %>
+	</p>
+	</div>
+</form>	
 </div>
+
 <div id="messages">
 </div>
 </div>

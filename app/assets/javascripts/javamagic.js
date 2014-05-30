@@ -1,5 +1,6 @@
 var load_functions;
 load_functions = function() {
+  Turbolinks.pagesCached(0);
   $("#search_by_name").keydown(function(event){
     if(event.keyCode == 13){
       search_by_name();        
@@ -104,7 +105,7 @@ load_functions = function() {
     }
   });
 
-    $('.edit_baby_complete').change(function() {
+  $('.edit_baby_complete').change(function() {
     var participant_id = $(this).val(); 
     if($(this).is(":checked")) { 
        var baby_complete = 'true'
@@ -120,15 +121,12 @@ load_functions = function() {
          alert('Something bad happened. Please try again later...'); 
      });
   });
-
-
-
-
-
 };
 
 $(document).ready(load_functions);
 $(document).on('page:load', load_functions);
+
+
 
 function toggle_menu(){
   $( "#menu_widget" ).toggle()
@@ -186,6 +184,7 @@ function register(group, staff){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
+  var success_msg = "<div class='good_text'><h3 style='text-align: center'>Congratulations, you've successfully registered for TADL Summer Reading Club!</h3> <p>Please be sure to stop by your home library to pick up your reading kit.</p>  <p>To find an upcoming event <a href='http://www.tadl.org/events/556'>click here</a>.</p> <p>To register another patron <a href='/main/index'>click here</a>.</p></div>"
   if ((group == 'teen' || group == 'youth') && staff != 'staff'){
     if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || grade == null || grade.length == "0" || school == null || school.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
       $(message_div).html('<h3>Missing required fields</h3>');
@@ -196,7 +195,8 @@ function register(group, staff){
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
-        $(message_div).html("<h3>Congratulations, you've successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event click here.</h3>");   
+        $('#sign_up_form').remove();
+        $(message_div).html(success_msg);   
       }).fail(function() {
         $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
       });
@@ -211,7 +211,8 @@ function register(group, staff){
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
-        $(message_div).html('<h3>Congratulations, you have successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event <a href="http://www.tadl.org/events/556">click here</a>.</h3>');   
+        $('#sign_up_form').remove();
+        $(message_div).html(success_msg);   
       }).fail(function() {
         $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
       });
@@ -226,7 +227,8 @@ function register(group, staff){
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
-        $(message_div).html('<h3>Congratulations, you have successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event <a href="http://www.tadl.org/events/556">click here</a>.</h3>');   
+        $('#sign_up_form').remove();
+        $(message_div).html(success_msg);   
       }).fail(function() {
         $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
       });
