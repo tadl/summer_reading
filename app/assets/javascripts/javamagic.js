@@ -120,20 +120,8 @@ function award_experience(participant_id){
   }
 }
 
-function calculateAge(birthday) { // birthday is a date
-    var birth_date = parseDate(birthday);
-    var ageDifMs = Date.now() - birth_date.getTime();
-    var ageDate = new Date(ageDifMs); // miliseconds from epoch
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
 
-function parseDate(input) {
-  var parts = input.match(/(\d+)/g);
-  // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
-  return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
-}
-
-function register(group){
+function register(group, staff){
   var first_name = $("#first_name").val();
   var last_name = $("#last_name").val();
   var age = $("#age").val();
@@ -145,10 +133,11 @@ function register(group){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
-  check_fields();
-  if (group == 'teen' || group == 'youth'){
+  alert(library_card)
+  if ((group == 'teen' || group == 'youth') && staff != 'staff'){
     if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || grade == null || grade.length == "0" || school == null || school.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
-      $(message_div).html('<h3>Missing required fields</h3>'); 
+      $(message_div).html('<h3>Missing required fields</h3>');
+      check_fields(); 
     }else{ 
       base_url = '/main/register.json'
       parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
@@ -160,16 +149,32 @@ function register(group){
         $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
       });
     }
-  }else{
+  }else if ((group == 'baby' || group == 'adult') && staff != 'staff') {
     if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
       $(message_div).html('<h3>Missing required fields</h3>');
+      check_fields();
     }else{
       base_url = '/main/register.json'
       parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
-        $(message_div).html("<h3>Congratulations, you've successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event click here.</h3>");   
+        $(message_div).html('<h3>Congratulations, you have successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event <a href="http://www.tadl.org/events/556">click here</a>.</h3>');   
+      }).fail(function() {
+        $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
+      });
+    }
+  }else if (staff == 'staff'){
+    if (first_name.length == "0" || last_name.length == "0") {
+      $(message_div).html('<h3>Missing required fields</h3>');
+      check_fields('staff');
+    }else{
+      base_url = '/main/register.json'
+      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+      full_url = base_url + parameters;
+      $.get(full_url, function(data){
+      }).done(function() {
+        $(message_div).html('<h3>Congratulations, you have successfully registered for TADL Summer Reading Club!  Please be sure to stop by your home library to pick up your reading kit.  To find an upcoming event <a href="http://www.tadl.org/events/556">click here</a>.</h3>');   
       }).fail(function() {
         $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
       });
@@ -177,13 +182,22 @@ function register(group){
   }
 }
 
-function check_fields(){
-  $('.required').removeClass('highlight');
-  $('.required').each(function(){
-    if ($.trim($(this).val()).length == 0){
-      $(this).addClass('highlight');
-    }
-  })
+function check_fields(staff){
+  if(staff != 'staff'){
+    $('.required').removeClass('highlight');
+    $('.required').each(function(){
+      if ($.trim($(this).val()).length == 0){
+        $(this).addClass('highlight');
+      }
+    })
+  }else{
+    $('.required_staff').removeClass('highlight');
+    $('.required_staff').each(function(){
+      if ($.trim($(this).val()).length == 0){
+        $(this).addClass('highlight');
+      }
+    })
+  }
 }
 
 

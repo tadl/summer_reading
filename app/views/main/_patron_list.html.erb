@@ -1,6 +1,6 @@
 
 
-<% if @participants_count != 0  %>
+<% if @participants_count != 0 && @participants  %>
 
 <%= paginate @participants %>
 
@@ -20,7 +20,7 @@
             <strong>Library Card:</strong> <%= participant.library_card %>,
           <% end %>
           <% if participant.school? && participant.school != 'undefined' %>
-            <strong>School:</strong> <%= participant.school %>
+            <strong>School:</strong> <%= participant.school %>,
           <% end %>    
         </p>
         <p>
@@ -72,6 +72,7 @@
             Got Award
           </p>
         <% end %>
+        <a href="/main/edit_patron?id=<%= participant.id %>">Edit</a>
       </div>
     <% end %>
 

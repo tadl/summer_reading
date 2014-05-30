@@ -1,46 +1,24 @@
-<style type="text/css">
-#background_img{
-	display: block;
-}
+<h2>Editing: <%= @patron.first_name %>  <%= @patron.last_name %> </h2>
 
-#content{ background-color: transparent; }
-
-#top_bar{
-  opacity: .9;
-}
-
-#menu_widget{
-  opacity: .9;
-}
-
-
-
-</style>
-
-<div id="sign_up">
-<h2><%= @group_name %> Registration</h2>
-
-
-<div id="sign_up_form">
-	
+<h3>Basic Info: (click update button to save)</h3>
 	<div class="sign_up_form_left">
 		First Name:<br> 
-		<input class="full_width required required_staff sign_up_element" type="text" id="first_name">
+		<input class="full_width required required_staff sign_up_element" type="text" id="first_name" value="<%= @patron.first_name %>">
 	</div> 
 	<div class="sign_up_form_right">
 		Last Name: <br>
-		<input class="full_width required required_staff sign_up_element" type="text" id="last_name"> 
+		<input class="full_width required required_staff sign_up_element" type="text" id="last_name" value="<%= @patron.last_name %>"> 
 	</div>
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Age: <br>
-		<%= select_tag 'age', options_for_select(@age), {:class => 'required sign_up_element'} %>
+		<%= select_tag 'age', options_for_select(@age, @patron.age), {:class => 'required sign_up_element'} %>
 	</div>
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_left">
 		Grade (in Fall):<br> 
 		<select  id="grade" class="required sign_up_element">
-			<option disabled="disabled" selected="selected">Select Your Grade</option>
+			<option selected="selected" value="<%= @patron.grade %>"><%= @patron.grade %></option>
 				<% @grades.each do |grade| %>
 					<option value="<%= grade %>"><%= grade %></option>
 				<% end %>	
@@ -54,7 +32,7 @@
 	<div class="sign_up_form_right">
 		School: <br>
 		<select  id="school" class="required sign_up_element">
-			<option disabled="disabled" selected="selected">Select Your School</option>
+			<option selected="selected" value="<%= @patron.school %>"><%= @patron.school %></option>
 				<% @schools.each do |school| %>
 					<option value="<%= school %>"><%= school %></option>
 				<% end %>	
@@ -64,12 +42,12 @@
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Home Zip Code:<br> 
-		<input class="half_width required sign_up_element" type="number" id="zip_code">
+		<input class="half_width required sign_up_element" type="number" id="zip_code" value="<%= @patron.zip_code %>">
 	</div>
 	<div class="sign_up_form_left">
 		Home Library: <br> 
 		<select  id="home_library" class="required sign_up_element">
-			<option disabled="disabled" selected="selected">Select a Location</option>
+			<option selected="selected" value="<%= @patron.home_library %>"><%= @patron.home_library %></option>
 			<% @libraries.each do |library| %>
   				<option value="<%= library %>"><%= library %></option>
   			<% end %>
@@ -78,22 +56,14 @@
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Email (optional):<br>
-	 	<input class="full_width sign_up_element" type="email" id="email">
+	 	<input class="full_width sign_up_element" type="email" id="email" value="<%= @patron.email %>">
 	</div>
 	<div class="sign_up_form_left">
 		Library Card # (optional):<br>
-		<input class="full_width sign_up_element" id="library_card">
+		<input class="full_width sign_up_element" id="library_card" value="<%= @patron.library_card %>">
 	</div>
 	<div class="clear_div"></div>
+	<button onclick="update_patron_info()">Update</button>
+	<h3>Participation Info: (changes saved automagically)</h3>
 </div>
-<div class="center">
-	<% if current_user %> 
-	<h4> hello </h4>
-		<a class="register_button" onclick="register('<%= @group_variable %>', 'staff')">Register</a>
-	<% else %>
-		<a class="register_button" onclick="register('<%= @group_variable %>')">Register</a>
-	<% end %>
-</div>
-<div id="messages">
-</div>
-</div>
+

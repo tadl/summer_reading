@@ -88,7 +88,7 @@ class MainController < ApplicationController
     club = CGI.unescapeHTML(params[:club])
     email = CGI.unescapeHTML(params[:email])
     library_card_raw = CGI.unescapeHTML(params[:library_card])
-    library_card_clean = _normalize_card(library_card_raw) rescue null
+    library_card_clean = _normalize_card(library_card_raw) rescue library_card_raw
     valid_values = true
     error_message = 'We noticed the following problems:'
 
@@ -117,6 +117,27 @@ class MainController < ApplicationController
       end 
     end
   end
+
+  def edit_patron
+    @patron = Participant.find(params[:id])
+    @group_variable = @patron.club
+    if @patron.club == "baby"
+      @age = @baby_ages
+    elsif @patron.club == "youth"
+      @age = @youth_ages
+      @schools = @youth_schools.sort
+      @grades = @youth_grades
+    elsif @patron.club == "teen"
+      @teen = @teen_ages
+      @grades = @teen_grades
+      @schools = @yteen_schools.sort
+    elsif  @patron.club == "adult"
+      @age = @adult_ages
+    end
+  end
+
+
+
 
   def patron_list
 
@@ -291,6 +312,8 @@ class MainController < ApplicationController
     end
      return card_value
   end
+
+
 
 
 end
