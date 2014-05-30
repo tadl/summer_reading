@@ -136,6 +136,36 @@ class MainController < ApplicationController
     end
   end
 
+  def update_patron
+    first_name = CGI.unescapeHTML(params[:first_name])
+    last_name = CGI.unescapeHTML(params[:last_name])
+    age = CGI.unescapeHTML(params[:age])
+    grade = CGI.unescapeHTML(params[:grade])
+    school = CGI.unescapeHTML(params[:school])
+    zip_code = CGI.unescapeHTML(params[:zip_code])
+    home_library = CGI.unescapeHTML(params[:home_library])
+    email = CGI.unescapeHTML(params[:email])
+    library_card_raw = CGI.unescapeHTML(params[:library_card])
+    library_card_clean = _normalize_card(library_card_raw) rescue library_card_raw
+    p = Participant.find(params[:id])
+    p.first_name = first_name
+    p.last_name = last_name
+    p.age = age
+    p.grade = grade
+    p.school = school
+    p.zip_code = zip_code
+    p.home_library = home_library
+    p.email = email
+    p.library_card = library_card_clean
+    p.save
+
+    respond_with do |format|
+      format.json { render :json =>{message: 'updated'}}
+    end 
+
+
+  end
+
 
 
 
@@ -241,7 +271,14 @@ class MainController < ApplicationController
     respond_with do |format|
         format.json { render :json =>{message: message}}
     end 
-    
+  end
+
+  def revoke_award
+    a = Award.find(params[:id])
+    a.delete
+    respond_with do |format|
+        format.json { render :json =>{message: "award revoked"}}
+    end 
   end
 
   def mark_got_kit

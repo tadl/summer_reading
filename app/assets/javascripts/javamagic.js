@@ -48,7 +48,6 @@ load_functions = function() {
       full_url = base_url + parameters;
       $.get(full_url, function(data){
         }).done(function() {
-          Turbolinks.visit(document.URl) 
         }).fail(function() {
           alert('Something bad happened. Please try again later...'); 
       });
@@ -83,7 +82,6 @@ load_functions = function() {
      full_url = base_url + parameters;
      $.get(full_url, function(data){
        }).done(function() {
-         Turbolinks.visit(document.URl) 
        }).fail(function() {
          alert('Something bad happened. Please try again later...'); 
      });
@@ -105,6 +103,25 @@ load_functions = function() {
       });
     }
   });
+
+    $('.edit_baby_complete').change(function() {
+    var participant_id = $(this).val(); 
+    if($(this).is(":checked")) { 
+       var baby_complete = 'true'
+     }else{  
+       var baby_complete = 'false'
+     }
+     base_url = '/main/mark_baby_complete.json'
+     parameters = '?participant='+ participant_id + '&baby_complete=' + baby_complete
+     full_url = base_url + parameters;
+     $.get(full_url, function(data){
+       }).done(function() {
+       }).fail(function() {
+         alert('Something bad happened. Please try again later...'); 
+     });
+  });
+
+
 
 
 
@@ -215,6 +232,42 @@ function register(group, staff){
       });
     }
   }
+}
+
+function update_patron(id){
+  var first_name = $("#first_name").val();
+  var last_name = $("#last_name").val();
+  var age = $("#age").val();
+  var grade = $("#grade").val();
+  var school = $("#school").val();
+  var zip_code = $("#zip_code").val();
+  var home_library = $("#home_library").val();
+  var email = $("#email").val();
+  var library_card = $("#library_card").val();
+  base_url = '/main/update_patron.json'
+  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+  full_url = base_url + parameters;
+  $.get(full_url, function(data){
+  }).done(function() {
+      alert('Patron has been updated. Nice work!'); 
+      Turbolinks.visit(document.URl)
+  }).fail(function() {
+      alert('Something bad happened. Please try again later...'); 
+  });
+
+}
+
+
+function delete_award(id){
+  url = '/main/revoke_award.json?id=' + id
+  div = '#edit_' + id
+  $.get(url, function(data){
+  }).done(function() {
+      $(div).remove();
+  }).fail(function() {
+      alert('Something bad happened. Please try again later...'); 
+  });
+
 }
 
 function check_fields(staff){
