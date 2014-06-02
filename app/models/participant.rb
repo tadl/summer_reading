@@ -1,7 +1,7 @@
 class Participant < ActiveRecord::Base
 	include PgSearch
 	pg_search_scope :search_by_name, :against =>[:first_name, :last_name],  :using => { :tsearch => {:prefix => true}}
-	pg_search_scope :search_by_card, :against =>[:library_card], :order_within_rank => "updated_at DESC"
+	pg_search_scope :search_by_card, :against =>[:library_card]
 	has_many :awards
 	has_many :experiences, through: :awards
 
