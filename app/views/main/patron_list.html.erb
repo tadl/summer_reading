@@ -6,8 +6,9 @@ $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'che
 
 <% if @winner == 'yes' %>
   $('#winner').attr('checked', 'checked');
-<% end %>
-
+<% else %>
+  $('#winner').attr('checked', false);
+<% end %>  
 
 })
 

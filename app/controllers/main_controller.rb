@@ -219,9 +219,6 @@ class MainController < ApplicationController
     end
 
   
-    @participants = @participants.page params[:page]
-
-
     @club_filter = club
     @location_filter = library
     @participant_count = @participants.count 
@@ -229,6 +226,8 @@ class MainController < ApplicationController
     @participants.each do |p|
       @total_experience_count = p.awards.count + @total_experience_count
     end
+
+    @participants = @participants.page params[:page]
 
     respond_with do |format|
       format.html {

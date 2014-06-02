@@ -126,12 +126,9 @@ load_functions = function() {
 $(document).ready(load_functions);
 $(document).on('page:load', load_functions);
 
-
-
 function toggle_menu(){
   $( "#menu_widget" ).toggle()
 }
-
 
 function change_role(role, id){
   if (role == "approved"){
@@ -170,7 +167,6 @@ function award_experience(participant_id){
     });
   }
 }
-
 
 function register(group, staff){
   var first_name = $("#first_name").val();
@@ -256,9 +252,7 @@ function update_patron(id){
   }).fail(function() {
       alert('Something bad happened. Please try again later...'); 
   });
-
 }
-
 
 function delete_award(id){
   url = '/main/revoke_award.json?id=' + id
@@ -269,7 +263,6 @@ function delete_award(id){
   }).fail(function() {
       alert('Something bad happened. Please try again later...'); 
   });
-
 }
 
 function check_fields(staff){
@@ -289,7 +282,6 @@ function check_fields(staff){
     })
   }
 }
-
 
 function search_by_name(){
  var name = $('#search_by_name').val();
@@ -344,17 +336,3 @@ function download_as_csv(){
   window.open(url)
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
