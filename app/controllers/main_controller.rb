@@ -14,11 +14,11 @@ class MainController < ApplicationController
 
     @youth_schools = ['Blair','Central Grade School','Central Tag','Cherry Knoll','Courtade Elementary','Eastern','Holy Angels','Immaculate Conception Elementary','Long Lake','Northwest Michigan House of Hope','Old Mission Peninsula','Pathfinder School','Silver Lake','St. Elizabeth Ann Seton Middle School','Oak Park', 'TBA SE Early Childhood','TCAPS Montessori Schoool',"The Children's House",'Traverse Bay Christian School', 'Traverse Bay Mennonite School', 'Traverse City Seventh-Day Advent', 'Traverse Heights Elementary School','Trinity Lutheran','West Middle School','Westwoods','Willow Hill','Woodland School','Fife Lake Elementary','Forest Area Middle School','Interlochen Elementary','Kingsley Area Elementary','Kingsley Area Middle School','Lake Ann Elementary',"St. Mary's of Hannah",'Grand Traverse Academy','Greenspire School', 'New Campus', 'Other', 'Home School',]
 
-    @youth_grades = ['Pre-School','Kindergarten', 1, 2, 3, 4, 5, 6]
+    @youth_grades = ['Pre-School','Kindergarten', 1, 2, 3, 4, 5, 6, 7]
 
     @libraries = ['Woodmere','Kingsley','Interlochen','East Bay','Peninsula','Fife Lake']
     
-    @baby_ages = [*0..4]
+    @baby_ages = [*0..3]
     @youth_ages = [*4..12]
     @teen_ages = [*13..19]
     @adult_ages = [*18..105]
