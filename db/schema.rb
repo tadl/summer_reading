@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529192621) do
+ActiveRecord::Schema.define(version: 20140602152542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 20140529192621) do
     t.boolean  "got_final_prize", default: false
     t.boolean  "baby_complete",   default: false
     t.integer  "age"
+    t.boolean  "verify_info",     default: false
+    t.boolean  "inactive",        default: false
   end
 
 end
