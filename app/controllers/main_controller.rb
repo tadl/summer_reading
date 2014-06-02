@@ -188,29 +188,26 @@ class MainController < ApplicationController
     end
 
     if params[:location] && params[:group]
-      @participants = Participant.where(home_library: home_library, club: club).all.order(:id)
+      @participants = Participant.where(home_library: home_library, club: club).where.not(inactive: true).all.order("id DESC")
     end
     
     if params[:location] && params[:group].blank?
-      @participants = Participant.where(home_library: home_library).all.order(:id)
+      @participants = Participant.where(home_library: home_library).all.order("id DESC").where.not(inactive: true)
     end
     
     if params[:location].blank? && params[:group]
-      @participants = Participant.where(club: club).all.order(:id)
+      @participants = Participant.where(club: club).all.order("id DESC").where.not(inactive: true)
     end
     
     if params[:group].blank? && params[:location].blank?
-      @participants = Participant.all.order(:id)
+      @participants = Participant.where.not(inactive: true).all.order("id DESC")
     end
-
-
 
     if params[:winner] == 'yes'
       @participants = @participants.select {|p| p.awards.count >= 6 || (p.club == 'baby' && p.baby_complete == true) }
       @participants = Kaminari.paginate_array(@participants).page(params[:page])
     end
       
-
     participant_csv = CSV.generate do |csv|
         csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Awards Count', 'Email']
       @participants.each do |p|
@@ -218,7 +215,6 @@ class MainController < ApplicationController
       end
     end
 
-  
     @club_filter = club
     @location_filter = library
     @participant_count = @participants.count 
@@ -243,7 +239,9 @@ class MainController < ApplicationController
     end  
   end
 
-
+  def inactive_patrons
+    @participants = Participant.where(inactive: true).all.order("id DESC").page(params[:page])
+  end
 
   def experience_list
     @experiences = Experience.all
@@ -313,16 +311,31 @@ class MainController < ApplicationController
     end 
   end 
 
+  def mark_inactive
+    participant_id = params[:participant]
+    inactive_switch = params[:inactive]
+    p = Participant.find(participant_id)
+    if inactive_switch == 'true'
+      p.update_attributes(:inactive => true)
+    else
+      p.update_attributes(:inactive => false)
+    end  
+    p.save
+    respond_with do |format|
+      format.json { render :json =>{message: 'complete'}}
+    end 
+  end
+
   def search_by_name
     @search = URI.unescape(params[:name])
-    @participants = Participant.search_by_name(params[:name]).page params[:page]
+    @participants = Participant.search_by_name(params[:name]).where.not(inactive: true).page params[:page]
   end
 
   def search_by_card
     # TODO: normalize card value before searching by passing through _normalize_card?
     @search = URI.unescape(params[:card])
     clean_card = _normalize_card(@search) rescue @search
-    @participants = Participant.search_by_card(clean_card).page params[:page]
+    @participants = Participant.search_by_card(clean_card).where.not(inactive: true).page params[:page]
   end
 
   def _normalize_card(card_value)

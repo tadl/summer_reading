@@ -124,6 +124,23 @@ load_functions = function() {
          alert('Something bad happened. Please try again later...'); 
      });
   });
+
+  $('.edit_inactive').change(function() {
+    var participant_id = $(this).val(); 
+    if($(this).is(":checked")) { 
+       var inactive = 'true'
+     }else{  
+       var inactive = 'false'
+     }
+     base_url = '/main/mark_inactive.json'
+     parameters = '?participant='+ participant_id + '&inactive=' + inactive
+     full_url = base_url + parameters;
+    $.get(full_url, function(data){
+    }).done(function() {
+    }).fail(function() {
+      alert('Something bad happened. Please try again later...'); 
+    });
+  });
 };
 
 $(document).ready(load_functions);

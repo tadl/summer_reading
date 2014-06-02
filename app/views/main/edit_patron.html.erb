@@ -103,6 +103,14 @@
         	<% end %>	
         	Got Award	
 		</li>
+		<li>
+			<% if @patron.inactive == false %> 
+            	<input type="checkbox" class="edit_inactive" value="<%= @patron.id %>">
+        	<% else %>
+            	<input type="checkbox" class="edit_inactive" value="<%= @patron.id %>" checked>	
+        	<% end %>	
+        	Inactive (inactive users do not appear in reports)	
+		</li>
 
 				
 	</ul>	

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "main/change_admin_role"
   get "main/patron_list"
   get "main/patron_list_export"
+  get "main/inactive_patrons"
   get "main/experience_list"
   get "main/award_list"
   get "main/award_patron"
@@ -25,6 +26,7 @@ Rails.application.routes.draw do
   get "main/mark_got_kit"
   get "main/mark_got_prize"
   get "main/mark_baby_complete"
+  get "main/mark_inactive"
   get "main/search_by_name"
   get "main/search_by_card"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
