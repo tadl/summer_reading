@@ -321,7 +321,8 @@ class MainController < ApplicationController
   def search_by_card
     # TODO: normalize card value before searching by passing through _normalize_card?
     @search = URI.unescape(params[:card])
-    @participants = Participant.search_by_card(params[:card]).page params[:page]
+    clean_card = _normalize_card(@search) rescue @search
+    @participants = Participant.search_by_card(clean_card).page params[:page]
   end
 
   def _normalize_card(card_value)

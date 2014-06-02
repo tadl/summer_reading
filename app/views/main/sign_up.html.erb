@@ -29,7 +29,7 @@
 	<div class="clear_div"></div>
 	<div class="sign_up_form_left">
 		Age: <br>
-		<%= select_tag 'age', options_for_select(@age), {:class => 'required sign_up_element'} %>
+		<%= select_tag 'age', options_for_select(@age), {:class => 'required sign_up_element', :prompt => "Select Your Age"} %>
 	</div>
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_left">
