@@ -1,6 +1,9 @@
 var load_functions;
 load_functions = function() {
   Turbolinks.pagesCached(0);
+
+  var loading = 'false'
+
   $("#search_by_name").keydown(function(event){
     if(event.keyCode == 13){
       search_by_name();        
@@ -125,6 +128,27 @@ load_functions = function() {
 
 $(document).ready(load_functions);
 $(document).on('page:load', load_functions);
+$(document).on('page:fetch', startSpinner).delay(3000);
+$(document).on('page:receive', stopSpinner);
+
+function startSpinner(){
+  loading = 'true'
+  setTimeout(still_loading, 500);
+}
+
+function still_loading(){
+  if (loading == 'true'){
+    $('#content').css('opacity', .5);
+    $('#loading').show(0);
+  }
+}
+
+function stopSpinner(){
+  loading = 'false'
+  $('#loading').hide(0);
+  $('#content').css('opacity', 1);
+}
+
 
 function toggle_menu(){
   $( "#menu_widget" ).toggle()
