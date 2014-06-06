@@ -187,26 +187,9 @@ class MainController < ApplicationController
       library = 'all'
     end
 
-    if params[:location] && params[:group]
-      @participants = Participant.where(home_library: home_library, club: club).where.not(inactive: true).all.order("id DESC")
-    end
-    
-    if params[:location] && params[:group].blank?
-      @participants = Participant.where(home_library: home_library).all.order("id DESC").where.not(inactive: true)
-    end
-    
-    if params[:location].blank? && params[:group]
-      @participants = Participant.where(club: club).all.order("id DESC").where.not(inactive: true)
-    end
-    
-    if params[:group].blank? && params[:location].blank?
-      @participants = Participant.where.not(inactive: true).all.order("id DESC")
-    end
+  @participants = patron_filter(params[:page], home_library, params[:group], params[:winner])
 
-    if params[:winner] == 'yes'
-      @participants = @participants.select {|p| p.awards.count >= 6 || (p.club == 'baby' && p.baby_complete == true) }
-      @participants = Kaminari.paginate_array(@participants).page(params[:page])
-    end
+
       
     participant_csv = CSV.generate do |csv|
         csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Awards Count', 'Email']
@@ -223,20 +206,34 @@ class MainController < ApplicationController
       @total_experience_count = p.awards.count + @total_experience_count
     end
 
-    @participants = @participants.page params[:page]
+    
+
+    
 
     respond_with do |format|
       format.html {
-        if params[:winner] == 'yes'
-          @participants = Kaminari.paginate_array(@participants).page(params[:page])
-        else
-          @participants = @participants.page params[:page]
-        end
+ 
       }
       format.csv { 
         send_data participant_csv 
       }
     end  
+  end
+
+  def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil)
+    
+    if winner.present?
+      adult_winners = Participant.joins(:awards).group("participants.id").having('count(participants.id) >= ?', 6) 
+      adult_winner_ids = []
+      adult_winners.each do |p|
+        adult_winner_ids = adult_winner_ids.push(p.id)
+      end
+    end
+    patrons = Participant.all.where(inactive: false)
+    patrons = patrons.all.where("id in (?) or baby_complete = ?", adult_winner_ids, true) if winner.present?
+    patrons = patrons.where(home_library: home_library) if home_library.present?
+    patrons = patrons.where(club: club) if club.present?
+    patrons = patrons.page(page_number)
   end
 
   def inactive_patrons
