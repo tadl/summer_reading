@@ -128,7 +128,7 @@ class MainController < ApplicationController
       @schools = @youth_schools.sort
       @grades = @youth_grades
     elsif @patron.club == "teen"
-      @teen = @teen_ages
+      @age = @teen_ages
       @grades = @teen_grades
       @schools = @teen_schools.sort
     elsif  @patron.club == "adult"
