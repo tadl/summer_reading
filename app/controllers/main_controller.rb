@@ -187,8 +187,8 @@ class MainController < ApplicationController
       library = 'all'
     end
 
-  @participants = patron_filter(params[:page], home_library, params[:group], params[:winner])
-
+    participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner])
+    @participants = participants_query[0]
 
       
     participant_csv = CSV.generate do |csv|
@@ -200,11 +200,9 @@ class MainController < ApplicationController
 
     @club_filter = club
     @location_filter = library
-    @participant_count = @participants.count 
-    @total_experience_count = 0
-    @participants.each do |p|
-      @total_experience_count = p.awards.count + @total_experience_count
-    end
+    @participant_count = participants_query[1]
+    @total_experience_count = participants_query[2]
+ 
 
     
 
@@ -220,8 +218,7 @@ class MainController < ApplicationController
     end  
   end
 
-  def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil)
-    
+  def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil)    
     if winner.present?
       adult_winners = Participant.joins(:awards).group("participants.id").having('count(participants.id) >= ?', 6) 
       adult_winner_ids = []
@@ -233,7 +230,13 @@ class MainController < ApplicationController
     patrons = patrons.all.where("id in (?) or baby_complete = ?", adult_winner_ids, true) if winner.present?
     patrons = patrons.where(home_library: home_library) if home_library.present?
     patrons = patrons.where(club: club) if club.present?
+    patron_count = patrons.count
+    expereience_count = 0
+    patrons.each do |p|
+      expereience_count = p.awards.count + expereience_count
+    end
     patrons = patrons.page(page_number)
+    return patrons, patron_count, expereience_count
   end
 
   def inactive_patrons
