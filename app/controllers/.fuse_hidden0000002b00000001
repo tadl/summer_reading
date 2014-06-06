@@ -130,7 +130,7 @@ class MainController < ApplicationController
     elsif @patron.club == "teen"
       @teen = @teen_ages
       @grades = @teen_grades
-      @schools = @teen_schools.sort
+      @schools = @yteen_schools.sort
     elsif  @patron.club == "adult"
       @age = @adult_ages
     end
@@ -187,27 +187,8 @@ class MainController < ApplicationController
       library = 'all'
     end
 
-    if params[:location] && params[:group]
-      @participants = Participant.where(home_library: home_library, club: club).where.not(inactive: true).all.order("id DESC")
-    end
-    
-    if params[:location] && params[:group].blank?
-      @participants = Participant.where(home_library: home_library).all.order("id DESC").where.not(inactive: true)
-    end
-    
-    if params[:location].blank? && params[:group]
-      @participants = Participant.where(club: club).all.order("id DESC").where.not(inactive: true)
-    end
-    
-    if params[:group].blank? && params[:location].blank?
-      @participants = Participant.where.not(inactive: true).all.order("id DESC")
-    end
-
-    if params[:winner] == 'yes'
-      @participants = @participants.select {|p| p.awards.count >= 6 || (p.club == 'baby' && p.baby_complete == true) }
-      @participants = Kaminari.paginate_array(@participants).page(params[:page])
-    end
-      
+    @participants = filters(home_library, params[:group], params[:winner])
+  
     participant_csv = CSV.generate do |csv|
         csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Awards Count', 'Email']
       @participants.each do |p|
@@ -230,7 +211,7 @@ class MainController < ApplicationController
         if params[:winner] == 'yes'
           @participants = Kaminari.paginate_array(@participants).page(params[:page])
         else
-          @participants = @participants.page params[:page]
+          @participants = @participants.page(params[:page])
         end
       }
       format.csv { 
@@ -363,6 +344,16 @@ class MainController < ApplicationController
      return card_value
   end
 
+  private
+
+    def filters(location = nil, group = nil, winner = nil)
+      result = Participant.includes([:experiences, :awards]) 
+      result = result.where.not(inactive: true)
+      result = result.where(:home_library => location) if location.present?
+      result = result.where(:club => group) if group.present?
+      result = result.where(:winner_check => true) if winner.present?
+      result = result.order("id DESC").page(params[:page])
+    end
 
 
 
