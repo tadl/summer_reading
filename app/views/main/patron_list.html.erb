@@ -1,19 +1,3 @@
-<script>
-jQuery(function(){
-
-$('input[name="club"][value="<%= @club_filter %>"]').attr('checked', 'checked');
-$('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'checked');
-
-<% if @winner == 'yes' %>
-  $('#winner').attr('checked', 'checked');
-<% else %>
-  $('#winner').attr('checked', false);
-<% end %>  
-
-})
-
-</script>
-
 <h2>
   Browsing
   <% if @club_filter == 'all' %>
@@ -34,19 +18,19 @@ $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'che
     <strong>Group:</strong>
   </li>
   <li>
-    <input type="radio" name="club" value="all">All
+    <input type="radio" name="club" value="all" <% if @club_filter == 'all' %> checked <% end %> >All
   </li> 
   <li>
-    <input type="radio" name="club" value="baby">Baby
+    <input type="radio" name="club" value="baby" <% if @club_filter == 'baby' %> checked <% end %> >Baby
   </li>
   <li>
-    <input type="radio" name="club" value="youth">Youth
+    <input type="radio" name="club" value="youth" <% if @club_filter == 'youth' %> checked <% end %> >Youth
   </li>
   <li>
-    <input type="radio" name="club" value="teen">Teen
+    <input type="radio" name="club" value="teen" <% if @club_filter == 'teen' %> checked <% end %> >Teen
   </li>
   <li>
-    <input type="radio" name="club" value="adult">Adult
+    <input type="radio" name="club" value="adult" <% if @club_filter == 'adult' %> checked <% end %> >Adult
   </li> 
 </ul>
 
@@ -56,28 +40,28 @@ $('input[name="library"][value="<%= @location_filter %>"]').attr('checked', 'che
     <strong>Location:</strong>
   </li>
   <li>
-    <input type="radio" name="library" value="all">All
+    <input type="radio" name="library" value="all" <% if @location_filter == 'all' %> checked <% end %> >All
   </li> 
   <li>
-    <input type="radio" name="library" value="woodmere">Woodmere
+    <input type="radio" name="library" value="woodmere" <% if @location_filter == 'woodmere' %> checked <% end %> >Woodmere
   </li>
   <li>
-    <input type="radio" name="library" value="kingsley">Kingsley
+    <input type="radio" name="library" value="kingsley" <% if @location_filter == 'kingsley' %> checked <% end %> >Kingsley
   </li> 
   <li>
-    <input type="radio" name="library" value="interlochen">Interlochen
+    <input type="radio" name="library" value="interlochen" <% if @location_filter == 'interlochen' %> checked <% end %> > Interlochen
   </li> 
   <li>
-    <input type="radio" name="library" value="peninsula">Peninsula
+    <input type="radio" name="library" value="peninsula" <% if @location_filter == 'peninsula' %> checked <% end %> >Peninsula
   </li> 
   <li>
-    <input type="radio" name="library" value="fife lake">Fife Lake
+    <input type="radio" name="library" value="fife lake" <% if @location_filter == 'fife lake' %> checked <% end %> >Fife Lake
   </li> 
   <li>
-    <input type="radio" name="library" value="east bay">East Bay
+    <input type="radio" name="library" value="east bay" <% if @location_filter == 'east bay' %> checked <% end %> >East Bay
   </li> 
 </ul>
-<input type="checkbox" id="winner">Limit to Award Eligible Patrons
+<input type="checkbox" id="winner" <% if @winner == 'yes' %> checked <% end %> >Limit to Award Eligible Patrons
 <br>
 <button onclick="filter_patrons()"> Apply Filter</button>
 <button onclick="download_as_csv()"> Download as CSV </button>
