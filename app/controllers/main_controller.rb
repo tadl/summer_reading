@@ -88,6 +88,7 @@ class MainController < ApplicationController
     club = CGI.unescapeHTML(params[:club])
     email = CGI.unescapeHTML(params[:email])
     library_card_raw = CGI.unescapeHTML(params[:library_card])
+    got_kit = params[:got_kit]
     library_card_clean = _normalize_card(library_card_raw) rescue library_card_raw
     valid_values = true
     error_message = 'We noticed the following problems:'
@@ -104,6 +105,9 @@ class MainController < ApplicationController
       p.club = club
       p.email = email
       p.library_card = library_card_clean
+      if current_user && got_kit == 'true'
+        p.got_reading_kit = true
+      end
       p.save
     end
 
@@ -189,8 +193,7 @@ class MainController < ApplicationController
 
     participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner])
     @participants = participants_query[0]
-
-      
+ 
     participant_csv = CSV.generate do |csv|
         csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Awards Count', 'Email']
       @participants.each do |p|
@@ -203,14 +206,8 @@ class MainController < ApplicationController
     @participant_count = participants_query[1]
     @total_experience_count = participants_query[2]
  
-
-    
-
-    
-
     respond_with do |format|
       format.html {
- 
       }
       format.csv { 
         send_data participant_csv 
