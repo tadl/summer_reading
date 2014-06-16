@@ -190,32 +190,31 @@ class MainController < ApplicationController
     else
       library = 'all'
     end
-
-    participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner])
-    @participants = participants_query[0]
- 
-    participant_csv = CSV.generate do |csv|
-        csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Awards Count', 'Email']
-      @participants.each do |p|
-        csv << [p.first_name, p.last_name, p.age, p.club, p.home_library, p.awards.count, p.email,]
-      end
-    end
-
-    @club_filter = club
-    @location_filter = library
-    @participant_count = participants_query[1]
-    @total_experience_count = participants_query[2]
  
     respond_with do |format|
       format.html {
+        participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner])
+        @participants = participants_query[0]
+        @club_filter = club
+        @location_filter = library
+        @participant_count = participants_query[1]
+        @total_experience_count = participants_query[2]
       }
       format.csv { 
+        participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner], true)
+        @participants = participants_query[0]
+        participant_csv = CSV.generate do |csv|
+          csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Library Card #', 'School', 'Experience Count', 'Email']
+          @participants.each do |p|
+            csv << [p.first_name, p.last_name, p.age, p.club, p.home_library, p.library_card, p.school, p.awards.count, p.email,]
+          end
+        end
         send_data participant_csv 
       }
     end  
   end
 
-  def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil)    
+  def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil, csv = nil)    
     if winner.present?
       adult_winners = Participant.joins(:awards).group("participants.id").having('count(participants.id) >= ?', 6) 
       adult_winner_ids = []
@@ -232,7 +231,9 @@ class MainController < ApplicationController
     patrons.each do |p|
       expereience_count = p.awards.count + expereience_count
     end
-    patrons = patrons.page(page_number)
+    unless csv.present?
+      patrons = patrons.page(page_number)
+    end
     return patrons, patron_count, expereience_count
   end
 
