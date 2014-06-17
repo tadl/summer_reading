@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get "main/index"
   get "main/admin_manage"
   match "main/sign_up/:group", to: "main#sign_up", via: [:get, :post]
+  match "lookup", to: "main#lookup", via: [:get, :post]
   get "main/register"
   get "main/edit_patron"
   get "main/update_patron"

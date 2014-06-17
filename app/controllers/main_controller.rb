@@ -3,8 +3,9 @@ class MainController < ApplicationController
   require 'csv'
   
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :sign_up, :register]
-  before_action :check_for_approved, :except => [:index, :sign_up, :register, :admin_manage, :change_admin_role] 
+  before_action :authenticate_user!, :except => [:index, :sign_up, :register, :lookup]
+  before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role] 
+  skip_before_filter :verify_authenticity_token, :only => [:lookup] 
   respond_to :html, :json
   
   def shared_variables
@@ -334,6 +335,10 @@ class MainController < ApplicationController
     @search = URI.unescape(params[:card])
     clean_card = _normalize_card(@search) rescue @search
     @participants = Participant.search_by_card(clean_card).where.not(inactive: true).page params[:page]
+  end
+
+  def lookup
+    @cards = params[:cards].split(',') rescue []
   end
 
   def _normalize_card(card_value)
