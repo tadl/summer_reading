@@ -18,4 +18,14 @@ class Participant < ActiveRecord::Base
 		end
 	end
 
+	def needs_to_win
+		awards_earned = self.awards.count
+		awards_needed = 6 - awards_earned
+		if awards_needed <= 0 
+			return 'won'
+		else
+			return	awards_needed
+		end
+	end
+
 end

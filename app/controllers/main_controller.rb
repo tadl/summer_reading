@@ -338,7 +338,8 @@ class MainController < ApplicationController
   end
 
   def lookup
-    @cards = params[:cards].split(',') rescue []
+     @cards = params[:cards].split(',') rescue [] 
+     @participants = Participant.where(library_card: @cards).where.not(inactive: true).all.order("id DESC")
   end
 
   def _normalize_card(card_value)

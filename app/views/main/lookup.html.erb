@@ -1,7 +1,39 @@
-<h2> Test Lookup </h2>
+<h2> Summer Reading Club Progress </h2>
 
-You passed the following library cards:
-<br>
-<% @cards.each do |c| %>
-	<%= c %> <br>
+<% if @participants.count != 0 %>
+
+	We found <%= pluralize(@participants.count, 'participant') %> registered with this account. <br>
+	<% @participants.each do |p| %>
+		<h3><%= p.first_name %>:</h3> 
+		<%if p.club != 'baby' %> 
+			<%= p.first_name %> has earned <%= pluralize(p.awards.count, 'experience') %> 
+			<% if p.needs_to_win != 'won' %>
+				and needs to report <%= pluralize(p.needs_to_win, 'more experience') %> to earn the final award and be eligible for the final prize drawing.
+			<% else %>
+				and has earned a final award and is in a drawing for the final prize.
+			<% end %>
+			<br>
+		    <% p.awards.each do |a| %>
+            	<div class="patron_badge center">
+               	<img src="<%= a.experience.image_url %>" class="award">
+               	<br>
+               	<%= a.experience.name %>
+             	</div> 
+        	<% end %>
+        	<div class="clear_div"></div>    
+		<% else %>
+		<%= p.first_name %> is registered for the Read to Me Program
+		<% if p.baby_complete != true %>
+				but has not turned in a completed activity sheet.
+		<% else %>
+				and has turned in a completed activity sheet and is in a drawing for the final prize.
+		<% end %>
+		<br>
+		<% end %>
+	<% end %>
+
+<% else %>
+	
+	Sorry. We didn't find any participants registered with your library card number. 
+
 <% end %>
