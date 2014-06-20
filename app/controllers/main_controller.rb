@@ -227,8 +227,8 @@ class MainController < ApplicationController
         adult_winner_ids = adult_winner_ids.push(p.id)
       end
     end
-    patrons = Participant.all.includes(:awards).where(inactive: false).order("id DESC")
-    patrons = patrons.all.where("id in (?) or baby_complete = ?", adult_winner_ids, true) if winner.present?
+    patrons = Participant.includes(:awards).where(inactive: false).order("id DESC")
+    patrons = patrons.where("id in (?) or baby_complete = ?", adult_winner_ids, true) if winner.present?
     patrons = patrons.where(home_library: home_library) if home_library.present?
     patrons = patrons.where(club: club) if club.present?
     patron_count = patrons.count
