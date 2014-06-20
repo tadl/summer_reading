@@ -5,6 +5,10 @@ class MainController < ApplicationController
   before_filter :shared_variables
   before_action :authenticate_user!, :except => [:index, :sign_up, :register, :lookup]
   before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role] 
+  before_action :block_non_tadl_user!, :only => [:edit_patron]
+  before_filter(:only => :patron_list) do |controller|
+   block_non_tadl_user! unless controller.request.format.html?
+  end
   skip_before_filter :verify_authenticity_token, :only => [:lookup] 
   respond_to :html, :json
   

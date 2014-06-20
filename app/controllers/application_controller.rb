@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
       end
   end
 
+  def block_non_tadl_user!
+      if current_user.email == 'srcvol@tadl.org'
+        redirect_to root_url, :alert => 'Please ask a TADL staff member if you need to make changes to an account or need to download information in CSV format'
+      end
+  end
+
   def check_for_admin
     super_users = ENV["super_users"].split(',')
 
