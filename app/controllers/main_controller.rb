@@ -219,7 +219,7 @@ class MainController < ApplicationController
     end  
   end
 
-  def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil, csv = nil)    
+   def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil, csv = nil)    
     if winner.present?
       adult_winners = Participant.joins(:awards).group("participants.id").having('count(participants.id) >= ?', 6) 
       adult_winner_ids = []
@@ -232,14 +232,16 @@ class MainController < ApplicationController
     patrons = patrons.where(home_library: home_library) if home_library.present?
     patrons = patrons.where(club: club) if club.present?
     patron_count = patrons.count
-    expereience_count = 0
+    patron_ids = []
     patrons.each do |p|
-      expereience_count = p.awards.count + expereience_count
+      patron_ids = patron_ids.push(p.id)
     end
+     experience_count = Award.where("participant_id in (?)", patron_ids).count
+    
     unless csv.present?
       patrons = patrons.page(page_number)
     end
-    return patrons, patron_count, expereience_count
+    return patrons, patron_count, experience_count
   end
 
   def inactive_patrons

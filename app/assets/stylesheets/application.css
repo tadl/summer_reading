@@ -389,5 +389,22 @@ a:hover {
 	color: #000;
 }
 
+.important_button{
+  background: #3498db;
+  padding: 10px 10px 10px 10px;
+  color: #fff;
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+}
+
+.important_button:hover{
+    background: #3cb0fd;
+    background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+    background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+}
 
 
