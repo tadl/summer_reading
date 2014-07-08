@@ -227,7 +227,7 @@ class MainController < ApplicationController
       winners = ''
     end
 
-    csv_description = 'CSV contails users' + winners + ' at location: ' + library + ' in club: ' + club
+    csv_description = 'CSV contains users' + winners + ' at location: ' + library + ' in club: ' + club
     participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner], true)
     @participants = participants_query[0]
     @user_email = current_user.email
