@@ -378,7 +378,12 @@ function filter_patrons(){
 
 function download_as_csv(){
   var filters = window.location.search;
-  var url = '/main/patron_list.csv' + filters
-  window.open(url)
+  var url = '/main/patron_list_export.json' + filters
+  $.get(url, function(data){
+  }).done(function() {
+      alert('An email containing the requested data will be sent to your tadl.org email account within the next two minutes.'); 
+  }).fail(function() {
+      alert('Error: You do not have permission to access this feature'); 
+  });
 
 }

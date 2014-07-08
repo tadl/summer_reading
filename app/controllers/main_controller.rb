@@ -5,10 +5,7 @@ class MainController < ApplicationController
   before_filter :shared_variables
   before_action :authenticate_user!, :except => [:index, :sign_up, :register, :lookup]
   before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role] 
-  before_action :block_non_tadl_user!, :only => [:edit_patron]
-  before_filter(:only => :patron_list) do |controller|
-   block_non_tadl_user! unless controller.request.format.html?
-  end
+  before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
   skip_before_filter :verify_authenticity_token, :only => [:lookup] 
   respond_to :html, :json
   
@@ -179,7 +176,6 @@ class MainController < ApplicationController
 
 
   def patron_list
-
     home_library = params[:location].try(:titleize)
     library = params[:location]
     @winner = params[:winner]
@@ -205,18 +201,40 @@ class MainController < ApplicationController
         @participant_count = participants_query[1]
         @total_experience_count = participants_query[2]
       }
-      format.csv { 
-        participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner], true)
-        @participants = participants_query[0]
-        participant_csv = CSV.generate do |csv|
-          csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Library Card #', 'School', 'Experience Count', 'Email']
-          @participants.each do |p|
-            csv << [p.first_name, p.last_name, p.age, p.club, p.home_library, p.library_card, p.school, p.awards.count, p.email,]
-          end
-        end
-        send_data participant_csv 
-      }
     end  
+  end
+
+  def patron_list_export
+    home_library = params[:location].try(:titleize)
+    library = params[:location]
+    @winner = params[:winner]
+
+    if params[:group]
+      club = params[:group]
+    else
+      club = 'all'
+    end
+
+    if params[:location]
+      library = params[:location]
+    else
+      library = 'all'
+    end
+
+    if params[:winner] == 'yes'
+      winners = ' who are eligible for final prize '
+    else
+      winners = ''
+    end
+
+    csv_description = 'CSV contails users' + winners + ' at location: ' + library + ' in club: ' + club
+    participants_query = patron_filter(params[:page], home_library, params[:group], params[:winner], true)
+    @participants = participants_query[0]
+    @user_email = current_user.email
+    SendCSVJob.new.async.perform(@user_email, @participants, csv_description)
+    respond_with do |format|
+      format.json { render :json =>{message: 'complete'}}
+    end
   end
 
    def patron_filter(page_number = 1, home_library = nil, club = nil, winner = nil, csv = nil)    

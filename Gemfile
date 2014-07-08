@@ -37,6 +37,7 @@ gem 'font-awesome-sass'
 gem 'kaminari'
 gem 'unicorn'
 gem 'jquery-turbolinks'
+gem 'sucker_punch'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
