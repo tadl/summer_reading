@@ -31,7 +31,8 @@
 
 <div id="register_buttons">
 	<h2 class="registration_box_title">Experience Summer Reading Club 2014</h2>
-	<ul>
+	<% if current_user %>
+  <ul>
 		<li>
 			<a href="/main/sign_up/baby">
 			<div class="register_button">
@@ -65,4 +66,7 @@
 			</a>
 		</li>
 	</ul>
+  <% else %>
+  <p style="font-size: 20px; margin-top: 20px; margin-left: 10px; margin-right: 10px; "> Registration has closed. <a href="http://www.tadl.org/events/556">Check out upcoming Summer Reading events here</a>, <a href="http://www.tadl.org/locations">report your experiences at your library</a>, and have fun!</p> 
+  <% end %>
 </div>

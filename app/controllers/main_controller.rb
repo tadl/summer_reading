@@ -3,7 +3,7 @@ class MainController < ApplicationController
   require 'csv'
   
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :sign_up, :register, :lookup]
+  before_action :authenticate_user!, :except => [:index, :lookup]
   before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
   skip_before_filter :verify_authenticity_token, :only => [:lookup] 
