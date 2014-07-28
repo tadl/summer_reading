@@ -179,6 +179,7 @@ class MainController < ApplicationController
     home_library = params[:location].try(:titleize)
     library = params[:location]
     @winner = params[:winner]
+    expedition_winner = params[:exp_winner]
 
     if params[:group]
       club = params[:group]
@@ -260,6 +261,21 @@ class MainController < ApplicationController
       patrons = patrons.page(page_number)
     end
     return patrons, patron_count, experience_count
+  end
+
+  def exp_winners
+    @participants = Participant.includes(:awards).where(inactive: false).where(:awards => {:experience_id => 1})
+    participant_csv = CSV.generate do |csv|
+      csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Library Card #', 'School', 'Experience Count', 'Email']
+      @participants.each do |p|
+        csv << [p.first_name, p.last_name, p.age, p.club, p.home_library, p.library_card, p.school, p.awards.count, p.email,]
+      end
+    end
+    respond_with do |format|
+      format.csv { 
+        send_data participant_csv 
+      }
+    end  
   end
 
   def inactive_patrons

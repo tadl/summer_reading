@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get "main/change_admin_role"
   get "main/patron_list"
   get "main/patron_list_export"
+  get "main/exp_winners"
   get "main/inactive_patrons"
   get "main/experience_list"
   get "main/award_list"
