@@ -25,15 +25,16 @@ class ApplicationController < ActionController::Base
 
   def check_for_admin
     super_users = ENV["super_users"].split(',')
-
     if super_users.include? @current_user.email
       return true
     end
   end
 
   def check_for_approved
-    super_users = ENV["super_users"].split(',')
+    super_users = ENV["super_users"].split(',') 
     if current_user.role == 'approved'
+      return true
+    elsif super_users.include? @current_user.email
       return true
     end
   end

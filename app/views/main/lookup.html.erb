@@ -1,7 +1,5 @@
 <h2> Summer Reading Club Progress </h2>
-
 <% if @participants.count != 0 %>
-
 	We found <%= pluralize(@participants.count, 'participant') %> registered with this account. <br>
 	<% @participants.each do |p| %>
 		<h3><%= p.first_name %>:</h3> 

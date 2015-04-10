@@ -38,6 +38,7 @@ gem 'kaminari'
 gem 'unicorn'
 gem 'jquery-turbolinks'
 gem 'sucker_punch'
+gem 'mechanize'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

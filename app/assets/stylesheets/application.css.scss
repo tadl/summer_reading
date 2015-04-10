@@ -11,7 +11,6 @@
  * file per style scope.
  *
  *= require_tree .
- *= require font-awesome
  *= require_self
  */
 
@@ -408,3 +407,5 @@ a:hover {
 }
 
 
+@import "font-awesome-sprockets";
+@import "font-awesome";
