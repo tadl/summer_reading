@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get "main/mark_inactive"
   get "main/search_by_name"
   get "main/search_by_card"
+  get "main/self_reward_form"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match 'auth/failure', to: redirect('/'), via: [:get, :post]
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]

@@ -1,0 +1,21 @@
+<div id="award_patron_<%= patron.id %>">
+<h3>Select an experience to reward:</h3>
+<% patron.unearned_experiences.each_slice(4) do |slice| %>
+  <% slice.each do |experience|%>
+  
+    <div class="patron_badge">
+      <img src="<%= experience.image_url %>" class="award">
+      <br>
+      <%= experience.name %>
+      <br>
+      <%= experience.description %>
+      <br>
+      <%= link_to "reward", :controller => :main, :action => :self_reward_form, :patron => patron.id, :experience => experience.id, :remote => true %>
+    </div>
+  <% end %>
+  <div class="clear_div"></div>     
+<% end %>
+</div>
+<div id="award_form_<%= patron.id %>">
+
+</div>          

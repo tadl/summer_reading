@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  pool: 5
+
+development:
+  <<: *default
+  database: summer_reading-development
+  username: postgres
+  password: <%= ENV['username: postgres
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+POSTGRES_PASSWORD'] %>
+
+test:
+  <<: *default
+  database: summer_reading-test
+  username: action
+
+

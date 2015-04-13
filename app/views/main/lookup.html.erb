@@ -1,41 +1,53 @@
 <h2> Summer Reading Club Progress </h2>
-<% if @participants.count != 0 %>
-	We found <%= pluralize(@participants.count, 'participant') %> registered with this account. <br>
-	<% @participants.each do |p| %>
-		<h3><%= p.first_name %>:</h3> 
-		<%if p.club != 'baby' %> 
-			<%= p.first_name %> has earned <%= pluralize(p.awards.count, 'experience') %> 
-			<% if p.needs_to_win != 'won' %>
-				and needs to report <%= pluralize(p.needs_to_win, 'more experience') %> to earn the final award and be eligible for the final prize drawing.
+
+<% if @logged_into_eg == true %>
+	<% if @participants.count != 0 %>
+		We found <%= pluralize(@participants.count, 'participant') %> registered with this account. <br>
+		<% @participants.each do |p| %>
+			<h3><%= p.first_name %>:</h3> 
+			<%if p.club != 'baby' %> 
+				<%= p.first_name %> has earned <%= pluralize(p.awards.count, 'experience') %> 
+				<% if p.needs_to_win != 'won' %>
+					and needs to report <%= pluralize(p.needs_to_win, 'more experience') %> to earn the final award and be eligible for the final prize drawing.
+				<% else %>
+					and has earned a final award and is in a drawing for the final prize.
+				<% end %>
+				<br>
+			    <% p.awards.each do |a| %>
+	            	<div class="patron_badge center">
+	               	<img src="<%= a.experience.image_url %>" class="award">
+	               	<br>
+	               	<%= a.experience.name %>
+	             	</div> 
+	        	<% end %>
+	        	<div class="clear_div"></div>
+	        	<p> <a onclick="show_award_div('<%= p.id %>')">Click here to add a new experience for <%= p.first_name %></a> </p>
+	        	<div id="award_<%= p.id%>" style="display:none;">
+	        		<%= render 'self_award', :patron => p %>
+	        	</div>
 			<% else %>
-				and has earned a final award and is in a drawing for the final prize.
+			<%= p.first_name %> is registered for the Read to Me Program
+			<% if p.baby_complete != true %>
+					but has not turned in a completed activity sheet.
+			<% else %>
+					and has turned in a completed activity sheet and is in a drawing for the final prize.
 			<% end %>
 			<br>
-		    <% p.awards.each do |a| %>
-            	<div class="patron_badge center">
-               	<img src="<%= a.experience.image_url %>" class="award">
-               	<br>
-               	<%= a.experience.name %>
-             	</div> 
-        	<% end %>
-        	<div class="clear_div"></div>    
-		<% else %>
-		<%= p.first_name %> is registered for the Read to Me Program
-		<% if p.baby_complete != true %>
-				but has not turned in a completed activity sheet.
-		<% else %>
-				and has turned in a completed activity sheet and is in a drawing for the final prize.
+			<% end %>
 		<% end %>
-		<br>
-		<% end %>
-	<% end %>
-
-<% else %>
 	
-	<p>Sorry. We didn't find any participants registered with your library card number.</p>
-
-    <p>Already registered but not seeing your progress here? Ask to add your library card the next time you come in to the library to report on your experiences!</p>
-
-    <p>Not yet registered? <a href="https://summer.tadl.org/">Sign up for Summer Reading</a>!</p>
-
+	<% else %>
+		
+		<p>Sorry. We didn't find any participants registered with your library card number.</p>
+	
+	    <p>Already registered but not seeing your progress here? Ask to add your library card the next time you come in to the library to report on your experiences!</p>
+	
+	    <p>Not yet registered? <a href="https://summer.tadl.org/">Sign up for Summer Reading</a>!</p>
+	
+	<% end %>
+<% else %>
+	<p>You must be logged into your library account to check your summer reading progress.</p>
+	
+	<p>Please <a href="https://summer.tadl.org/">login at catalog.tadl.org</a>.</p>
 <% end %>
+

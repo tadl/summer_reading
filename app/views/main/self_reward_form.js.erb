@@ -1,0 +1,4 @@
+var target_div = "#award_form_" + <%= @patron.id %>
+var div_hide = "#award_patron_" + <%= @patron.id %>
+$(div_hide).hide();
+$(target_div).html("<%= escape_javascript(render partial: 'self_award_form') %>"); 

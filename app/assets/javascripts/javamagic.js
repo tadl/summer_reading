@@ -387,3 +387,15 @@ function download_as_csv(){
   });
 
 }
+
+function show_award_div(patron){
+  var div_show = "#award_" + patron
+  $(div_show).show(); 
+}
+
+function self_reward_cancel(patron){
+  var target_div = "#award_form_" + patron
+  var div_show = "#award_patron_" + patron
+  $(div_show).show(); 
+  $(target_div).html("");
+}

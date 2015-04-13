@@ -364,15 +364,37 @@ class MainController < ApplicationController
   end
 
   def lookup
-     session_cookie =  cookies['shared_ses'].to_s
-     request_url = 'https://www.tadl.org/summer-redirect/summer-redirect.cgi?m=jwt'
-     agent = Mechanize.new
-     cookie = Mechanize::Cookie.new :domain => '.tadl.org', :name => 'shared_ses', :value => session_cookie , :path => '/'
-     agent.cookie_jar << cookie
-     response = agent.get(request_url).body
-     json_parsed = JSON.parse response
-     cards = json_parsed["cards"].split(',') rescue [] 
-     @participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
+    check_patron = check_patron()
+     @logged_into_eg = check_patron[0] 
+     @participants = check_patron[1]
+  end
+
+  def self_reward_form
+    @patron = Participant.find(params[:patron])
+    @experience = Experience.find(params[:experience])
+    respond_to do |format|
+        format.js
+    end
+  end
+
+
+  def check_patron
+    session_cookie =  cookies['shared_ses'].to_s
+    request_url = 'https://www.tadl.org/summer-redirect/summer-redirect.cgi?m=jwt'
+    agent = Mechanize.new
+    cookie = Mechanize::Cookie.new :domain => '.tadl.org', :name => 'shared_ses', :value => session_cookie , :path => '/'
+    agent.cookie_jar << cookie
+    response = agent.get(request_url).body
+    json_parsed = JSON.parse response rescue nil
+    if json_parsed != nil
+      logged_into_eg = true
+      cards = json_parsed["cards"].split(',') rescue []
+      participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
+    else
+      logged_into_eg = false
+      participants = nil
+    end
+    return logged_into_eg, participants 
   end
 
   def _normalize_card(card_value)
