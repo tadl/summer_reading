@@ -393,6 +393,20 @@ function show_award_div(patron){
   $(div_show).show(); 
 }
 
+function self_reward(patron, experience, card){
+  var read = $('#award_read').val();
+  var did =  $('#award_did').val();
+  var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card
+  $.get(url, function(data){
+  }).done(function(){
+    Turbolinks.visit(document.URl)
+  }).fail(function(){
+    Turbolinks.visit(document.URl)
+  });
+
+}
+
+
 function self_reward_cancel(patron){
   var target_div = "#award_form_" + patron
   var div_show = "#award_patron_" + patron

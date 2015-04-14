@@ -19,7 +19,6 @@ Rails.application.routes.draw do
   get "main/change_admin_role"
   get "main/patron_list"
   get "main/patron_list_export"
-  get "main/exp_winners"
   get "main/inactive_patrons"
   get "main/experience_list"
   get "main/award_list"
@@ -32,6 +31,7 @@ Rails.application.routes.draw do
   get "main/search_by_name"
   get "main/search_by_card"
   get "main/self_reward_form"
+  get "/main/self_award_patron"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match 'auth/failure', to: redirect('/'), via: [:get, :post]
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]

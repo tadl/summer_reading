@@ -5,10 +5,10 @@ class MainController < ApplicationController
   require 'json'
   
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :lookup]
-  before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role] 
+  before_action :authenticate_user!, :except => [:index, :lookup, :self_reward_form, :self_award_patron, :check_patron]
+  before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
-  skip_before_filter :verify_authenticity_token, :only => [:lookup] 
+  skip_before_filter :verify_authenticity_token, :only => [:lookup, :self_reward_form, :self_award_patron, :check_patron] 
   respond_to :html, :json
   
   def shared_variables
@@ -181,7 +181,6 @@ class MainController < ApplicationController
     home_library = params[:location].try(:titleize)
     library = params[:location]
     @winner = params[:winner]
-    expedition_winner = params[:exp_winner]
 
     if params[:group]
       club = params[:group]
@@ -265,21 +264,6 @@ class MainController < ApplicationController
     return patrons, patron_count, experience_count
   end
 
-  def exp_winners
-    @participants = Participant.includes(:awards).where(inactive: false).where(:awards => {:experience_id => 1})
-    participant_csv = CSV.generate do |csv|
-      csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Library Card #', 'School', 'Experience Count', 'Email']
-      @participants.each do |p|
-        csv << [p.first_name, p.last_name, p.age, p.club, p.home_library, p.library_card, p.school, p.awards.count, p.email,]
-      end
-    end
-    respond_with do |format|
-      format.csv { 
-        send_data participant_csv 
-      }
-    end  
-  end
-
   def inactive_patrons
     @participants = Participant.where(inactive: true).all.order("id DESC").page(params[:page])
   end
@@ -309,6 +293,28 @@ class MainController < ApplicationController
     respond_with do |format|
         format.json { render :json =>{message: message}}
     end 
+  end
+
+  def self_award_patron
+    identify = check_patron()
+    if identify[2].include?(params[:card])
+      if Award.where(:participant_id => params[:participant], :experience_id => params[:experience] ).blank?
+        a = Award.new
+        a.participant_id = params[:participant]
+        a.experience_id = params[:experience]
+        a.did = params[:notes]
+        a.read = params[:read]
+        a.save
+        message = "success"
+      else
+        message = "award was already granted"
+      end
+    else
+        message = "you do not have access to this account"
+    end
+    respond_with do |format|
+      format.json { render :json =>{message: message}}
+    end
   end
 
   def revoke_award
@@ -410,7 +416,7 @@ class MainController < ApplicationController
       logged_into_eg = false
       participants = nil
     end
-    return logged_into_eg, participants 
+    return logged_into_eg, participants, cards 
   end
 
   def _normalize_card(card_value)
