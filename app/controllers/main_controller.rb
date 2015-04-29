@@ -1,14 +1,15 @@
 class MainController < ApplicationController
+  include Webhookable
   require 'uri'
   require 'csv'
   require 'mechanize'
   require 'json'
-  
+
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :lookup, :self_reward_form, :self_award_patron, :check_patron]
-  before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron] 
+  before_action :authenticate_user!, :except => [:index, :lookup, :self_reward_form, :self_award_patron, :check_patron, :closing]
+  before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
-  skip_before_filter :verify_authenticity_token, :only => [:lookup, :self_reward_form, :self_award_patron, :check_patron] 
+  skip_before_filter :verify_authenticity_token, :only => [:lookup, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   respond_to :html, :json
   
   def shared_variables
@@ -444,7 +445,16 @@ class MainController < ApplicationController
      return card_value
   end
 
-
-
-
+  def closing
+    response = Twilio::TwiML::Response.new do |r|
+        r.Pause :length => '2'
+        r.Play :digits => 'w44534'
+        r.Pause :length => '2'
+        r.Play :digits => 'w921'
+        r.Pause :length => '2'
+        r.Say 'Hello Scott.  You are the best. Hello Scott.  You are the best'
+        r.Pause :length => '3'
+      end
+    render_twiml response
+  end
 end
