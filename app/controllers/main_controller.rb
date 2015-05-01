@@ -446,15 +446,37 @@ class MainController < ApplicationController
   end
 
   def closing
-    response = Twilio::TwiML::Response.new do |r|
-        r.Pause :length => '2'
-        r.Play :digits => 'w44534'
-        r.Pause :length => '2'
-        r.Play :digits => 'w921'
-        r.Pause :length => '2'
-        r.Say 'Hello Scott.  You are the best. Hello Scott.  You are the best'
-        r.Pause :length => '3'
+    message_type = params[:message]
+    if params[:message] != '59'
+      if message_type == '45'
+        filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/15.mp3'
+      elsif message_type == '50'
+        filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/10.mp3'
+      elsif message_type == '30'
+        filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/5.mp3'
       end
-    render_twiml response
+      response = Twilio::TwiML::Response.new do |r|
+          r.Pause :length => '2'
+          r.Play :digits => 'w44534'
+          r.Pause :length => '2'
+          r.Play :digits => 'w921'
+          r.Pause :length => '2'
+          r.Play  filename
+          r.Pause :length => '3'
+        end
+      render_twiml response
+    elsif params[:message] == '59'
+      filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/closed.mp3'
+      response = Twilio::TwiML::Response.new do |r|
+          r.Pause :length => '30'
+          r.Play :digits => 'w44534'
+          r.Pause :length => '25'
+          r.Play :digits => 'w921'
+          r.Pause :length => '2'
+          r.Play filename
+          r.Pause :length => '3'
+        end
+      render_twiml response
+    end
   end
 end
