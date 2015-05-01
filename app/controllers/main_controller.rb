@@ -452,7 +452,7 @@ class MainController < ApplicationController
         filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/15.mp3'
       elsif message_type == '50'
         filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/10.mp3'
-      elsif message_type == '30'
+      elsif message_type == '55'
         filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/5.mp3'
       end
       response = Twilio::TwiML::Response.new do |r|
