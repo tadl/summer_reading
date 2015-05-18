@@ -387,9 +387,14 @@ class MainController < ApplicationController
   end
 
   def lookup
-    check_patron = check_patron()
-     @logged_into_eg = check_patron[0] 
-     @participants = check_patron[1]
+     cards = auth(params[:token]).split(',') rescue []
+     if cards != nil
+       @logged_into_eg = true
+       @participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
+     else
+       @logged_into_eg = false
+       @participants = nil
+     end
   end
 
   def self_reward_form
@@ -400,25 +405,6 @@ class MainController < ApplicationController
     end
   end
 
-
-  def check_patron
-    session_cookie =  cookies['shared_ses'].to_s
-    request_url = 'https://www.tadl.org/summer-redirect/summer-redirect.cgi?m=jwt'
-    agent = Mechanize.new
-    cookie = Mechanize::Cookie.new :domain => '.tadl.org', :name => 'shared_ses', :value => session_cookie , :path => '/'
-    agent.cookie_jar << cookie
-    response = agent.get(request_url).body
-    json_parsed = JSON.parse response rescue nil
-    if json_parsed != nil
-      logged_into_eg = true
-      cards = json_parsed["cards"].split(',') rescue []
-      participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
-    else
-      logged_into_eg = false
-      participants = nil
-    end
-    return logged_into_eg, participants, cards 
-  end
 
   def _normalize_card(card_value)
     # It is entirely possible that this method belongs somewhere else,

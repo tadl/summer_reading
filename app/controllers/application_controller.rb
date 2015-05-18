@@ -39,4 +39,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # JWT Stuff
+
+  def auth(token)
+    begin
+      secret = ENV['JWT_SECRET']
+      decoded_token = JWT.decode(token, secret, false)
+      @user = decoded_token
+      cards = @user[0]["http://tadl.org/patron-cards"]
+      return cards
+    rescue JWT::DecodeError
+      error = JWT::DecodeError
+      return nil
+    end
+  end
+
 end

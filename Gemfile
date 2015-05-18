@@ -40,6 +40,7 @@ gem 'jquery-turbolinks'
 gem 'sucker_punch'
 gem 'mechanize'
 gem 'twilio-ruby'
+gem 'jwt'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

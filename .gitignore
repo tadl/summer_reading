@@ -16,3 +16,4 @@
 /log/*.log
 /tmp
 /*._.DS_store
+/.fuse_*
