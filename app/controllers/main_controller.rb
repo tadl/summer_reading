@@ -22,7 +22,8 @@ class MainController < ApplicationController
     @youth_grades = ['Pre-School','Kindergarten', 1, 2, 3, 4, 5, 6, 7]
 
     @libraries = ['Woodmere','Kingsley','Interlochen','East Bay','Peninsula','Fife Lake']
-    
+    @clubs = ['baby', 'youth', 'teen', 'adult']
+    @all_ages = [*0..105]
     @baby_ages = [*0..3]
     @youth_ages = [*4..12]
     @teen_ages = [*13..19]
@@ -130,18 +131,15 @@ class MainController < ApplicationController
   def edit_patron
     @patron = Participant.find(params[:id])
     @group_variable = @patron.club
+    @age = @all_ages
     if @patron.club == "baby"
-      @age = @baby_ages
     elsif @patron.club == "youth"
-      @age = @youth_ages
       @schools = @youth_schools.sort
       @grades = @youth_grades
     elsif @patron.club == "teen"
-      @age = @teen_ages
       @grades = @teen_grades
       @schools = @teen_schools.sort
     elsif  @patron.club == "adult"
-      @age = @adult_ages
     end
   end
 
@@ -154,6 +152,7 @@ class MainController < ApplicationController
     zip_code = CGI.unescapeHTML(params[:zip_code])
     home_library = CGI.unescapeHTML(params[:home_library])
     email = CGI.unescapeHTML(params[:email])
+    club = CGI.unescapeHTML(params[:club])
     library_card_raw = CGI.unescapeHTML(params[:library_card])
     library_card_clean = _normalize_card(library_card_raw) rescue library_card_raw
     p = Participant.find(params[:id])
@@ -165,6 +164,7 @@ class MainController < ApplicationController
     p.zip_code = zip_code
     p.home_library = home_library
     p.email = email
+    p.club = club
     p.library_card = library_card_clean
     p.save
 

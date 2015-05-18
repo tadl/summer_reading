@@ -288,8 +288,9 @@ function update_patron(id){
   var home_library = $("#home_library").val();
   var email = $("#email").val();
   var library_card = $("#library_card").val();
+  var club = $("#club").val();
   base_url = '/main/update_patron.json'
-  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card) + '&club=' + club
   full_url = base_url + parameters;
   $.get(full_url, function(data){
   }).done(function() {

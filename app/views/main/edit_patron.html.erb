@@ -14,6 +14,10 @@
 		Age: <br>
 		<%= select_tag 'age', options_for_select(@age, @patron.age), {:class => 'required sign_up_element'} %>
 	</div>
+	<div class="sign_up_form_right">
+		Club: <br>
+		<%= select_tag 'club', options_for_select(@clubs, @patron.club), {:class => 'required sign_up_element'} %>
+	</div>
 	<% if @group_variable == 'teen' || @group_variable == 'youth' %>
 	<div class="sign_up_form_left">
 		Grade (in Fall):<br> 
