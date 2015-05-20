@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_self
+ *= require fancybox
  */
 
  html {
@@ -37,7 +38,7 @@ html body a{
 
 body {
 	background-color: #fff;
-	min-width: 760px;
+	min-width: 200px;
 }
 
 a:hover {
@@ -50,7 +51,7 @@ a:hover {
  	background-color: #11b872;
  	color: #fff;
  	width: 100%;
- 	min-width: 760px;
+ 	min-width: 200px;
  	height: 35px;
  	top: 0;
  	margin: 0;

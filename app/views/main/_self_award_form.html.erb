@@ -1,4 +1,4 @@
 <h1>Awarding the <%= @experience.name %> experience</h1>
 <p>What did you read?</p><input id="award_read"></input>
 <p>What did you do?</p><input id="award_did"></input>
-<button onclick="self_reward(<%= @patron.id %>, <%= @experience.id %>, '<%= @patron.library_card %>')">Submitt</button><button onclick="self_reward_cancel(<%= @patron.id %>)">Cancel</button>
+<button onclick="self_reward(<%= @patron.id %>, <%= @experience.id %>, '<%= @patron.library_card %>', '<%= @token %>')">Submitt</button><button onclick="self_reward_cancel(<%= @patron.id %>)">Cancel</button>

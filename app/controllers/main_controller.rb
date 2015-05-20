@@ -297,8 +297,8 @@ class MainController < ApplicationController
   end
 
   def self_award_patron
-    identify = check_patron()
-    if identify[2].include?(params[:card])
+    cards = auth(params[:token]).split(',') rescue []
+    if cards.include?(params[:card])
       if Award.where(:participant_id => params[:participant], :experience_id => params[:experience] ).blank?
         a = Award.new
         a.participant_id = params[:participant]
@@ -387,17 +387,23 @@ class MainController < ApplicationController
   end
 
   def lookup
-     cards = auth(params[:token]).split(',') rescue []
-     if cards != nil
-       @logged_into_eg = true
-       @participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
-     else
-       @logged_into_eg = false
-       @participants = nil
-     end
+    if params[:token]
+      @token = params[:token]
+      cards = auth(params[:token]).split(',') rescue []
+      if cards != nil
+        @logged_into_eg = true
+        @participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
+      else
+        @logged_into_eg = false
+        @participants = nil
+      end
+    else
+      redirect_to "https://catalog.tadl.org/eg/opac/login"
+    end
   end
 
   def self_reward_form
+    @token = params[:token]
     @patron = Participant.find(params[:patron])
     @experience = Experience.find(params[:experience])
     respond_to do |format|

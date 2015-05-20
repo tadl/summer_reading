@@ -391,16 +391,27 @@ function download_as_csv(){
 
 function show_award_div(patron){
   var div_show = "#award_" + patron
-  $(div_show).show(); 
+  $(div_show).show();
 }
 
-function self_reward(patron, experience, card){
+function hide_award_div(patron){
+  var div_show = "#award_" + patron
+  $(div_show).hide(); 
+}
+
+function self_reward(patron, experience, card, token){
   var read = $('#award_read').val();
   var did =  $('#award_did').val();
-  var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card
+  var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card + '&token=' + token
+  var target_div = "#award_form_" + patron
   $.get(url, function(data){
   }).done(function(){
-    Turbolinks.visit(document.URl)
+      $.fancybox.open({ 
+      'scrolling'     : 'no',
+      'overlayOpacity': 0.1,
+      'afterClose' : function() {Turbolinks.visit(document.URl)},
+      'content' : '<h2>Congratulations</h2><p>Be sure to visit your...</p>'
+    }); 
   }).fail(function(){
     Turbolinks.visit(document.URl)
   });

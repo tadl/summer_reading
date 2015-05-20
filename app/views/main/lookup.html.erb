@@ -23,7 +23,7 @@
 	        	<div class="clear_div"></div>
 	        	<p> <a onclick="show_award_div('<%= p.id %>')">Click here to add a new experience for <%= p.first_name %></a> </p>
 	        	<div id="award_<%= p.id%>" style="display:none;">
-	        		<%= render 'self_award', :patron => p %>
+	        		<%= render 'self_award', :patron => p, :token => @token %>
 	        	</div>
 			<% else %>
 			<%= p.first_name %> is registered for the Read to Me Program
@@ -50,4 +50,5 @@
 	
 	<p>Please <a href="https://summer.tadl.org/">login at catalog.tadl.org</a>.</p>
 <% end %>
+<div id="fancybox2" style="display:none">...</div>
 
