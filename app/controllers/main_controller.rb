@@ -297,7 +297,10 @@ class MainController < ApplicationController
   end
 
   def self_award_patron
-    cards = auth(params[:token]).split(',') rescue []
+    if session[:expires] > Time.now.utc
+      session[:expires] = 1.hour.from_now.utc
+      cards = session[:cards].split(',') rescue []
+    end
     if cards.include?(params[:card])
       if Award.where(:participant_id => params[:participant], :experience_id => params[:experience] ).blank?
         a = Award.new
@@ -387,23 +390,25 @@ class MainController < ApplicationController
   end
 
   def lookup
-    if params[:token]
-      @token = params[:token]
+    if session[:cards]
+      if session[:expires] && session[:expires] < Time.now.utc
+        session[:cards] = nil
+        redirect_to "https://catalog.tadl.org/eg/opac/login"
+      end 
+      cards = session[:cards].split(',') rescue []
+    elsif params[:token]
       cards = auth(params[:token]).split(',') rescue []
-      if cards != nil
-        @logged_into_eg = true
-        @participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
-      else
-        @logged_into_eg = false
-        @participants = nil
-      end
     else
       redirect_to "https://catalog.tadl.org/eg/opac/login"
+    end
+    if cards
+      @participants = Participant.where(library_card: cards).where.not(inactive: true).all.order("id DESC")
+    else
+      @participants = nil
     end
   end
 
   def self_reward_form
-    @token = params[:token]
     @patron = Participant.find(params[:patron])
     @experience = Experience.find(params[:experience])
     respond_to do |format|

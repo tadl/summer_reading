@@ -47,11 +47,12 @@ class ApplicationController < ActionController::Base
       decoded_token = JWT.decode(token, secret, false)
       @user = decoded_token
       cards = @user[0]["http://tadl.org/patron-cards"]
+      session[:cards] = cards
+      session[:expires] = 1.hour.from_now.utc
       return cards
     rescue JWT::DecodeError
-      error = JWT::DecodeError
-      return nil
+      session[:cards] = nil
+      redirect_to "https://catalog.tadl.org/eg/opac/login"
     end
   end
-
 end

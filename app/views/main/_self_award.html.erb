@@ -9,7 +9,7 @@
       <br>
       <%= experience.description %>
       <br>
-      <%= link_to "reward", :controller => :main, :action => :self_reward_form, :patron => patron.id, :experience => experience.id, :token => @token, :remote => true %>
+      <%= link_to "reward", :controller => :main, :action => :self_reward_form, :patron => patron.id, :experience => experience.id, :remote => true %>
     </div>
   <% end %>
   <div class="clear_div"></div>     

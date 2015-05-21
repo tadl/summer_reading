@@ -399,10 +399,10 @@ function hide_award_div(patron){
   $(div_show).hide(); 
 }
 
-function self_reward(patron, experience, card, token){
+function self_reward(patron, experience, card){
   var read = $('#award_read').val();
   var did =  $('#award_did').val();
-  var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card + '&token=' + token
+  var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card
   var target_div = "#award_form_" + patron
   $.get(url, function(data){
   }).done(function(){

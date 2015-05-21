@@ -1,6 +1,5 @@
 <h2> Summer Reading Club Progress </h2>
-
-<% if @logged_into_eg == true %>
+<% if @participants %>
 	<% if @participants.count != 0 %>
 		We found <%= pluralize(@participants.count, 'participant') %> registered with this account. <br>
 		<% @participants.each do |p| %>
@@ -26,7 +25,7 @@
 	        	</div>
 	        	<br>
 	        	<div id="award_<%= p.id%>" style="display:none">
-	        		<%= render 'self_award', :patron => p, :token => @token %>
+	        		<%= render 'self_award', :patron => p %>
 	        	</div>
 			<% else %>
 				<%= p.first_name %> is registered for the Read to Me Program
