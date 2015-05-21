@@ -21,17 +21,20 @@
 	             	</div> 
 	        	<% end %>
 	        	<div class="clear_div"></div>
-	        	<p> <a onclick="show_award_div('<%= p.id %>')">Click here to add a new experience for <%= p.first_name %></a> </p>
-	        	<div id="award_<%= p.id%>" style="display:none;">
+	        	<div class="register_button" style="display: inline-block; margin: 20px; margin-bottom: 20px;">
+	        		<a onclick="show_award_div('<%= p.id %>')">Award New Experience</a>
+	        	</div>
+	        	<br>
+	        	<div id="award_<%= p.id%>" style="display:none">
 	        		<%= render 'self_award', :patron => p, :token => @token %>
 	        	</div>
 			<% else %>
-			<%= p.first_name %> is registered for the Read to Me Program
-			<% if p.baby_complete != true %>
+				<%= p.first_name %> is registered for the Read to Me Program
+				<% if p.baby_complete != true %>
 					but has not turned in a completed activity sheet.
-			<% else %>
+				<% else %>
 					and has turned in a completed activity sheet and is in a drawing for the final prize.
-			<% end %>
+				<% end %>
 			<br>
 			<% end %>
 		<% end %>
