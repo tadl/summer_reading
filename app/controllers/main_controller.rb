@@ -308,6 +308,7 @@ class MainController < ApplicationController
         a.experience_id = params[:experience]
         a.did = params[:notes]
         a.read = params[:read]
+        a.needs_prize = true
         a.save
         message = "success"
       else
@@ -414,6 +415,15 @@ class MainController < ApplicationController
     respond_to do |format|
         format.js
     end
+  end
+
+  def award_prize
+    a = Award.find(params[:id])
+    a.needs_prize = false
+    a.save
+    respond_with do |format|
+        format.json { render :json =>{message: "prize granted"}}
+    end 
   end
 
 

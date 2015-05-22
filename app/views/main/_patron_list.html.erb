@@ -28,10 +28,14 @@
           Experiences: </br>
            <% participant.awards.each do |a| %>
              <div class="patron_badge center">
-               <img src="<%= a.experience.image_url %>" class="award">
-               <br>
-               <%= a.experience.name %>
-             </div>     
+                <img src="<%= a.experience.image_url %>" class="award">
+                <br>
+                <%= a.experience.name %>
+                <% if a.needs_prize == true %>
+                  <br>
+                  <a  class="important_button" style="display: inline-block;" onclick="award_prize('<%= a.id %>')">Award Prize</a>
+                <% end %> 
+             </div>    
            <% end %>
              <div class="clear_div"></div>
             <br>
@@ -41,7 +45,7 @@
              <option value="<%= e.id %>"><%= e.name %></option>            
            <% end %>
            </select>
-           <a class="important_button" onclick="award_experience('<%= participant.id %>')">Award</a>
+           <a class="important_button" onclick="award_experience('<%= participant.id %>')">Award Experience</a>
         <% end %>   
         </p>
         <p>

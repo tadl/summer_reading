@@ -425,3 +425,13 @@ function self_reward_cancel(patron){
   $(div_show).show(); 
   $(target_div).html("");
 }
+
+function award_prize(id){
+  url = '/main/award_prize.json?id=' + id
+  $.get(url, function(data){
+  }).done(function() {
+      Turbolinks.visit(document.URl)
+  }).fail(function() {
+      alert('Something bad happened. Please try again later...'); 
+  });
+}
