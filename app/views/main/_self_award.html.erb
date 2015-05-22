@@ -2,14 +2,14 @@
 <h3>Select an experience to reward: (<a onclick="hide_award_div('<%= patron.id %>')">cancel</a>)</h3>
 <% patron.unearned_experiences.each_slice(4) do |slice| %>
   <% slice.each do |experience|%>
-    <div class="patron_badge">
+    <div class="patron_badge" style="height: 280px;">
       <img src="<%= experience.image_url %>" class="award">
       <br>
       <%= experience.name %>
       <br>
       <%= experience.description %>
       <br>
-      <%= link_to "reward", :controller => :main, :action => :self_reward_form, :patron => patron.id, :experience => experience.id, :remote => true %>
+      <%= link_to "Award", {:controller => :main, :action => :self_reward_form, :patron => patron.id, :experience => experience.id, :remote => true}, {class: "important_button", style: "display: inline-block;"} %>
     </div>
   <% end %>
   <div class="clear_div"></div>     

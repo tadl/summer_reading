@@ -290,8 +290,13 @@ function update_patron(id){
   var library_card = $("#library_card").val();
   var club = $("#club").val();
   base_url = '/main/update_patron.json'
-  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card) + '&club=' + club
-  full_url = base_url + parameters;
+  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age)  + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card) + '&club=' + club
+  if(grade || school){
+    var school_stuff = '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school)
+    full_url = base_url + parameters + school_stuff;
+  }else{
+    full_url = base_url + parameters;
+  }
   $.get(full_url, function(data){
   }).done(function() {
       alert('Patron has been updated. Nice work!'); 
@@ -399,22 +404,33 @@ function hide_award_div(patron){
   $(div_show).hide(); 
 }
 
-function self_reward(patron, experience, card){
+function self_reward(patron, experience, card, image){
   var read = $('#award_read').val();
   var did =  $('#award_did').val();
   var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card
   var target_div = "#award_form_" + patron
-  $.get(url, function(data){
-  }).done(function(){
-      $.fancybox.open({ 
-      'scrolling'     : 'no',
-      'overlayOpacity': 0.1,
-      'afterClose' : function() {Turbolinks.visit(document.URl)},
-      'content' : '<h2>Congratulations</h2><p>Be sure to visit your...</p>'
-    }); 
-  }).fail(function(){
-    Turbolinks.visit(document.URl)
-  });
+  var show_image = '<img src="' + image + '">'
+  var print_link = '<a target="_blank" href="'+ image +'">Click Here for Printable Badge</a>'
+  if(read && did){
+    $.get(url, function(data){
+      }).done(function(){
+        $.fancybox.open({ 
+        'scrolling'     : 'no',
+        'overlayOpacity': 0.1,
+        'afterClose' : function() {Turbolinks.visit(document.URl)},
+        'content' : '<center><h2>Congratulations</h2>'+ show_image +'<p>Be sure to visit your library to pick up your reward</p>'+ print_link +'</center>'
+      }); 
+      }).fail(function(){
+        Turbolinks.visit(document.URl)
+      });
+  }else{
+    $('#messages').html('<h4>Please let us know what you read and what you did</h4>');
+    $('.required').each(function(){
+      if ($.trim($(this).val()).length == 0){
+        $(this).addClass('highlight');
+      }
+    })
+  }
 
 }
 

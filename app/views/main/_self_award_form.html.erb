@@ -1,5 +1,10 @@
 <h1>Awarding the <%= @experience.name %> experience</h1>
 <img src="<%= @experience.image_url %>" class="award">
-<p>What did you read?</p><input id="award_read"></input>
-<p>What did you do?</p><input id="award_did"></input>
-<button onclick="self_reward(<%= @patron.id %>, <%= @experience.id %>, '<%= @patron.library_card %>')">Submitt</button><button onclick="self_reward_cancel(<%= @patron.id %>)">Cancel</button>
+<h3 id="messages"></h3>
+<p>What did you read?</p><input class="required" id="award_read"></input>
+<p>What did you do?</p><input class="required" id="award_did"></input>
+<br>
+<div style="margin-top: 20px;">
+	<a class="important_button" onclick="self_reward(<%= @patron.id %>, <%= @experience.id %>, '<%= @patron	.library_card %>', '<%= @experience.image_url %>')">Award Experience</a>
+	<a class="important_button" onclick="self_reward_cancel(<%= @patron.id %>)">Cancel</a>
+</div>

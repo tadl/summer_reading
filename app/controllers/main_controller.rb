@@ -147,8 +147,10 @@ class MainController < ApplicationController
     first_name = CGI.unescapeHTML(params[:first_name])
     last_name = CGI.unescapeHTML(params[:last_name])
     age = CGI.unescapeHTML(params[:age])
-    grade = CGI.unescapeHTML(params[:grade])
-    school = CGI.unescapeHTML(params[:school])
+    if params[:grade] && params[:school]
+      grade = CGI.unescapeHTML(params[:grade])
+      school = CGI.unescapeHTML(params[:school])
+    end
     zip_code = CGI.unescapeHTML(params[:zip_code])
     home_library = CGI.unescapeHTML(params[:home_library])
     email = CGI.unescapeHTML(params[:email])
@@ -159,8 +161,10 @@ class MainController < ApplicationController
     p.first_name = first_name
     p.last_name = last_name
     p.age = age
-    p.grade = grade
-    p.school = school
+    if grade && school
+      p.grade = grade
+      p.school = school
+    end
     p.zip_code = zip_code
     p.home_library = home_library
     p.email = email
