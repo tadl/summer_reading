@@ -9,7 +9,7 @@ class MainController < ApplicationController
   before_action :authenticate_user!, :except => [:index, :lookup, :self_reward_form, :self_award_patron, :check_patron, :closing]
   before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
-  skip_before_filter :verify_authenticity_token, :only => [:lookup, :self_reward_form, :self_award_patron, :check_patron, :closing] 
+  skip_before_filter :verify_authenticity_token, :only => [:lookup, :sign_up, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   respond_to :html, :json
   
   def shared_variables
