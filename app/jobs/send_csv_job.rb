@@ -2,6 +2,7 @@ class SendCSVJob
 	include SuckerPunch::Job
 
 	def perform(user_email, data, csv_description)
+      puts "hello"
   		participant_csv = CSV.generate do |csv|
         	csv << ['First Name', 'Last Name', 'Age', 'Club', 'Home Library', 'Library Card #', 'School', 'Experience Count', 'Email']
         	data.each do |p|
