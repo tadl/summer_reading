@@ -3,6 +3,7 @@
 	<% if @participants.count != 0 %>
 		We found <%= pluralize(@participants.count, 'participant') %> registered with this account. <br>
 		<% @participants.each do |p| %>
+			<div class="patron_card">
 			<h3><%= p.first_name %>:</h3> 
 			<%if p.club != 'baby' %> 
 				<%= p.first_name %> has earned <%= pluralize(p.awards.count, 'experience') %> 
@@ -44,7 +45,9 @@
 				<% end %>
 			<br>
 			<% end %>
+		</div>
 		<% end %>
+
 	
 	<% else %>
 		
