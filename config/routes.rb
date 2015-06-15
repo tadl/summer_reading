@@ -32,7 +32,9 @@ Rails.application.routes.draw do
   get "main/search_by_card"
   get "main/self_reward_form"
   get "/main/self_award_patron"
+  get "/main/self_record_hours"
   get "/main/award_prize"
+  get "/main/self_record_hours_refresh"
   match 'main/closing', to: 'main#closing', via: [:get, :post]
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match 'auth/failure', to: redirect('/'), via: [:get, :post]

@@ -404,6 +404,18 @@ function hide_award_div(patron){
   $(div_show).hide(); 
 }
 
+function show_hour_div(patron){
+  var div_show = "#hour_" + patron
+  $(div_show).show();
+}
+
+function hide_hour_div(patron){
+  var div_show = "#hour_" + patron
+  $(div_show).hide(); 
+}
+
+
+
 function self_reward(patron, experience, card, image){
   var read = $('#award_read').val();
   var did =  $('#award_did').val();
@@ -447,6 +459,19 @@ function award_prize(id){
   $.get(url, function(data){
   }).done(function() {
       Turbolinks.visit(document.URl)
+  }).fail(function() {
+      alert('Something bad happened. Please try again later...'); 
+  });
+}
+
+function add_hours(week, id, card){
+  hour_div = '#week_' + week
+  patron_div = '#hour_' + id
+  hours = $(hour_div).val()
+  url = '/main/self_record_hours.json?id=' + id +'&week=' + week + '&hours=' + hours + '&card=' + card
+  $.get(url, function(data){
+  }).done(function() {
+      $(patron_div).load('/main/self_record_hours_refresh?id=' + id);
   }).fail(function() {
       alert('Something bad happened. Please try again later...'); 
   });

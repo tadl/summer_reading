@@ -3,6 +3,7 @@ class Participant < ActiveRecord::Base
 	pg_search_scope :search_by_name, :against =>[:first_name, :last_name],  :using => { :tsearch => {:prefix => true}}
 	pg_search_scope :search_by_card, :against =>[:library_card]
 	has_many :awards
+	has_many :hours
 	has_many :experiences, through: :awards
 
 	def unearned_experiences	
@@ -28,4 +29,20 @@ class Participant < ActiveRecord::Base
 		end
 	end
 
+	def total_hours
+		patron_hours = 0
+		self.hours.each do |h|
+			patron_hours = h.amount.to_i + patron_hours
+		end
+		return patron_hours
+	end
+
+	def week(week_number)
+		patron_hours = 0
+		requested_week = 'week ' + week_number.to_s
+		self.hours.where(:week => requested_week).each do |h|
+			patron_hours = h.amount.to_i + patron_hours
+		end
+		return patron_hours
+	end
 end

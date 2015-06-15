@@ -50,9 +50,6 @@ class ApplicationController < ActionController::Base
       session[:cards] = cards
       session[:expires] = 1.hour.from_now.utc
       return cards
-    rescue JWT::DecodeError
-      session[:cards] = nil
-      redirect_to "https://catalog.tadl.org/eg/opac/login"
     end
   end
 end

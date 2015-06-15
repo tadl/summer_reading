@@ -5,6 +5,6 @@
 <p>What did you do?</p><input class="required" id="award_did"></input>
 <br>
 <div style="margin-top: 20px;">
-	<a class="important_button" onclick="self_reward(<%= @patron.id %>, <%= @experience.id %>, '<%= @patron	.library_card %>', '<%= @experience.image_url %>')">Award Experience</a>
+	<a class="important_button" onclick="self_reward(<%= @patron.id %>, <%= @experience.id %>, '<%= @patron.library_card %>', '<%= @experience.image_url %>')">Award Experience</a>
 	<a class="important_button" onclick="self_reward_cancel(<%= @patron.id %>)">Cancel</a>
 </div>
