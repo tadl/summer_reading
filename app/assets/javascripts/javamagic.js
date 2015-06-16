@@ -471,6 +471,11 @@ function add_hours(week, id, card){
   url = '/main/self_record_hours.json?id=' + id +'&week=' + week + '&hours=' + hours + '&card=' + card
   $.get(url, function(data){
   }).done(function() {
+      $.fancybox.open({ 
+        'scrolling'     : 'no',
+        'overlayOpacity': 0.1,
+        'content' : '<center><h2>Thanks for Upating Your Hours!</h2></center>'
+      });
       $(patron_div).load('/main/self_record_hours_refresh?id=' + id);
   }).fail(function() {
       alert('Something bad happened. Please try again later...'); 

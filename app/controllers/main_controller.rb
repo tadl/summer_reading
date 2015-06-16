@@ -129,6 +129,8 @@ class MainController < ApplicationController
   end
 
   def edit_patron
+    Time.zone = 'Eastern Time (US & Canada)'
+    @today = Time.now.strftime("%m/%d/%Y")
     @patron = Participant.find(params[:id])
     @group_variable = @patron.club
     @age = @all_ages
@@ -332,7 +334,7 @@ class MainController < ApplicationController
       cards = session[:cards].split(',') rescue []
     end
     week = 'week ' + params[:week].to_s
-    if cards.include?(params[:card])
+    if cards.include?(params[:card]) || check_for_approved()
       if Hour.where(:participant_id => params[:id], :week => week).blank?
         h = Hour.new
         h.participant_id = params[:id]
