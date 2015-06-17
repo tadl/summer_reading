@@ -116,7 +116,7 @@
         	Inactive (inactive users do not appear in reports)	
 		</li>
 	</ul>
-	<% if p.club == "teen" %>
+	<% if @patron.club == "teen" %>
 	<h4>Teen Hours</h4>
 	<div id='hour_<%= @patron.id %>'>
 		<%= render :partial => "self_hours", :locals => {:patron => @patron} %>
