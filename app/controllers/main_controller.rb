@@ -516,7 +516,7 @@ class MainController < ApplicationController
           r.Pause :length => '3'
         end
       render_twiml response
-    elsif params[:message] == '59'
+    elsif params[:message] == '59' || params[:message] == '00'
       filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/closed.mp3'
       response = Twilio::TwiML::Response.new do |r|
           r.Pause :length => '25'
