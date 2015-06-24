@@ -1,13 +1,13 @@
 desc "Send emails for weekly winners"
-task :send_teen_winners =>  :environment do
+task :send_teen_hours =>  :environment do
 	require 'tzinfo'
 	require 'csv'
 	
 	def match_library(l)
 		if l == 'Woodmere'
-			return 'smorey@tadl.org,lsmith@tadl.org'
+			return 'smorey@tadl.org, lsmith@tadl.org'
 		elsif l == 'Kingsley'
-			return 'smorey@tadl.org,mfraquelli@tadl.org'
+			return 'smorey@tadl.org'
 		elsif l == 'Interlochen'
 			return 'smorey@tadl.org,rkelchak@tadl.org'
 		elsif  l == 'East Bay'
@@ -19,9 +19,13 @@ task :send_teen_winners =>  :environment do
 		end	
 	end
 
+	# Set week_number here
+	week_number = 1
+
+
 	Time.zone = 'Eastern Time (US & Canada)'
 	report_dates = ['06/24/2015','07/01/2015','07/08/2015','07/15/2015','07/22/2015', '07/29/2015', '08/05/12', '08/12/2015']
-	libraries = ['Woodmere','Kingsley']
+	libraries = ['Woodmere']
 	time_now = Time.now.strftime("%m/%d/%Y")
 	if report_dates.include?(time_now)
 		patrons = Participant.includes(:awards).where(inactive: false, club: "teen").order("id DESC")
@@ -30,13 +34,9 @@ task :send_teen_winners =>  :environment do
 		start_date = end_date - 7.days
 		puts start_date.to_s + ' - ' + end_date.to_s
 		patrons.each do |p|
-			p.awards.each do |a|
-				check_date = a.created_at.in_time_zone
-				if check_date >= start_date && check_date < end_date
-					puts p.first_name + ' - ' +a.experience.name + ' - ' + a.created_at.in_time_zone('Eastern Time (US & Canada)').to_s
-					patrons_with_right_criteria = patrons_with_right_criteria.push(p)
-					break
-				end
+			if p.week(week_number) > 0
+				puts p.first_name + p.week(week_number).to_s
+				patrons_with_right_criteria = patrons_with_right_criteria.push(p)
 			end
 		end
 		libraries.each do |l|
@@ -47,8 +47,8 @@ task :send_teen_winners =>  :environment do
 				end
 			end
 			person_to_email = match_library(l) 
-			description = 'report contains all teens at ' + l + ' who reported an experiences in the last week.' 
-			SendCSVJob.new.perform(person_to_email, patron_list, description )
+			description = 'report contains all teens at ' + l + ' who reported a hours in the last week.' 
+			SendTeenHourCSVJob.new.perform(person_to_email, patron_list, description, week_number)
 		end
 	else
 		puts "Now is not the time for emails"
