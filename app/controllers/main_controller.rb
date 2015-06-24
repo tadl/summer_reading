@@ -331,10 +331,11 @@ class MainController < ApplicationController
   def self_record_hours
     if session[:expires] > Time.now.utc
       session[:expires] = 1.hour.from_now.utc
-      cards = session[:cards].split(',') rescue []
     end
+      cards = session[:cards].split(',') rescue Array.new
+      card = params[:card] rescue ""
     week = 'week ' + params[:week].to_s
-    if cards.include?(params[:card]) || check_for_approved()
+    if cards.include?(card) || check_for_approved()
       if Hour.where(:participant_id => params[:id], :week => week).blank?
         h = Hour.new
         h.participant_id = params[:id]
@@ -355,6 +356,7 @@ class MainController < ApplicationController
       format.json { render :json =>{message: message}}
     end
   end
+
 
   def self_record_hours_refresh
     patron = Participant.find(params[:id])
