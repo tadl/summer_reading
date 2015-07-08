@@ -14,7 +14,7 @@
 	<h4>Week #3 (July 1 to July 7) </h4>
 	Hours reported for Week #3: <input id="week_3" size="3" value="<%= patron.week(3) %>"></input><button onclick="add_hours(3,'<%= patron.id %>','<%= patron.library_card %>')">Update</button>
 <% end %>
-<% if Date.parse('2015-7-8') < Date.today  %>
+<% if Date.parse('2015-7-7') < Date.today  %>
 	<h4>Week #4 (July 8 to July 14)</h4>
 	Hours reported for Week #4: <input id="week_4" size="3" value="<%= patron.week(4) %>"></input><button onclick="add_hours(4,'<%= patron.id %>','<%= patron.library_card %>')">Update</button>
 <% end %>
