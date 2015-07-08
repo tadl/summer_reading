@@ -329,11 +329,13 @@ class MainController < ApplicationController
   end
 
   def self_record_hours
-    if session[:expires] > Time.now.utc
-      session[:expires] = 1.hour.from_now.utc
-    end
-      cards = session[:cards].split(',') rescue Array.new
-      card = params[:card] rescue ""
+    if !session[:expires].nil?
+      if session[:expires] > Time.now.utc
+        session[:expires] = 1.hour.from_now.utc
+      end
+    end  
+    cards = session[:cards].split(',') rescue Array.new
+    card = params[:card] rescue ""
     week = 'week ' + params[:week].to_s
     if cards.include?(card) || check_for_approved()
       if Hour.where(:participant_id => params[:id], :week => week).blank?
