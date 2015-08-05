@@ -24,7 +24,7 @@ task :send_teen_hours =>  :environment do
 
 
 	Time.zone = 'Eastern Time (US & Canada)'
-	report_dates = ['06/24/2015','07/01/2015','07/08/2015','07/15/2015','07/22/2015', '07/29/2015', '08/05/12', '08/12/2015']
+	report_dates = ['06/24/2015','07/01/2015','07/08/2015','07/15/2015','07/22/2015', '07/29/2015', '08/05/15', '08/12/2015']
 	libraries = ['Woodmere']
 	time_now = Time.now.strftime("%m/%d/%Y")
 	if report_dates.include?(time_now)
