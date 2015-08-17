@@ -23,6 +23,11 @@ class ApplicationController < ActionController::Base
       end
   end
 
+  def end_of_year
+    redirect_to root_url
+  end
+
+
   def check_for_admin
     super_users = ENV["super_users"].split(',')
     if super_users.include? @current_user.email
