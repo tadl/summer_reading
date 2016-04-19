@@ -1,11 +1,11 @@
 desc "Send emails for weekly winners"
-task :send_weekly_winners =>  :environment do
+task :send_teen_winners =>  :environment do
 	require 'tzinfo'
 	require 'csv'
 	
 	def match_library(l)
 		if l == 'Woodmere'
-			return 'smorey@tadl.org,bbush@tadl.org'
+			return 'smorey@tadl.org,lsmith@tadl.org'
 		elsif l == 'Kingsley'
 			return 'smorey@tadl.org,mfraquelli@tadl.org'
 		elsif l == 'Interlochen'
@@ -21,10 +21,10 @@ task :send_weekly_winners =>  :environment do
 
 	Time.zone = 'Eastern Time (US & Canada)'
 	report_dates = ['06/24/2015','07/01/2015','07/08/2015','07/15/2015','07/22/2015', '07/29/2015', '08/05/2015', '08/12/2015']
-	libraries = ['Woodmere','Kingsley','Interlochen','East Bay','Peninsula','Fife Lake']
+	libraries = ['Woodmere','Kingsley']
 	time_now = Time.now.strftime("%m/%d/%Y")
 	if report_dates.include?(time_now)
-		patrons = Participant.includes(:awards).where(inactive: false, club: "adult").order("id DESC")
+		patrons = Participant.includes(:awards).where(inactive: false, club: "teen").order("id DESC")
 		patrons_with_right_criteria = Array.new
 		end_date = Time.strptime(time_now ,"%m/%d/%Y")
 		start_date = end_date - 7.days
@@ -47,7 +47,7 @@ task :send_weekly_winners =>  :environment do
 				end
 			end
 			person_to_email = match_library(l) 
-			description = 'report contains all adults at ' + l + ' who reported an experiences in the last week.' 
+			description = 'report contains all teens at ' + l + ' who reported an experiences in the last week.' 
 			SendCSVJob.new.perform(person_to_email, patron_list, description )
 		end
 	else

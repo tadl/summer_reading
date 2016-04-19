@@ -6,8 +6,9 @@ class MainController < ApplicationController
   require 'json'
 
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :lookup, :sign_up, :register, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
-  before_action :check_for_approved, :except => [:index, :sign_up, :register, :lookup, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
+  before_action :end_off_year, :only => [:self_record_hours, :self_award_patron, :edit_patron, :award_patron, :register, :sign_up]
+  before_action :authenticate_user!, :except => [:index, :lookup, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
+  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
   skip_before_filter :verify_authenticity_token, :only => [:lookup, :sign_up, :self_record_hours_refresh, :self_record_hours, :register, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   respond_to :html, :json, :js
@@ -329,12 +330,15 @@ class MainController < ApplicationController
   end
 
   def self_record_hours
-    if session[:expires] > Time.now.utc
-      session[:expires] = 1.hour.from_now.utc
-      cards = session[:cards].split(',') rescue []
-    end
+    if !session[:expires].nil?
+      if session[:expires] > Time.now.utc
+        session[:expires] = 1.hour.from_now.utc
+      end
+    end  
+    cards = session[:cards].split(',') rescue Array.new
+    card = params[:card] rescue ""
     week = 'week ' + params[:week].to_s
-    if cards.include?(params[:card]) || check_for_approved()
+    if cards.include?(card) || check_for_approved()
       if Hour.where(:participant_id => params[:id], :week => week).blank?
         h = Hour.new
         h.participant_id = params[:id]
@@ -355,6 +359,7 @@ class MainController < ApplicationController
       format.json { render :json =>{message: message}}
     end
   end
+
 
   def self_record_hours_refresh
     patron = Participant.find(params[:id])
@@ -516,7 +521,7 @@ class MainController < ApplicationController
           r.Pause :length => '3'
         end
       render_twiml response
-    elsif params[:message] == '59'
+    elsif params[:message] == '59' || params[:message] == '00'
       filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/closed.mp3'
       response = Twilio::TwiML::Response.new do |r|
           r.Pause :length => '25'
