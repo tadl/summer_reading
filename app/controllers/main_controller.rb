@@ -6,7 +6,6 @@ class MainController < ApplicationController
   require 'json'
 
   before_filter :shared_variables
-  before_action :end_off_year, :only => [:self_record_hours, :self_award_patron, :edit_patron, :award_patron, :register, :sign_up]
   before_action :authenticate_user!, :except => [:index, :lookup, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
   before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
@@ -500,40 +499,4 @@ class MainController < ApplicationController
      return card_value
   end
 
-  def closing
-    message_type = params[:message]
-    if params[:message] != '59' || params[:message] != '00'
-      if message_type == '45' || message_type == '44' || message_type == '46' 
-        filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/15.mp3'
-      elsif message_type == '50' || message_type == '49' || message_type == '51'
-        filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/10.mp3'
-      elsif message_type == '55' || message_type == '56' || message_type == '54'
-        filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/5.mp3'
-      end
-      response = Twilio::TwiML::Response.new do |r|
-          r.Pause :length => '2'
-          r.Play :digits => 'w44534'
-          r.Pause :length => '2'
-          r.Play :digits => 'w921'
-          r.Pause :length => '1'
-          r.Play  'https://s3.amazonaws.com/tadl-public-audio/overhead/chime.mp3'
-          r.Play  filename
-          r.Pause :length => '3'
-        end
-      render_twiml response
-    elsif params[:message] == '59' || params[:message] == '00'
-      filename = 'https://s3.amazonaws.com/tadl-public-audio/overhead/closed.mp3'
-      response = Twilio::TwiML::Response.new do |r|
-          r.Pause :length => '25'
-          r.Play :digits => 'w44534'
-          r.Pause :length => '25'
-          r.Play :digits => 'w921'
-          r.Pause :length => '1'
-          r.Play  'https://s3.amazonaws.com/tadl-public-audio/overhead/chime.mp3'
-          r.Play filename
-          r.Pause :length => '3'
-        end
-      render_twiml response
-    end
-  end
 end
