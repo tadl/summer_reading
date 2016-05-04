@@ -90,7 +90,7 @@ class MainController < ApplicationController
     grade = CGI.unescapeHTML(params[:grade])
     school = CGI.unescapeHTML(params[:school])
     zip_code = CGI.unescapeHTML(params[:zip_code])
-    phone = CGI.unescapeHTML(params[:phone])
+    phone = params[:phone] 
     home_library = CGI.unescapeHTML(params[:home_library])
     club = CGI.unescapeHTML(params[:club])
     email = CGI.unescapeHTML(params[:email])
