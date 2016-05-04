@@ -218,40 +218,47 @@ function register(group, staff){
   var zip_code = $("#zip_code").val();
   var home_library = $("#home_library").val();
   var club = group;
+  var phone = $("#phone").val();
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
   var success_msg = "<div class='good_text'><h3 style='text-align: center'>Congratulations, you've successfully registered for TADL Summer Reading Club!</h3> <p>Please be sure to stop by your home library to pick up your reading kit.</p>  <p>To find an upcoming event <a href='http://www.tadl.org/events/556'>click here</a>.</p> <p>To register another patron <a href='/main/index'>click here</a>.</p></div>"
   if ((group == 'teen' || group == 'youth') && staff != 'staff'){
-    if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || grade == null || grade.length == "0" || school == null || school.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
+    if (first_name.length == "0" || last_name.length == "0" || phone.length < '7' || !phone.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/) || age.length == "0" || grade == null || grade.length == "0" || school == null || school.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
       $(message_div).html('<h3>Missing required fields</h3>');
+      if(!phone.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)){
+         $(message_div).append('<h3>Invalid Phone Number</h3>');
+      }
       check_fields(); 
     }else{ 
       base_url = '/main/register.json'
-      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+      parameters = '?first_name='+ encodeURIComponent(first_name) + '&phone='+ phone  + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
         $('#sign_up_form').remove();
         $(message_div).html(success_msg);   
       }).fail(function() {
-        $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
+        $(message_div).html('<h3>Sorry. Something went wrong. Please try again later...</h3>'); 
       });
     }
   }else if ((group == 'baby' || group == 'adult') && staff != 'staff') {
-    if (first_name.length == "0" || last_name.length == "0" || age.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
+    if (first_name.length == "0" || last_name.length == "0" || phone.length < '7' || !phone.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/) || age.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
       $(message_div).html('<h3>Missing required fields</h3>');
+      if(!phone.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)){
+         $(message_div).append('<h3>Invalid Phone Number</h3>');
+      }
       check_fields();
     }else{
       base_url = '/main/register.json'
-      parameters = '?first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
+      parameters = '?first_name='+ encodeURIComponent(first_name) + '&phone='+ phone +'&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age) + '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school) + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&club=' + encodeURIComponent(club) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card)
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
         $('#sign_up_form').remove();
         $(message_div).html(success_msg);   
       }).fail(function() {
-        $(message_div).html('<h3>Something bad happened. Please try again later...</h3>'); 
+        $(message_div).html('<h3>Sorry. Something went wrong. Please try again later...</h3>'); 
       });
     }
   }else if (staff == 'staff'){
@@ -289,8 +296,9 @@ function update_patron(id){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var club = $("#club").val();
+  var phone = $("#phone").val();
   base_url = '/main/update_patron.json'
-  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&age=' + encodeURIComponent(age)  + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card) + '&club=' + club
+  parameters = '?id='+ id +'&first_name='+ encodeURIComponent(first_name) + '&last_name=' + encodeURIComponent(last_name) + '&phone=' + phone + '&age=' + encodeURIComponent(age)  + '&zip_code=' + encodeURIComponent(zip_code) + '&home_library=' + encodeURIComponent(home_library) + '&email=' + encodeURIComponent(email) + '&library_card=' + encodeURIComponent(library_card) + '&club=' + club
   if(grade || school){
     var school_stuff = '&grade=' + encodeURIComponent(grade) + '&school=' + encodeURIComponent(school)
     full_url = base_url + parameters + school_stuff;

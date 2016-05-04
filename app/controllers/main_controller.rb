@@ -6,8 +6,8 @@ class MainController < ApplicationController
   require 'json'
 
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :lookup, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
-  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
+  before_action :authenticate_user!, :except => [:index, :lookup, :register, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
+  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :register, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
   skip_before_filter :verify_authenticity_token, :only => [:lookup, :sign_up, :self_record_hours_refresh, :self_record_hours, :register, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   respond_to :html, :json, :js
@@ -90,6 +90,7 @@ class MainController < ApplicationController
     grade = CGI.unescapeHTML(params[:grade])
     school = CGI.unescapeHTML(params[:school])
     zip_code = CGI.unescapeHTML(params[:zip_code])
+    phone = CGI.unescapeHTML(params[:phone])
     home_library = CGI.unescapeHTML(params[:home_library])
     club = CGI.unescapeHTML(params[:club])
     email = CGI.unescapeHTML(params[:email])
@@ -107,6 +108,7 @@ class MainController < ApplicationController
       p.grade = grade
       p.school = school
       p.zip_code = zip_code
+      p.phone = phone
       p.home_library = home_library
       p.club = club
       p.email = email
@@ -149,6 +151,7 @@ class MainController < ApplicationController
     first_name = CGI.unescapeHTML(params[:first_name])
     last_name = CGI.unescapeHTML(params[:last_name])
     age = CGI.unescapeHTML(params[:age])
+    phone = params[:phone]
     if params[:grade] && params[:school]
       grade = CGI.unescapeHTML(params[:grade])
       school = CGI.unescapeHTML(params[:school])
@@ -167,6 +170,7 @@ class MainController < ApplicationController
       p.grade = grade
       p.school = school
     end
+    p.phone = phone
     p.zip_code = zip_code
     p.home_library = home_library
     p.email = email

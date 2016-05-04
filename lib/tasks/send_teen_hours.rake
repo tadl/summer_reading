@@ -47,7 +47,7 @@ task :send_teen_hours =>  :environment do
 				end
 			end
 			person_to_email = match_library(l) 
-			description = 'report contains all teens at ' + l + ' who reported a hours in the last week.' 
+			description = 'report contains all teens at ' + l + ' who reported hours in the last week.' 
 			SendTeenHourCSVJob.new.perform(person_to_email, patron_list, description, week_number)
 		end
 	else
