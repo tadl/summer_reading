@@ -299,6 +299,7 @@ a:hover {
 
 #messages{
 	margin-top: 20px;
+	margin-bottom: 30px;
 	font-size: 18px;
 	color: #ff201a;
 }	
@@ -394,6 +395,11 @@ a:hover {
 		display: none;
 	}
 
+	#sign_up_block_mobile{
+		display: none;
+	}
+
+
 
 @media screen and (min-width: 1px) and (max-width: 736px){
 	.sign_up_form_left{
@@ -455,6 +461,14 @@ a:hover {
 
 	.mobile_experience_clear{
 		clear: both;
+		height: 30px;
+		widht: 100%;
+		display: block;
+	}
+
+	.sign_up_block_mobile{
+		height: 10px;
+		display: block;
 	}
 
 }
