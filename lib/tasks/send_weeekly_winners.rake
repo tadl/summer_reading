@@ -20,7 +20,7 @@ task :send_weekly_winners =>  :environment do
 	end
 
 	Time.zone = 'Eastern Time (US & Canada)'
-	report_dates = ['06/24/2015','07/01/2015','07/08/2015','07/15/2015','07/22/2015', '07/29/2015', '08/05/2015', '08/12/2015']
+	report_dates = ['06/27/2016','07/04/2016','07/11/2016','07/18/2016','07/25/2016', '08/01/2016']
 	libraries = ['Woodmere','Kingsley','Interlochen','East Bay','Peninsula','Fife Lake']
 	time_now = Time.now.strftime("%m/%d/%Y")
 	if report_dates.include?(time_now)
@@ -32,7 +32,7 @@ task :send_weekly_winners =>  :environment do
 		patrons.each do |p|
 			p.awards.each do |a|
 				check_date = a.created_at.in_time_zone
-				if check_date >= start_date && check_date < end_date
+				if check_date >= start_date && check_date <= end_date
 					puts p.first_name + ' - ' +a.experience.name + ' - ' + a.created_at.in_time_zone('Eastern Time (US & Canada)').to_s
 					patrons_with_right_criteria = patrons_with_right_criteria.push(p)
 					break

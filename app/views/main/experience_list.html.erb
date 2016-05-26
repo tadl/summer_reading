@@ -1,13 +1,17 @@
 <h1>Experiences</h1>
   
   <% @experiences.each_slice(4) do |slice| %>
-    <% slice.each do |experience|%>
+    <% slice.each_with_index do |experience, i|%>
       <div class="patron_badge">
         <img src="<%= experience.image_url %>" class="award">
         <br>
         <%= experience.name %>
         <br>
         <%= experience.description %> - <%= link_to 'edit', edit_experience_path(experience) %>
+        <% if i != 0 and i.odd? %>
+          <div class="mobile_experience_clear">
+          </div>
+        <% end %>
       </div>
     <% end %>
     <div class="clear_div"></div>     

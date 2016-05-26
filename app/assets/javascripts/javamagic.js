@@ -343,8 +343,13 @@ function check_fields(staff){
   }
 }
 
-function search_by_name(){
- var name = $('#search_by_name').val();
+function search_by_name(mobile){
+ if(mobile == 'true'){
+  var target_div = '.search_by_name_mobile'
+ }else{
+  var target_div = '.search_by_name'
+ }
+ var name = $(target_div).val();
  var clean_name = encodeURIComponent(name);  
   if (name){
     var url = '/main/search_by_name?name=' + clean_name
@@ -354,8 +359,13 @@ function search_by_name(){
      }     
 }
 
-function search_by_card(){
- var card = $('#search_by_card').val();
+function search_by_card(mobile){
+ if(mobile == 'true'){
+  var target_div = '.search_by_card_mobile'
+ }else{
+  var target_div = '.search_by_card'
+ }
+ var card = $(target_div).val();
  var clean_card = encodeURIComponent(card);  
   if (card){
     var url = '/main/search_by_card?card=' + clean_card

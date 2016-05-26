@@ -390,6 +390,76 @@ a:hover {
 	color: #000;
 }
 
+	#search_div_mobile{
+		display: none;
+	}
+
+
+@media screen and (min-width: 1px) and (max-width: 736px){
+	.sign_up_form_left{
+		float:none;
+		width: 90%;
+		padding:5px;
+	}
+
+	.sign_up_form_right{
+		float:none;
+		width: 90%;
+		padding:5px;
+	}
+
+	#register_buttons{
+		background-color:rgba(255, 255, 255, 0.8);
+		width: 90%;
+		height: 100%;
+		position: relative;
+		margin: auto;
+	}
+
+	#register_buttons ul{
+		padding: 0;
+		list-style: none;
+		position: relative;
+		bottom: 5px;
+		text-align: center;
+		width: 100%;
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	#register_buttons li{
+		margin: 10px;
+		display: block;
+	}
+
+	.registration_box_title{
+		padding-bottom: 10px;
+	}
+	
+	#search_div_mobile{
+		display: block;
+		background-color:rgba(255, 255, 255, 0.8);
+		padding: 10px;
+	}
+
+	#search_div{
+		display: none;
+	}
+
+	.patron_badge {
+		float: left;
+		width: 40%;
+		margin: 10px;
+		height: auto; 
+	}
+
+	.mobile_experience_clear{
+		clear: both;
+	}
+
+}
+
+
 .important_button{
   background: #3498db;
   padding: 10px 10px 10px 10px;
