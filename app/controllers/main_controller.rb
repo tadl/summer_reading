@@ -6,8 +6,8 @@ class MainController < ApplicationController
   require 'json'
 
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :lookup, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
-  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
+  before_action :authenticate_user!, :except => [:index, :lookup, :register, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
+  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :register, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
   skip_before_filter :verify_authenticity_token, :only => [:lookup, :sign_up, :self_record_hours_refresh, :self_record_hours, :register, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   respond_to :html, :json, :js
