@@ -236,8 +236,7 @@ function register(group, staff){
       full_url = base_url + parameters;
       $.get(full_url, function(data){
       }).done(function() {
-        $('#sign_up_form').remove();
-        $(message_div).html(success_msg);   
+        $('#sign_up_form').html(success_msg); 
       }).fail(function() {
         $(message_div).html('<h3>Sorry. Something went wrong. Please try again later...</h3>'); 
       });
