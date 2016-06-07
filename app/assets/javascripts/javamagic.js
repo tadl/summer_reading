@@ -498,7 +498,7 @@ function add_hours(week, id, card){
 }
 
 function clone_previous(){
-  var last_name = getCookie('last_name')
+  var last_name = getCookie('last_name').replace(/\+/g, " ")
   var email = getCookie('email')
   var library_card = getCookie('library_card')
   var zip_code = getCookie('zip_code')
