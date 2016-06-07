@@ -100,6 +100,12 @@
 			Received Reading Kit
 		</div>
 		<div class="clear_div"></div>
+		<% if cookies['last_name'] %>
+			<div class="sign_up_form_left">
+				<a onclick="clone_previous()">Clone from Previous Patron</a>
+			</div>
+			<div class="clear_div"></div>
+		<% end %>
 	<% end %>
 	<div class="center">
 		<div id="messages">

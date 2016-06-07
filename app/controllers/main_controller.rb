@@ -117,6 +117,14 @@ class MainController < ApplicationController
         p.got_reading_kit = true
       end
       p.save
+      if current_user
+        cookies['last_name'] = {:value => last_name, :expires => 5.minutes.from_now}
+        cookies['email'] = {:value => email, :expires => 5.minutes.from_now}
+        cookies['library_card'] = {:value => library_card_clean, :expires => 5.minutes.from_now}
+        cookies['zip_code'] = {:value => zip_code, :expires => 5.minutes.from_now}
+        cookies['phone'] = {:value => phone, :expires => 5.minutes.from_now}
+        cookies['home_library'] = {:value => home_library, :expires => 5.minutes.from_now} 
+      end
     end
 
     if valid_values

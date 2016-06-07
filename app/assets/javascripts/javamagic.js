@@ -496,3 +496,36 @@ function add_hours(week, id, card){
       alert('Something bad happened. Please try again later...'); 
   });
 }
+
+function clone_previous(){
+  var last_name = getCookie('last_name')
+  var email = getCookie('email')
+  var library_card = getCookie('library_card')
+  var zip_code = getCookie('zip_code')
+  var phone = getCookie('phone')
+  var home_library = getCookie('home_library').replace(/\+/g, " ")
+
+  $("#last_name").val(unescape(last_name));
+  $("#zip_code").val(unescape(zip_code));
+  $("#email").val(unescape(email));
+  $("#library_card").val(unescape(library_card));
+  $("#phone").val(unescape(phone));
+  if(home_library != 'null' && home_library != ''){
+    $("#home_library").val(home_library);
+  }
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length,c.length);
+        }
+    }
+    return "";
+}
