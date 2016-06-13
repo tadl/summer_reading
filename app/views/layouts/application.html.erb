@@ -23,7 +23,7 @@
 			<i class="fa fa-home fa-lg"></i> Summer-Reading
 		</a>
 	</div>
-	<% if current_user %>
+	<% if current_user  %>
 		<% if check_for_approved %>
 			<div id="search_div">		
 				<input type="text" class="search_by_name" placeholder="Search by Name" >
@@ -62,13 +62,17 @@
 
 
 <div id="content">
-	<div id="search_div_mobile">
-		<h3>Patron Search</h3>		
-		<input type="text" class="search_by_name_mobile" placeholder="Search by Name" >
-		<a onclick="search_by_name('true')">GO</a>
-		<input type="text" class="search_by_card_mobile" placeholder="Search by Card #">
-		<a onclick="search_by_card('ture')">GO</a>
-	</div>
+	<% if current_user  %>
+		<% if check_for_approved %>
+			<div id="search_div_mobile">
+				<h3>Patron Search</h3>		
+				<input type="text" class="search_by_name_mobile" placeholder="Search by Name" >
+				<a onclick="search_by_name('true')">GO</a>
+				<input type="text" class="search_by_card_mobile" placeholder="Search by Card #">
+				<a onclick="search_by_card('ture')">GO</a>
+			</div>
+		<% end %>
+	<% end %>
 	<%= yield %>
 </div>
 <div id="loading">
