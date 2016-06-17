@@ -324,7 +324,7 @@ class MainController < ApplicationController
         a = Award.new
         a.participant_id = params[:participant]
         a.experience_id = params[:experience]
-        a.did = params[:notes]
+        a.did = params[:did]
         a.read = params[:read]
         a.needs_prize = true
         a.save

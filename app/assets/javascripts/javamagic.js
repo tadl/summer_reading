@@ -4,14 +4,24 @@ load_functions = function() {
 
   var loading = 'false'
 
-  $("#search_by_name").keydown(function(event){
+  $(".search_by_name").keydown(function(event){
     if(event.keyCode == 13){
       search_by_name();        
     }
   });
-  $("#search_by_card").keydown(function(event){
+  $(".search_by_card").keydown(function(event){
     if(event.keyCode == 13){
       search_by_card();        
+    }
+  });
+  $(".search_by_name_mobile").keydown(function(event){
+    if(event.keyCode == 13){
+      search_by_name('true');        
+    }
+  });
+  $(".search_by_card_mobile").keydown(function(event){
+    if(event.keyCode == 13){
+      search_by_card('true');        
     }
   });
 
@@ -435,6 +445,7 @@ function self_reward(patron, experience, card, image){
   var read = $('#award_read').val();
   var did =  $('#award_did').val();
   var url = '/main/self_award_patron.json?participant=' + patron + '&experience=' + experience + '&card=' + card
+  url = url + '&read=' + read + '&did=' + did
   var target_div = "#award_form_" + patron
   var show_image = '<img src="' + image + '">'
   var print_link = '<a target="_blank" href="'+ image +'">Click Here for Printable Badge</a>'

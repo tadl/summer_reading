@@ -30,7 +30,13 @@
              <div class="patron_badge center">
                 <img src="<%= a.experience.image_url %>" class="award">
                 <br>
-                <%= a.experience.name %>
+                <b><%= a.experience.name %></b>
+                <% if a.read && a.did %>
+                  <br>
+                  <b>Read:</b> <%= a.read %>
+                  <br>
+                  <b>Did:</b> <%= a.did %>
+                <% end %>
                 <% if a.needs_prize == true %>
                   <br>
                   <a  class="important_button" style="display: inline-block;" onclick="award_prize('<%= a.id %>')">Award Prize</a>
@@ -73,7 +79,7 @@
             <% else %>
             <input type="checkbox" class="already_got_prize" value="<%= participant.id %>" checked disabled>
             <% end %>
-            Got Award
+            <b>Got Final Award</b>
           </p>
         <% end %>
         <a href="/main/edit_patron?id=<%= participant.id %>">Edit</a>
