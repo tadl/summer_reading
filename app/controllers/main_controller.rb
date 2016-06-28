@@ -56,29 +56,34 @@ class MainController < ApplicationController
   end
 
   def sign_up
-    group = params[:group]
-    if group == "baby" 
-      @group_name = "Baby"
-      @group_variable = params[:group]
-      @age = @baby_ages
-    elsif group == "youth"
-      @group_name = "Youth"
-      @group_variable = params[:group]
-      @schools = @youth_schools.sort
-      @grades = @youth_grades
-      @age = @youth_ages
-    elsif group == "teen"
-      @group_name = "Teen"
-      @group_variable = params[:group]
-      @schools = @teen_schools.sort
-      @grades = @teen_grades
-      @age = @teen_ages
-    elsif group == "adult"
-      @group_name = "Adult"
-      @group_variable = params[:group]
-      @age = @adult_ages
+    if (Date.parse('2016-7-18') != Date.today) && (Date.parse('2016-7-18') > Date.today)
+      group = params[:group]
+      if group == "baby" 
+        @group_name = "Baby"
+        @group_variable = params[:group]
+        @age = @baby_ages
+      elsif group == "youth"
+        @group_name = "Youth"
+        @group_variable = params[:group]
+        @schools = @youth_schools.sort
+        @grades = @youth_grades
+        @age = @youth_ages
+      elsif group == "teen"
+        @group_name = "Teen"
+        @group_variable = params[:group]
+        @schools = @teen_schools.sort
+        @grades = @teen_grades
+        @age = @teen_ages
+      elsif group == "adult"
+        @group_name = "Adult"
+        @group_variable = params[:group]
+        @age = @adult_ages
+      else
+        alert_msg = "Something went wrong! Please try again."
+        redirect_to :root, :flash => {:alert => alert_msg }      
+      end
     else
-      alert_msg = "Something went wrong! Please try again."
+      alert_msg = "Sorry. Registration is now closed."
       redirect_to :root, :flash => {:alert => alert_msg }      
     end
   end

@@ -20,7 +20,7 @@ task :send_teen_hours =>  :environment do
 	end
 
 	# Set week_number here
-	week_number = 1
+	week_number = 2
 
 
 	Time.zone = 'Eastern Time (US & Canada)'

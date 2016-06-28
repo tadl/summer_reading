@@ -31,9 +31,10 @@
 	</div>
 <% end %>
 
-<% if current_user || (Date.parse('2016-6-5') < Date.today) %>
+<% if (Date.parse('2016-7-18') != Date.today) && (Date.parse('2016-7-18') > Date.today)  %>
 <div id="register_buttons">
 	<h2 class="registration_box_title">Experience Summer Reading Club 2016</h2>
+	<p>Register today! Registration ends on July 18</p>
   <ul>
 		<li>
 			<a href="/main/sign_up/baby">
@@ -73,6 +74,6 @@
 <div id="register_buttons">
 	<h2 class="registration_box_title">Experience Summer Reading Club 2016</h2>
 	<br>
-	<p style="padding:10px; font-size: 20px;">Coming soon! Registration will begin on June 6th.</p>
+	<p style="padding:10px; font-size: 20px;">Registration for Summer Reading Club 2016 is closed.</p>
 </div>
 <% end %>
