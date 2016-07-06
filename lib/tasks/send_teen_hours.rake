@@ -20,11 +20,11 @@ task :send_teen_hours =>  :environment do
 	end
 
 	# Set week_number here
-	week_number = 2
+	week_number = 3
 
 
 	Time.zone = 'Eastern Time (US & Canada)'
-	report_dates = ['06/27/2016','07/04/2016','07/11/2016','07/18/2016','07/25/2016', '08/01/2016']
+	report_dates = ['06/27/2016','07/06/2016','07/11/2016','07/18/2016','07/25/2016', '08/01/2016']
 	libraries = ['Woodmere']
 	time_now = Time.now.strftime("%m/%d/%Y")
 	if report_dates.include?(time_now)
