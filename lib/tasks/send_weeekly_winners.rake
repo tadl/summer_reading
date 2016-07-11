@@ -26,7 +26,7 @@ task :send_weekly_winners =>  :environment do
 	if report_dates.include?(time_now)
 		patrons = Participant.includes(:awards).where(inactive: false, club: "adult").order("id DESC")
 		patrons_with_right_criteria = Array.new
-		end_date = Time.strptime(time_now ,"%m/%d/%Y") - 3.days
+		end_date = Time.strptime(time_now ,"%m/%d/%Y") - 1.days
 		start_date = end_date - 7.days
 		puts start_date.to_s + ' - ' + end_date.to_s
 		patrons.each do |p|
