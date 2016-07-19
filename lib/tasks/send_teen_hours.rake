@@ -20,8 +20,7 @@ task :send_teen_hours =>  :environment do
 	end
 
 	# Set week_number here
-	week_number = 3
-
+	week_number = 4
 
 	Time.zone = 'Eastern Time (US & Canada)'
 	report_dates = ['06/27/2016','07/06/2016','07/11/2016','07/18/2016','07/25/2016', '08/01/2016']
