@@ -56,7 +56,7 @@ class MainController < ApplicationController
   end
 
   def sign_up
-    if (Date.parse('2016-7-18') != Date.today) && (Date.parse('2016-7-18') > Date.today)
+    if ((Date.parse('2016-7-18') != Date.today) && (Date.parse('2016-7-18') > Date.today)) || current_user
       group = params[:group]
       if group == "baby" 
         @group_name = "Baby"
