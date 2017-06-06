@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504193743) do
+ActiveRecord::Schema.define(version: 20170606171657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,12 @@ ActiveRecord::Schema.define(version: 20160504193743) do
     t.boolean  "verify_info",     default: false
     t.boolean  "inactive",        default: false
     t.string   "phone"
+    t.boolean  "week_1",          default: false
+    t.boolean  "week_2",          default: false
+    t.boolean  "week_3",          default: false
+    t.boolean  "week_4",          default: false
+    t.boolean  "week_5",          default: false
+    t.boolean  "week_6",          default: false
   end
 
 end

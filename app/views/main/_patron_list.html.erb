@@ -11,8 +11,7 @@
         <h3> <%= participant.first_name %> <%= participant.last_name %> </h3> 
         <p> 
            <strong>Age:</strong> <%= participant.age %>, 
-           <strong>Club:</strong> <%= participant.club %>, 
-           <strong>Experience Count:</strong> <%= participant.awards.count %>, 
+           <strong>Club:</strong> <%= participant.club %>,  
         </p>
         <p>
           <strong>Home Library:</strong> <%= participant.home_library %>, 
@@ -24,35 +23,33 @@
           <% end %>    
         </p>
         <p>
-        <% if participant.club != 'baby' %>
-          Experiences: </br>
-           <% participant.awards.each do |a| %>
-             <div class="patron_badge center">
-                <img src="<%= a.experience.image_url %>" class="award">
-                <br>
-                <b><%= a.experience.name %></b>
-                <% if a.read && a.did %>
-                  <br>
-                  <b>Read:</b> <%= a.read %>
-                  <br>
-                  <b>Did:</b> <%= a.did %>
-                <% end %>
-                <% if a.needs_prize == true %>
-                  <br>
-                  <a  class="important_button" style="display: inline-block;" onclick="award_prize('<%= a.id %>')">Award Prize</a>
-                <% end %> 
-             </div>    
-           <% end %>
-             <div class="clear_div"></div>
-            <br>
-           <select id="award_form_<%= participant.id %>">
-             <option value="">Select Experience</option>
-           <% participant.unearned_experiences.each do |e| %>
-             <option value="<%= e.id %>"><%= e.name %></option>            
-           <% end %>
-           </select>
-           <a class="important_button" onclick="award_experience('<%= participant.id %>')">Award Experience</a>
-        <% end %>   
+          <h3>Weekly Reports</h3>
+          <ul id="week_list" style="list-style: none">
+            <li> 
+              <input type="checkbox" class="week_1" value="<%= participant.id %>"> 
+              Week 1 (June 19 - June 25) 
+            </li>
+            <li>
+              <input type="checkbox" class="week_2" value="<%= participant.id %>">  
+              Week 2 (June 26 - July 02) 
+            </li>
+            <li> 
+              <input type="checkbox" class="week_3" value="<%= participant.id %>"> 
+              Week 3 (July 03 - July 09)
+            </li>
+            <li>
+              <input type="checkbox" class="week_4" value="<%= participant.id %>">  
+              Week 4 (July 10 - July 16)
+            </li>
+            <li>
+              <input type="checkbox" class="week_6" value="<%= participant.id %>">  
+              Week 5 (July 17 - July 23)
+            </li>
+            <li>
+              <input type="checkbox" class="week_7" value="<%= participant.id %>"> 
+              Week 6 (July 24 - July 31)
+            </li>
+          </ul>
         </p>
         <p>
           <% if participant.got_reading_kit == false %> 
@@ -62,17 +59,12 @@
           <% end %>
           Received reading Kit 
         </p>
-        <% if participant.club == 'baby' %>
-          <p>  
-            <% if participant.baby_complete == false %> 
-              <input type="checkbox" class="not_complete_baby" value="<%= participant.id %>">
-            <% else %>
-              <input type="checkbox" class="complete_baby" value="<%= participant.id %>" checked disabled>
-            <% end %>
-            Completed baby activities
-          </p>
-        <% end %>
-        <%if participant.awards.count >= 6 || (participant.club == 'baby' && participant.baby_complete == true) %>
+        <%if participant.week_1 == true && 
+          participant.week_2 == true && 
+          participant.week_3 == true &&
+          participant.week_4 == true &&
+          participant.week_5 == true &&
+          participant.week_6 == true && %> 
           <p>  
             <% if participant.got_final_prize == false %> 
             <input type="checkbox" class="got_prize" value="<%= participant.id %>">
