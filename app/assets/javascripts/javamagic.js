@@ -50,6 +50,17 @@ load_functions = function() {
       }
   });
 
+  $('.week_report').change(function(){
+    var participant_and_week = $(this).val();
+    var participant_id = participant_and_week.split('-')[0]
+    var week_id = participant_and_week.split('-')[1]
+    if($(this).is(":checked")){
+      $.post('/main/report_week.json',{participant_id: participant_id, week_id: week_id, week_value: 'true'})
+    }else{
+      $.post('/main/report_week.json',{participant_id: participant_id, week_id: week_id, week_value: 'false'})
+    }
+  });
+
   $('.edit_got_kit').change(function() {
      var participant_id = $(this).val(); 
      if($(this).is(":checked")) { 

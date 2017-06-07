@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   get "/main/self_record_hours"
   get "/main/award_prize"
   get "/main/self_record_hours_refresh"
+  post "/main/report_week"
   match 'auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
   match 'auth/failure', to: redirect('/'), via: [:get, :post]
   match 'signout', to: 'sessions#destroy', as: 'signout', via: [:get, :post]

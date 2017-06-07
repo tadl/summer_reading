@@ -191,14 +191,23 @@ class MainController < ApplicationController
     p.library_card = library_card_clean
     p.save
 
-    respond_with do |format|
+   respond_with do |format|
       format.json { render :json =>{message: 'updated'}}
     end 
 
 
   end
 
-
+  def report_week
+    participant = Participant.find(params[:participant_id])
+    week = 'week_' + params[:week_id].to_s
+    week_value = params[:week_value].to_s
+    participant.send("#{week}=", week_value)
+    participant.save
+    respond_with do |format|
+      format.json { render :json =>{message: 'updated'}}
+    end 
+  end
 
 
   def patron_list
