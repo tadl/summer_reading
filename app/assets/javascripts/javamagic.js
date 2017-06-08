@@ -243,7 +243,7 @@ function register(group, staff){
   var email = $("#email").val();
   var library_card = $("#library_card").val();
   var message_div = "#messages"
-  var success_msg = "<div class='good_text'><h3 style='text-align: center'>Congratulations, you've successfully registered for TADL Summer Reading Club!</h3> <p>Please be sure to stop by your home library to pick up your reading kit.</p>  <p>To find an upcoming event <a href='http://www.tadl.org/events/556'>click here</a>.</p> <p>To register another patron <a href='/main/index'>click here</a>.</p></div>"
+  var success_msg = "<div class='good_text'><h3 style='text-align: center'>Congratulations, you've successfully registered for TADL Summer Reading Club!</h3> <p>Please be sure to stop by your home library to pick up your reading kit.</p>  <p>To find an upcoming event <a href='https://www.tadl.org/events/month/?tribe_eventcategory%5B%5D=24'>click here</a>.</p> <p>To register another patron <a href='/main/index'>click here</a>.</p></div>"
   if ((group == 'teen' || group == 'youth') && staff != 'staff'){
     if (first_name.length == "0" || last_name.length == "0" || phone.length < '7' || !phone.match(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/) || age.length == "0" || grade == null || grade.length == "0" || school == null || school.length == "0" || zip_code.length == "0" || home_library == null || home_library.length == "0") {
       $(message_div).html('<h3>Missing required fields</h3>');
