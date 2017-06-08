@@ -75,13 +75,6 @@
 	<button onclick="update_patron('<%= @patron.id %>')">Update</button>
 	
 	<h3>Participation Info: (changes saved automagically) </h3>
-	<h4>Experiences</h4>
-	<ul>	
-		<% @patron.awards.each do |a| %>
-			<li id="edit_<%= a.id %>"> <%= a.experience.name %> <a style="color: #FF0000" onclick="delete_award('<%= a.id %>')">Delete</a></li>
-		<% end %>
-	</ul>
-	<h4>Status</h4>
 	<ul>
 		<li>
 			<% if @patron.got_reading_kit == false %> 
@@ -121,11 +114,5 @@
         	Inactive (inactive users do not appear in reports)	
 		</li>
 	</ul>
-	<% if @patron.club == "teen" %>
-	<h4>Teen Hours</h4>
-	<div id='hour_<%= @patron.id %>'>
-		<%= render :partial => "self_hours", :locals => {:patron => @patron} %>
-	</div>
-	<% end %>
 </div>
 
