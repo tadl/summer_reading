@@ -24,8 +24,8 @@ class MainController < ApplicationController
     @libraries = ['Woodmere','Kingsley','Interlochen','East Bay','Peninsula','Fife Lake']
     @clubs = ['baby', 'youth', 'teen', 'adult']
     @all_ages = [*0..105]
-    @baby_ages = [*0..3]
-    @youth_ages = [*4..12]
+    @baby_ages = [*0..5]
+    @youth_ages = [*6..12]
     @teen_ages = [*13..19]
     @adult_ages = [*18..105]
 
@@ -59,7 +59,7 @@ class MainController < ApplicationController
     if ((Date.parse('2017-7-18') != Date.today) && (Date.parse('2017-7-18') > Date.today)) || current_user
       group = params[:group]
       if group == "baby" 
-        @group_name = "Baby"
+        @group_name = "Pre-School"
         @group_variable = params[:group]
         @age = @baby_ages
       elsif group == "youth"
