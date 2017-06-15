@@ -8,47 +8,37 @@
         <h3> <%= participant.first_name %> <%= participant.last_name %> </h3> 
         <p> 
            <strong>Age:</strong> <%= participant.age %>, 
-           <strong>Club:</strong> <%= participant.club %>,  
         </p>
-        <p>
-          <strong>Home Library:</strong> <%= participant.home_library %>, 
-          <%if  participant.library_card? %>
-            <strong>Library Card:</strong> <%= participant.library_card %>,
-          <% end %>
-          <% if participant.school? && participant.school != 'undefined' %>
-            <strong>School:</strong> <%= participant.school %>,
-          <% end %>    
-        </p>
-        <a href="/main/edit_patron?id=<%= participant.id %>">Edit</a>
         <p>
           <h3>Weekly Reports</h3>
           <ul id="week_list" style="list-style: none">
             <li> 
-              <input type="checkbox" class="week_report" value="<%= participant.id %>-1" <%=week_helper(participant.week_1)%>> 
+              <input type="checkbox" class="self_week_report" value="<%= participant.id %>-1" <%=week_helper(participant.week_1)%>> 
               Week 1 (June 19 - June 25) 
             </li>
             <li>
-              <input type="checkbox" class="week_report" value="<%= participant.id %>-2" <%=week_helper(participant.week_2)%>>  
+              <input type="checkbox" class="self_week_report" value="<%= participant.id %>-2" <%=week_helper(participant.week_2)%>>  
               Week 2 (June 26 - July 02) 
             </li>
             <li> 
-              <input type="checkbox" class="week_report" value="<%= participant.id %>-3" <%=week_helper(participant.week_3)%>> 
+              <input type="checkbox" class="self_week_report" value="<%= participant.id %>-3" <%=week_helper(participant.week_3)%>> 
               Week 3 (July 03 - July 09)
             </li>
             <li>
-              <input type="checkbox" class="week_report" value="<%= participant.id %>-4" <%=week_helper(participant.week_4)%>>  
+              <input type="checkbox" class="self_week_report" value="<%= participant.id %>-4" <%=week_helper(participant.week_4)%>>  
               Week 4 (July 10 - July 16)
             </li>
             <li>
-              <input type="checkbox" class="week_report" value="<%= participant.id %>-5" <%=week_helper(participant.week_5)%>>  
+              <input type="checkbox" class="self_week_report" value="<%= participant.id %>-5" <%=week_helper(participant.week_5)%>>  
               Week 5 (July 17 - July 23)
             </li>
             <li>
-              <input type="checkbox" class="week_report" value="<%= participant.id %>-6" <%=week_helper(participant.week_6)%>> 
+              <input type="checkbox" class="self_week_report" value="<%= participant.id %>-6" <%=week_helper(participant.week_6)%>> 
               Week 6 (July 24 - July 31)
             </li>
           </ul>
         </p>
+        <% end %>
 	<% else %>
 		
 		<p>Sorry. We didn't find any participants registered with your library card number.</p>

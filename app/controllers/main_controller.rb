@@ -6,10 +6,10 @@ class MainController < ApplicationController
   require 'json'
 
   before_filter :shared_variables
-  before_action :authenticate_user!, :except => [:index, :lookup, :register, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
-  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :register, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
+  before_action :authenticate_user!, :except => [:index, :self_report_week, :lookup, :register, :sign_up, :self_reward_form, :self_record_hours, :self_record_hours_refresh, :self_award_patron, :check_patron, :closing]
+  before_action :check_for_approved, :except => [:index, :sign_up, :lookup, :self_report_week, :register, :admin_manage, :self_record_hours, :self_record_hours_refresh, :change_admin_role, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   before_action :block_non_tadl_user!, :only => [:edit_patron, :patron_list_export]
-  skip_before_filter :verify_authenticity_token, :only => [:lookup, :sign_up, :self_record_hours_refresh, :self_record_hours, :register, :self_reward_form, :self_award_patron, :check_patron, :closing] 
+  skip_before_filter :verify_authenticity_token, :only => [:lookup, :sign_up, :self_record_hours_refresh, :self_report_week, :self_record_hours, :register, :self_reward_form, :self_award_patron, :check_patron, :closing] 
   respond_to :html, :json, :js
   
   def shared_variables
@@ -206,6 +206,26 @@ class MainController < ApplicationController
     participant.save
     respond_with do |format|
       format.json { render :json =>{message: 'updated'}}
+    end 
+  end
+
+  def self_report_week
+    if session[:expires] > Time.now.utc
+      session[:expires] = 1.hour.from_now.utc
+      cards = session[:cards].split(',') rescue []
+    end
+    participant = Participant.find(params[:participant_id])
+    if cards.include? participant.library_card
+      week = 'week_' + params[:week_id].to_s
+      week_value = params[:week_value].to_s
+      participant.send("#{week}=", week_value)
+      participant.save
+      message = 'updated' 
+    else
+      message = 'wrong user' 
+    end
+    respond_with do |format|
+      format.json { render :json =>{message: message}}
     end 
   end
 
