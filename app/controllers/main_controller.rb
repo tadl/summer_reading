@@ -332,7 +332,7 @@ class MainController < ApplicationController
     if session[:expires] > Time.now.utc
       session[:expires] = 1.hour.from_now.utc
       cards = session[:cards].split(',') rescue []
-    end
+    end rescue cards = []
     if cards.include?(params[:card])
       if Award.where(:participant_id => params[:participant], :experience_id => params[:experience] ).blank?
         a = Award.new
